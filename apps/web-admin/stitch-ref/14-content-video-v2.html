@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenClaw Ops - Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&amp;family=JetBrains+Mono:wght@500&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#91f4e8",
+                        "inverse-on-surface": "#ffede9",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#00837a",
+                        "on-surface-variant": "#56423e",
+                        "surface-container-high": "#f7e4e0",
+                        "primary": "#9a4029",
+                        "secondary": "#5f5e5e",
+                        "on-surface": "#231917",
+                        "outline": "#89726c",
+                        "surface-bright": "#fff8f6",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "surface-container-low": "#fff1ed",
+                        "on-secondary-fixed-variant": "#474747",
+                        "on-primary-fixed-variant": "#7d2c17",
+                        "on-tertiary-fixed": "#00201d",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#392e2b",
+                        "secondary-fixed": "#e4e2e1",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#e8d6d2",
+                        "inverse-primary": "#ffb4a2",
+                        "secondary-container": "#e4e2e1",
+                        "primary-fixed": "#ffdbd2",
+                        "on-primary-fixed": "#3c0800",
+                        "background": "#fff8f6",
+                        "outline-variant": "#dcc1ba",
+                        "tertiary-fixed-dim": "#74d7cc",
+                        "on-background": "#231917",
+                        "surface-variant": "#f1dfda",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary": "#006860",
+                        "on-error-container": "#93000a",
+                        "surface": "#fff8f6",
+                        "surface-tint": "#9c432b",
+                        "primary-fixed-dim": "#ffb4a2",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "on-secondary-container": "#656464",
+                        "on-tertiary-container": "#f5fffc",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#c8c6c6",
+                        "primary-container": "#b9583f",
+                        "on-primary-container": "#fffcff",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#f1dfda",
+                        "surface-container": "#fdeae5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "grid-gutter": "24px",
+                        "container-padding": "32px",
+                        "element-gap": "16px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Space Grotesk"],
+                        "headline-md": ["Space Grotesk"],
+                        "data-mono": ["JetBrains Mono"],
+                        "body-main": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "data-mono": ["14px", { "lineHeight": "1.5", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-main": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body-main text-body-main antialiased h-screen flex overflow-hidden">
+<!-- SideNavBar -->
+<nav class="bg-stone-50 dark:bg-zinc-950 font-['Space_Grotesk'] antialiased h-screen w-64 border-r border-zinc-200 dark:border-zinc-800 no-shadow flex flex-col h-full py-6 space-y-2 hidden md:flex shrink-0">
+<div class="px-6 mb-8">
+<h1 class="text-lg font-black text-[#B9583F]">OpenClaw Ops</h1>
+<p class="text-xs text-zinc-500 font-data-mono uppercase tracking-wider mt-1">Production Factory</p>
+</div>
+<div class="flex-1 flex flex-col space-y-1 px-4">
+<!-- Dashboard - ACTIVE -->
+<a class="bg-stone-100 dark:bg-zinc-900 text-[#B9583F] border-r-4 border-[#B9583F] flex items-center gap-3 px-4 py-3 rounded-l-lg transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-medium text-sm">Dashboard</span>
+</a>
+<!-- Projects - INACTIVE -->
+<a class="text-zinc-600 dark:text-zinc-400 hover:bg-stone-100 dark:hover:bg-zinc-900 hover:text-[#B9583F] flex items-center gap-3 px-4 py-3 rounded-lg border-r-4 border-transparent transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]">video_library</span>
+<span class="font-medium text-sm">Projects</span>
+</a>
+<!-- Assets - INACTIVE -->
+<a class="text-zinc-600 dark:text-zinc-400 hover:bg-stone-100 dark:hover:bg-zinc-900 hover:text-[#B9583F] flex items-center gap-3 px-4 py-3 rounded-lg border-r-4 border-transparent transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]">folder_open</span>
+<span class="font-medium text-sm">Assets</span>
+</a>
+<!-- Render Queue - INACTIVE -->
+<a class="text-zinc-600 dark:text-zinc-400 hover:bg-stone-100 dark:hover:bg-zinc-900 hover:text-[#B9583F] flex items-center gap-3 px-4 py-3 rounded-lg border-r-4 border-transparent transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]">slow_motion_video</span>
+<span class="font-medium text-sm">Render Queue</span>
+</a>
+</div>
+<div class="px-4 mt-auto">
+<!-- Settings - INACTIVE -->
+<a class="text-zinc-600 dark:text-zinc-400 hover:bg-stone-100 dark:hover:bg-zinc-900 hover:text-[#B9583F] flex items-center gap-3 px-4 py-3 rounded-lg border-r-4 border-transparent transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="font-medium text-sm">Settings</span>
+</a>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto p-container-padding">
+<!-- Top App Bar (Mobile Only Placeholder, actual topnav not requested for web in prompt but maintaining structure) -->
+<header class="md:hidden flex justify-between items-center mb-8">
+<h1 class="font-display-lg text-headline-md text-primary-container">OpenClaw Ops</h1>
+<button class="text-on-surface">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<div class="max-w-[1200px] mx-auto">
+<!-- Header -->
+<div class="mb-10 flex justify-between items-end">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface">Tổng quan Hệ thống</h2>
+<p class="text-secondary mt-2">Dữ liệu thời gian thực từ xưởng sản xuất</p>
+</div>
+<div class="bg-surface-variant px-4 py-2 rounded-full border border-outline-variant flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="font-data-mono text-data-mono text-on-surface-variant">HỆ THỐNG ONLINE</span>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-grid-gutter">
+<!-- Section 1: MA TRẬN DỰ ÁN -->
+<div class="col-span-12">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container">grid_view</span>
+                        MA TRẬN DỰ ÁN
+                    </h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-grid-gutter">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest p-6 rounded-[24px] border border-surface-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-on-primary-fixed text-[20px]">movie</span>
+</div>
+<p class="text-secondary text-sm mb-1">Tổng số</p>
+<h4 class="font-data-mono text-2xl text-on-surface font-semibold">Cảnh quay: 13</h4>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest p-6 rounded-[24px] border border-surface-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-on-tertiary-fixed text-[20px]">inventory_2</span>
+</div>
+<p class="text-secondary text-sm mb-1">Đã xử lý</p>
+<h4 class="font-data-mono text-2xl text-on-surface font-semibold">Tài nguyên: 45</h4>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest p-6 rounded-[24px] border border-emerald-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-emerald-50 rounded-full blur-xl"></div>
+<div>
+<p class="text-secondary text-sm mb-1">Trạng thái khóa</p>
+<h4 class="font-display-lg text-xl text-on-surface font-semibold">Motion Lock</h4>
+</div>
+<div class="mt-4 inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-full border border-emerald-200 self-start">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="font-data-mono text-data-mono">Đã khóa</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 2: CÔNG VIỆC RENDER -->
+<div class="col-span-12 lg:col-span-8 flex flex-col">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-6 mt-8 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container">speed</span>
+                        CÔNG VIỆC RENDER
+                    </h3>
+<div class="flex flex-col gap-grid-gutter flex-1">
+<!-- Render Job 1 -->
+<div class="bg-surface-container-lowest rounded-[24px] border border-surface-variant shadow-sm p-6 relative overflow-hidden">
+<!-- Progress Bar Background -->
+<div class="absolute bottom-0 left-0 h-1 bg-surface-variant w-full">
+<div class="h-full bg-amber-500 w-[65%]"></div>
+</div>
+<div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
+<div class="w-32 h-24 bg-zinc-200 rounded-xl shrink-0 overflow-hidden relative">
+<img alt="EngPath Walkthrough v3" class="w-full h-full object-cover" data-alt="A modern, high-tech digital rendering interface showing a 3D architectural walkthrough in progress. The scene features clean lines, bright studio lighting, and a minimalist aesthetic with warm corporate tones. Deep blacks and terracotta accents highlight the wireframe structures on the screen, evoking a professional video production environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMCFUntirJfR8LBZ2vASIE6LQT4LTkpgqSSGveYf59zUnxbQyCJHLMkbkcbizF7oaSSvNqywxGf7a8_6D-5CtrSq2-aEXxUb-hQOD0KJ6k415_LhWNGUjcurW96Dnqx_Ui6d3y8EA9sEcLnd9O0sH_BMJqfEw17KbPnIygBjmb16haJUadJd9a98CL0W7G2fIDbPtAHILr0TW7TakcRtspxn2bZEEisZ23lkwa0Kdz-WsaRXVTOh9NUOAZf4AeodB1YOmwXNQmnw"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-50 text-amber-700 border border-amber-200">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+<span class="font-data-mono text-[12px] uppercase font-bold tracking-wide">Đang render</span>
+</span>
+<span class="font-data-mono text-secondary text-sm">CinematicWalkthrough</span>
+</div>
+<h4 class="font-headline-md text-lg text-on-surface mb-1">EngPath Walkthrough v3</h4>
+<div class="flex gap-4 mt-3">
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span class="font-data-mono text-sm">42s</span>
+</div>
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[16px]">percent</span>
+<span class="font-data-mono text-sm">65%</span>
+</div>
+</div>
+</div>
+<div class="shrink-0 w-full md:w-auto mt-4 md:mt-0">
+<button class="w-full bg-surface-variant hover:bg-surface-dim text-on-surface-variant border border-outline-variant px-4 py-2.5 rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">preview</span>
+                                        Xem Preview
+                                    </button>
+</div>
+</div>
+</div>
+<!-- Render Job 2 -->
+<div class="bg-surface-container-lowest rounded-[24px] border border-surface-variant shadow-sm p-6 relative overflow-hidden">
+<div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
+<div class="w-32 h-24 bg-zinc-200 rounded-xl shrink-0 overflow-hidden relative group cursor-pointer">
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10">
+<span class="material-symbols-outlined text-white text-3xl">play_circle</span>
+</div>
+<img alt="Vanhien Walkthrough" class="w-full h-full object-cover" data-alt="A finalized high-resolution 3D render of a modern corporate building exterior. The lighting is pristine, bright daylight casting soft shadows, creating a clean, minimal look. The color palette incorporates crisp whites, glass reflections, and subtle terracotta accents in the landscaping, perfectly aligning with a high-end production studio aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0uO_vU8EQsg718jNnq53PPGrmCm7YtIKkUY0qoWQSTUHdkWJ7uybMMwSFY-S4f4txTjgG7FKDM5hZi1SyyR2tSyO7mSrCnkApEiGMWVioVo9fsKoPBZs0l_z4Y4srZi9TKd2hvF9WVaqOIG7ZNM_fpcAXdcIXmrah1hVs4FXqwNMoJwVzX8aOhKUVLzmEn4GRBY4zPRVW3-0e9-5Y2TqI-zrFr2FKPlmg9yfS9Z8175KJ4MDNxJUeyseibCeuv2N_h-zrt7Mypg"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span class="font-data-mono text-[12px] uppercase font-bold tracking-wide">Hoàn thành</span>
+</span>
+</div>
+<h4 class="font-headline-md text-lg text-on-surface mb-1">Vanhien Walkthrough</h4>
+<div class="flex gap-4 mt-3">
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span class="font-data-mono text-sm">38s</span>
+</div>
+</div>
+</div>
+<div class="shrink-0 flex gap-2 w-full md:w-auto mt-4 md:mt-0">
+<button class="flex-1 md:flex-none bg-surface-variant hover:bg-surface-dim text-on-surface-variant border border-outline-variant px-4 py-2.5 rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">preview</span>
+                                        Xem
+                                    </button>
+<button class="flex-1 md:flex-none bg-primary-container hover:bg-primary text-on-primary-container px-4 py-2.5 rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                                        Tải Xuống
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: KIỂM TRA CHẤT LƯỢNG (QA) Bento Card -->
+<div class="col-span-12 lg:col-span-4 flex flex-col">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-6 mt-8 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container">fact_check</span>
+                        KIỂM TRA CHẤT LƯỢNG (QA)
+                    </h3>
+<div class="bg-surface-container-lowest rounded-[24px] border border-surface-variant shadow-sm p-6 flex-1 flex flex-col h-full">
+<div class="mb-6 flex justify-between items-center">
+<div>
+<p class="text-sm text-secondary font-data-mono mb-1">Dự án: EngPath_v3</p>
+<p class="font-medium text-on-surface">Báo cáo tự động</p>
+</div>
+<div class="w-12 h-12 rounded-full border-[3px] border-amber-500 border-r-surface-variant flex items-center justify-center">
+<span class="font-data-mono text-sm font-bold text-amber-600">66%</span>
+</div>
+</div>
+<ul class="space-y-3 flex-1 font-data-mono text-sm">
+<li class="flex items-start gap-3 p-2 rounded-lg bg-emerald-50/50">
+<span class="material-symbols-outlined text-emerald-600 text-[18px] mt-0.5">check_circle</span>
+<span class="text-on-surface">Không gian màu BT.709</span>
+</li>
+<li class="flex items-start gap-3 p-2 rounded-lg bg-emerald-50/50">
+<span class="material-symbols-outlined text-emerald-600 text-[18px] mt-0.5">check_circle</span>
+<span class="text-on-surface">Không có khung hình đen</span>
+</li>
+<li class="flex items-start gap-3 p-2 rounded-lg bg-emerald-50/50">
+<span class="material-symbols-outlined text-emerald-600 text-[18px] mt-0.5">check_circle</span>
+<span class="text-on-surface">Đồng bộ âm thanh</span>
+</li>
+<li class="flex items-start gap-3 p-2 rounded-lg bg-emerald-50/50">
+<span class="material-symbols-outlined text-emerald-600 text-[18px] mt-0.5">check_circle</span>
+<span class="text-on-surface">Thời lượng khớp (42s ± 0.5s)</span>
+</li>
+<div class="h-px w-full bg-outline-variant my-2"></div>
+<li class="flex items-start gap-3 p-2 rounded-lg bg-amber-50/80 border border-amber-100">
+<span class="material-symbols-outlined text-amber-600 text-[18px] mt-0.5">warning</span>
+<span class="text-on-surface font-medium">Kiểm tra chồng chéo chữ</span>
+</li>
+<li class="flex items-start gap-3 p-2 rounded-lg bg-red-50/80 border border-red-100">
+<span class="material-symbols-outlined text-error text-[18px] mt-0.5">cancel</span>
+<span class="text-error font-medium">Tuân thủ nền tảng TikTok</span>
+</li>
+</ul>
+<button class="w-full mt-6 bg-surface-variant text-on-surface-variant py-2.5 rounded-lg border border-outline-variant font-medium text-sm flex items-center justify-center gap-2 hover:bg-surface-dim transition-colors">
+<span class="material-symbols-outlined text-[16px]">assignment_turned_in</span>
+                            Phê duyệt thủ công
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

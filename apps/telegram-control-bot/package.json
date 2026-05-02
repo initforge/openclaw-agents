@@ -1,0 +1,19 @@
+{
+  "name": "@openclaw/telegram-control-bot",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "biome check src",
+    "test": "vitest run",
+    "test:unit": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@openclaw/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.3"
+  }
+}

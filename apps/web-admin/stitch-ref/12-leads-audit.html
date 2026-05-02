@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenClaw Ops - Audit Log</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#6d5000",
+                        "on-secondary-container": "#636262",
+                        "on-secondary": "#ffffff",
+                        "surface-container-high": "#f2e7d6",
+                        "on-surface-variant": "#504532",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#e4e2e2",
+                        "primary-fixed-dim": "#fbbc00",
+                        "primary-container": "#ffbf00",
+                        "surface-tint": "#795900",
+                        "outline-variant": "#d4c5ab",
+                        "tertiary-fixed-dim": "#c7c6c6",
+                        "surface-bright": "#fff8f2",
+                        "on-surface": "#201b11",
+                        "surface-variant": "#ede1d0",
+                        "secondary-container": "#e2dfde",
+                        "primary-fixed": "#ffdfa0",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#fef2e1",
+                        "on-tertiary-fixed": "#1b1c1c",
+                        "error": "#ba1a1a",
+                        "secondary": "#5f5e5e",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "on-primary-fixed-variant": "#5c4300",
+                        "surface-container": "#f8ecdb",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "on-background": "#201b11",
+                        "inverse-on-surface": "#fbefde",
+                        "tertiary": "#5e5e5e",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#545454",
+                        "surface": "#fff8f2",
+                        "primary": "#795900",
+                        "tertiary-container": "#cac9c9",
+                        "on-primary-fixed": "#261a00",
+                        "secondary-fixed": "#e5e2e1",
+                        "on-secondary-fixed-variant": "#474746",
+                        "inverse-primary": "#fbbc00",
+                        "on-tertiary-fixed-variant": "#464747",
+                        "inverse-surface": "#363024",
+                        "outline": "#827660",
+                        "background": "#fff8f2",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#e4d8c8",
+                        "surface-container-highest": "#ede1d0",
+                        "secondary-fixed-dim": "#c8c6c5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "bento-gap": "16px",
+                        "row-padding-x": "16px",
+                        "row-padding-y": "12px",
+                        "container-padding": "24px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["JetBrains Mono"],
+                        "data-mono": ["JetBrains Mono"],
+                        "heading-md": ["Space Grotesk"],
+                        "body-main": ["Inter"],
+                        "display-xl": ["Space Grotesk"],
+                        "heading-lg": ["Space Grotesk"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "data-mono": ["14px", { "lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "heading-md": ["24px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "body-main": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "display-xl": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "heading-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-screen flex overflow-hidden font-body-main">
+<!-- SideNavBar -->
+<nav class="bg-[#FBF8F3] dark:bg-slate-950 text-amber-500 dark:text-amber-400 font-['Space_Grotesk'] font-medium h-screen w-72 fixed left-0 top-0 border-r border-slate-200 dark:border-slate-800 flat no shadows transition-all duration-150 active:scale-95 flex flex-col gap-2 p-6 h-full z-40 hidden md:flex">
+<div class="mb-6">
+<h1 class="text-xl font-bold text-slate-900 dark:text-white mb-2">OpenClaw</h1>
+<p class="text-sm text-slate-500">Vigilant Ops</p>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<!-- Inactive -->
+<a class="text-slate-500 dark:text-slate-400 py-3 px-4 hover:bg-white/50 dark:hover:bg-slate-900/50 hover:text-slate-900 dark:hover:text-white flex items-center gap-3 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                Overview
+            </a>
+<!-- Active -->
+<a class="bg-white dark:bg-slate-900 text-amber-600 dark:text-amber-400 shadow-sm border border-slate-200 dark:border-slate-700 rounded-lg py-3 px-4 flex items-center gap-3 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="history" data-weight="fill" style="font-variation-settings: 'FILL' 1;">history</span>
+                Audit Log
+            </a>
+<!-- Inactive -->
+<a class="text-slate-500 dark:text-slate-400 py-3 px-4 hover:bg-white/50 dark:hover:bg-slate-900/50 hover:text-slate-900 dark:hover:text-white flex items-center gap-3 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="person_search">person_search</span>
+                Leads
+            </a>
+<!-- Inactive -->
+<a class="text-slate-500 dark:text-slate-400 py-3 px-4 hover:bg-white/50 dark:hover:bg-slate-900/50 hover:text-slate-900 dark:hover:text-white flex items-center gap-3 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+                Monitoring
+            </a>
+<!-- Inactive -->
+<a class="text-slate-500 dark:text-slate-400 py-3 px-4 hover:bg-white/50 dark:hover:bg-slate-900/50 hover:text-slate-900 dark:hover:text-white flex items-center gap-3 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                Settings
+            </a>
+</div>
+<button class="w-full bg-primary-container text-on-primary-container font-data-mono text-data-mono py-3 rounded-lg hover:brightness-105 transition-all mt-4 mb-4 font-bold border border-outline-variant">
+            Generate Report
+        </button>
+<div class="flex flex-col gap-2 mt-auto border-t border-slate-200 pt-4">
+<a class="text-slate-500 dark:text-slate-400 py-3 px-4 hover:bg-white/50 hover:text-slate-900 flex items-center gap-3 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+                Documentation
+            </a>
+<a class="text-slate-500 dark:text-slate-400 py-3 px-4 hover:bg-white/50 hover:text-slate-900 flex items-center gap-3 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                Logout
+            </a>
+</div>
+</nav>
+<!-- Main Wrapper -->
+<div class="flex-1 flex flex-col md:ml-72 min-w-0">
+<!-- TopNavBar -->
+<header class="bg-white dark:bg-slate-900 text-amber-500 dark:text-amber-400 font-['Space_Grotesk'] text-sm tracking-tight docked full-width top-0 h-16 border-b border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none transition-colors duration-200 ease-in-out flex justify-between items-center w-full px-8 sticky top-0 z-30">
+<div class="flex items-center gap-6">
+<span class="text-lg font-black text-slate-900 dark:text-white">OpenClaw Ops</span>
+<div class="hidden md:flex items-center bg-surface-container-low border border-outline-variant rounded-lg px-3 py-1.5 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+<span class="material-symbols-outlined text-on-surface-variant text-sm mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none outline-none font-body-main text-body-main text-on-surface placeholder-on-surface-variant/50 focus:ring-0 p-0 w-64" placeholder="Search logs..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-500 hover:text-slate-900 hover:bg-slate-50 p-2 rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-slate-500 hover:text-slate-900 hover:bg-slate-50 p-2 rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<button class="text-slate-500 hover:text-slate-900 hover:bg-slate-50 p-2 rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="account_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto p-bento-gap">
+<div class="max-w-7xl mx-auto h-full flex flex-col gap-bento-gap">
+<!-- Bento Container: Audit Log Table -->
+<div class="bg-surface-container-lowest rounded-3xl p-container-padding border border-outline-variant/30 flex flex-col gap-6 flex-1">
+<header class="flex items-center justify-between">
+<div>
+<h2 class="font-heading-md text-heading-md text-on-surface m-0 uppercase tracking-tight">AUDIT LOG — LEADS</h2>
+<p class="font-body-main text-body-main text-on-surface-variant mt-1">Nhật ký kiểm tra — Leads</p>
+</div>
+<button class="flex items-center gap-2 border border-outline-variant rounded-lg px-4 py-2 font-data-mono text-data-mono text-on-surface hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="filter_list">filter_list</span>
+                            Filter
+                        </button>
+</header>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-surface-container-highest">
+<th class="py-3 px-row-padding-x font-label-caps text-label-caps text-on-surface-variant uppercase">Time (Thời gian)</th>
+<th class="py-3 px-row-padding-x font-label-caps text-label-caps text-on-surface-variant uppercase">Type (Loại)</th>
+<th class="py-3 px-row-padding-x font-label-caps text-label-caps text-on-surface-variant uppercase">Action (Hành động)</th>
+<th class="py-3 px-row-padding-x font-label-caps text-label-caps text-on-surface-variant uppercase text-right">Cost (Chi phí)</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-highest/50">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-bright transition-colors group">
+<td class="py-4 px-row-padding-x font-data-mono text-data-mono text-on-surface whitespace-nowrap">
+                                        20:15
+                                    </td>
+<td class="py-4 px-row-padding-x whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-DEFAULT bg-secondary-container text-on-secondary-container font-label-caps text-label-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                            reply_sent
+                                        </span>
+</td>
+<td class="py-4 px-row-padding-x">
+<p class="font-body-main text-body-main text-on-surface">Comment posted</p>
+<p class="font-body-main text-[13px] text-on-surface-variant mt-0.5">Đã gửi bình luận</p>
+</td>
+<td class="py-4 px-row-padding-x font-data-mono text-data-mono text-on-surface text-right whitespace-nowrap">
+                                        $0.003
+                                    </td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-bright transition-colors group">
+<td class="py-4 px-row-padding-x font-data-mono text-data-mono text-on-surface whitespace-nowrap">
+                                        18:00
+                                    </td>
+<td class="py-4 px-row-padding-x whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-DEFAULT bg-primary-container/30 text-on-primary-container font-label-caps text-label-caps border border-primary-container">
+<span class="material-symbols-outlined text-[14px]" data-icon="warning">warning</span>
+                                            platform_alert
+                                        </span>
+</td>
+<td class="py-4 px-row-padding-x">
+<p class="font-body-main text-body-main text-on-surface">Rate limit warning on SME Digital</p>
+<p class="font-body-main text-[13px] text-on-surface-variant mt-0.5">Cảnh báo giới hạn trên SME Digital</p>
+</td>
+<td class="py-4 px-row-padding-x font-data-mono text-data-mono text-on-surface-variant text-right whitespace-nowrap">
+                                        -
+                                    </td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-bright transition-colors group">
+<td class="py-4 px-row-padding-x font-data-mono text-data-mono text-on-surface whitespace-nowrap">
+                                        17:45
+                                    </td>
+<td class="py-4 px-row-padding-x whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-DEFAULT bg-surface-container-high text-on-surface-variant font-label-caps text-label-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                                            reply_draft
+                                        </span>
+</td>
+<td class="py-4 px-row-padding-x">
+<p class="font-body-main text-body-main text-on-surface">AI draft generated</p>
+<p class="font-body-main text-[13px] text-on-surface-variant mt-0.5">Bản thảo AI đã tạo</p>
+</td>
+<td class="py-4 px-row-padding-x font-data-mono text-data-mono text-on-surface text-right whitespace-nowrap">
+                                        $0.005
+                                    </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

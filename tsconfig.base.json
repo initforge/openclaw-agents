@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@openclaw/contracts": ["packages/contracts/src"],
+      "@openclaw/db": ["packages/db/src"],
+      "@openclaw/agent-core": ["packages/agent-core/src"],
+      "@openclaw/ai-router": ["packages/ai-router/src"],
+      "@openclaw/domain-content": ["packages/domain-content/src"],
+      "@openclaw/domain-trading": ["packages/domain-trading/src"],
+      "@openclaw/domain-leads": ["packages/domain-leads/src"],
+      "@openclaw/signal-parser": ["packages/signal-parser/src"],
+      "@openclaw/risk-engine": ["packages/risk-engine/src"]
+    }
+  }
+}

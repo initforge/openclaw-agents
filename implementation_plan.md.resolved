@@ -1,0 +1,299 @@
+# OpenClaw Ops Web Admin — Bản Đồ 17 Màn Hình
+
+Tài liệu này map chính xác từng màn hình với business logic trong `01-spec.md`, technical contract trong `02-engineering.md`, visual rules trong `DESIGN.md` và các quyết định trong `03-decisions.md`.
+
+Không có màn nào được bịa ra. Tất cả đều có nguồn gốc.
+
+## Cấu Trúc Điều Hướng (Navigation Contract)
+
+**Nguồn: `DESIGN.md` Navigation + `03-decisions.md` ADR-0014 + ADR-0015**
+
+- Đáy màn hình: **Workspace Toggle 3 trạng thái** (kiểu giống iOS light/dark toggle nhưng 3 option)
+- Mỗi workspace có **thanh menu riêng** ở đáy (nằm ngay trên Workspace Toggle)
+- Không có sidebar, không có global menu, không có workspace System/Ops/Settings
+- Route dùng hash deep-link: `#/agents/trading/desk`, `#/agents/facebook-leads/radar`...
+
+---
+
+## WORKSPACE 1: TRADING — The Sovereign Vault (5 màn)
+
+**Nguồn visual: `DESIGN.md`** — "Voltrex reference: pale app frame, large central trading surface, compact right risk rail, bottom market/status strip, soft rounded controls."
+
+**Nguồn color:** fog white, cool paper, charcoal ink, mint guarded state, amber warning.
+
+**Nguồn layout:** Large work planes, rails and bands — KHÔNG dùng card grid.
+
+---
+
+### Màn 1: Trading > Desk
+**Route:** `#/agents/trading/desk`
+**Mục đích:** Bàn điều khiển trực chiến — đây là màn hình người vận hành nhìn 24/7.
+
+**Nội dung cần hiển thị (nguồn: `01-spec.md` §01.2.1 + `02-engineering.md` §02.11):**
+- **Trung tâm:** Bảng vị thế đang mở (positions) với layer breakdown — mỗi position có nhiều layer (lot, entry, SL, TP, status, PnL). Dữ liệu từ `GET /agents/trading/positions`.
+- **Cột phải (Rail):** MT5 sync status (đồng bộ hay lệch), Agent mode hiện tại (`observe`/`paper`/`auto_guarded`/`paused`), Kill Switch.
+- **Dải dưới (Band):** Tóm tắt: Today PnL, Active Exposure, Trades Today, Daily Loss Cap remaining.
+- **Kill Switch:** Nút halt cấp critical — phải có gated interaction (hold 2s hoặc tương đương).
+
+**Trạng thái UI cần xử lý:** Empty (chưa có position), Loading, Not-Configured (chưa có MT5 bridge), Risk-Blocked (vượt cap).
+
+---
+
+### Màn 2: Trading > Strategy
+**Route:** `#/agents/trading/strategy`
+**Mục đích:** Cấu hình chiến lược đi vốn và rủi ro — thay đổi ở đây ảnh hưởng trực tiếp đến lệnh thật.
+
+**Nội dung cần hiển thị (nguồn: `01-spec.md` §01.2.1 + `02-engineering.md` §02.6):**
+- **Multiplier (Hệ số nhân):** Cấu hình lot multiplier theo tín hiệu.
+- **Layering (Rải lệnh):** Số layer, khoảng cách giữa các layer, lot scaling.
+- **Trailing SL / Gồng lời:** Quy tắc dời SL theo chiều có lợi.
+- **Max Lot per order, Max total exposure, Max trades per day.**
+- **Daily Loss Cap:** Nếu tổng lỗ trong ngày chạm cap thì agent tự dừng.
+- **Source Trust Score threshold:** Ngưỡng tin cậy tối thiểu để accept tín hiệu.
+- **Spread/Slippage guard, Duplicate signal guard.**
+
+**Cảnh báo quan trọng:** Mọi thay đổi ở đây là Policy Approval (`01-spec.md` §01.5.1). UI phải ghi versioned config snapshot. Nút Save phải là gated button (hold hoặc xác nhận 2 bước).
+
+---
+
+### Màn 3: Trading > Signal Stream
+**Route:** `#/agents/trading/signal-stream`
+**Mục đích:** Timeline trực quan thay vì JSON parser — người vận hành phải thấy rõ: tin nhắn gốc → AI hiểu gì → action đã chạy.
+
+**Nội dung cần hiển thị (nguồn: `01-spec.md` dòng 208 + `02-engineering.md` §02.4):**
+- **Timeline theo thời gian thực:** Mỗi entry gồm 3 cột/phase:
+  1. **Raw:** Tin nhắn gốc từ Telegram/Zalo (text thô, có thể kèm ảnh).
+  2. **Parsed:** AI phân loại thành `new_signal`, `amend_sl`, `partial_close`, `noise`... + confidence score.
+  3. **Action:** Kết quả — `EXECUTED` (kèm order ID), `HARD REJECT` (kèm lý do), `NOISE` (bỏ qua).
+- Dữ liệu từ `GET /agents/trading/signal-stream`.
+- Phải filter được theo: thời gian, source, message class, action result.
+
+---
+
+### Màn 4: Trading > Connections
+**Route:** `#/agents/trading/connections`
+**Mục đích:** Quản lý tất cả cầu nối dữ liệu và thực thi — nếu không có connections thì không có gì hoạt động.
+
+**Nội dung cần hiển thị (nguồn: `01-spec.md` §01.2.1 dòng 209 + `02-engineering.md` §02.7):**
+- **Telegram Auth:** Danh sách channel đang theo dõi, trạng thái kết nối, nút Add/Remove.
+- **Zalo Web:** Nút quét QR (`POST /agents/trading/connections/zalo-qr`), trạng thái session (active/expired), cookie expiry.
+- **MT5 Bridge:** Trạng thái bridge (connected/disconnected), broker name, account ID (không show password), last sync time.
+- **Manual Input:** Nơi paste tín hiệu thủ công vào hệ thống.
+
+> [!IMPORTANT]
+> **`02-engineering.md` §02.11 dòng 509:** "Build Trading Connections tab first: Telegram auth, Zalo QR, MT5 bridge login. Without connections, nothing else works." — Đây là tab PHẢI build đầu tiên.
+
+---
+
+### Màn 5: Trading > History
+**Route:** `#/agents/trading/history`
+**Mục đích:** Kiểm tra lại mọi thứ đã xảy ra — audit trail cho trading.
+
+**Nội dung cần hiển thị (nguồn: `01-spec.md` dòng 210 + `02-engineering.md` §02.11):**
+- **Execution Logs:** Lịch sử lệnh đã thực thi (order ID, symbol, type, lot, fill price, timestamp).
+- **Hard Reject Logs:** Lệnh bị từ chối + lý do cụ thể (thiếu SL, vượt lot, source paused...).
+- **Reconciliation:** Đối soát DB vs MT5 — highlight bất kỳ mismatch nào. Có nút chạy lại reconciliation (`POST /agents/trading/bridge/reconcile`).
+- Dữ liệu từ `GET /agents/trading/history`.
+
+---
+
+## WORKSPACE 2: FACEBOOK LEADS — The Warm Radar (6 màn)
+
+**Nguồn visual: `DESIGN.md`** — "CRM duplicate-reference spirit: darker contact workspace, a vivid yellow attention plane, contact comparison cards, fast response controls and customer preservation."
+
+**Nguồn color:** charcoal overlay, lemon attention, contact blue, consent green, coral risk.
+
+---
+
+### Màn 6: Leads > Radar
+**Route:** `#/agents/facebook-leads/radar`
+**Mục đích:** Feed radar quét group — phát hiện lead nóng ngay lập tức.
+
+**Nội dung (nguồn: `01-spec.md` §01.2.2 dòng 213):**
+- **Group/Source Feed:** Danh sách bài viết mới từ các group đang theo dõi, sắp xếp theo urgency.
+- **Lead Score:** AI chấm điểm (pain point, budget hint, service fit, urgency).
+- **Source Risk:** Đánh giá rủi ro của nguồn (group có quyền comment không, cooldown status).
+- Mỗi lead card phải có: nội dung bài gốc, thời gian, nhóm, lead score, urgency badge, nút "Respond" nhảy sang tab Respond.
+
+---
+
+### Màn 7: Leads > Respond
+**Route:** `#/agents/facebook-leads/respond`
+**Mục đích:** Bàn phản hồi nhanh — speed-first nhưng không spam.
+
+**Nội dung (nguồn: `01-spec.md` §01.2.2 dòng 214):**
+- **Comment Draft:** AI tạo sẵn comment dựa trên pain point + proof match. Có nút Copy / Open Post / Send (nếu surface hợp lệ).
+- **Zalo Draft:** Nếu khách để lại Zalo, AI tạo follow-up draft. Chỉ auto-send nếu contact đã consent.
+- **Proof Match:** Hiển thị proof/case study liên quan mà hệ thống gợi ý dùng.
+- **Handoff Controls:** Nút mở đúng post Facebook trên browser để user tự comment.
+- **Mode hiện tại:** Hiển thị rõ đang ở `draft_fast` / `assisted_comment` / `allowed_auto`.
+
+---
+
+### Màn 8: Leads > Customers
+**Route:** `#/agents/facebook-leads/customers`
+**Mục đích:** CRM khách hàng thân thiết — chống mất contact.
+
+**Nội dung (nguồn: `01-spec.md` §01.2.2 dòng 215):**
+- **Loyal Contacts:** Danh sách khách đã tương tác, có backup contact (email, SĐT, Zalo ID, profile link).
+- **Customer Value Score:** Ước tính CLV dựa trên dịch vụ đã dùng, tần suất, budget hint, deal history, service fit.
+- **Deal History:** Lịch sử tương tác/giao dịch với từng khách.
+- **Contact Backup:** Nút thêm thông tin backup cho mỗi khách (`POST /agents/facebook-leads/customers/:id/contact-backups`).
+
+---
+
+### Màn 9: Leads > Sources
+**Route:** `#/agents/facebook-leads/sources`
+**Mục đích:** Quản lý nguồn theo dõi — cấu hình policy cho từng group/surface.
+
+**Nội dung (nguồn: `01-spec.md` §01.2.2 dòng 216):**
+- **Watched Sources:** Danh sách group/page đang theo dõi + trạng thái (active/paused/cooldown).
+- **Cooldown Config:** Thời gian chờ giữa các lần comment trên cùng group.
+- **Blacklist:** Topic/user/group bị loại.
+- **Account/Surface Policy:** Mỗi group có policy riêng — group mình sở hữu thì cho `allowed_auto`, group ngoài thì bắt buộc `draft_fast` hoặc `assisted_comment`.
+
+---
+
+### Màn 10: Leads > Proof
+**Route:** `#/agents/facebook-leads/proof`
+**Mục đích:** Thư viện bằng chứng (case study, testimonial) — AI chỉ được claim "từng làm case tương tự" nếu proof thật sự có.
+
+**Nội dung (nguồn: `01-spec.md` §01.2.2 dòng 217):**
+- **Proof Library:** Danh sách case study, kết quả, ảnh chụp, feedback khách. Mỗi proof có: claim text, safety level, last verified date.
+- **Claim Safety:** Proof nào an toàn để dùng, proof nào cần review.
+- **Contact/Consent Context:** Liên kết proof với contact đã cho phép dùng.
+
+---
+
+### Màn 11: Leads > Audit
+**Route:** `#/agents/facebook-leads/audit`
+**Mục đích:** Kiểm tra lại mọi hoạt động của Lead Agent — "who/what/why/when/result".
+
+**Nội dung (nguồn: `01-spec.md` §01.2.2 dòng 218 + `02-engineering.md` §02.11 dòng 480):**
+- **Lead Approvals:** Lịch sử các draft đã approve/reject.
+- **Reply History:** Tất cả comment/Zalo message đã gửi, bao gồm nội dung và kết quả.
+- **Platform Risk Alert:** Cảnh báo từ Facebook nếu có dấu hiệu automated behavior.
+- **Model/Cost theo Leads:** Chi phí AI (classification, comment drafting, pain-point extraction) — từ `model_calls` + `cost_ledger` filter theo workspace.
+
+---
+
+## WORKSPACE 3: PLATFORM CONTENT — The Illuminated Studio (6 màn)
+
+**Nguồn visual: `DESIGN.md`** — "creator calendar reference: warm studio surface, content planning calendar, left tool rail, illustrated warmth translated into operational content cards."
+
+**Nguồn color:** warm cream, olive green, clay orange, soft sky tags.
+
+---
+
+### Màn 12: Content > Command
+**Route:** `#/agents/platform-content/command`
+**Mục đích:** Trung tâm điều khiển nội dung — gõ lệnh hoặc bấm nút để AI tạo content.
+
+**Nội dung (nguồn: `01-spec.md` §01.2.3 dòng 221):**
+- **Prompt Command:** Ô nhập lệnh (hoặc chọn template) để AI tạo bài viết/caption/script/proposal.
+- **Content Package:** Tóm tắt package đang active — đang làm gì, cho nền tảng nào.
+- **Platform Focus:** Nền tảng ưu tiên hiện tại (Facebook/LinkedIn/TikTok/YouTube/Upwork).
+- **Current State:** Trạng thái agent (`generate_only`/`render_video`/`publish_assisted`/`allowed_publish`/`context_capture`).
+
+---
+
+### Màn 13: Content > Packages
+**Route:** `#/agents/platform-content/packages`
+**Mục đích:** Quản lý các gói nội dung đã tạo — từ draft đến sẵn sàng publish.
+
+**Nội dung (nguồn: `01-spec.md` §01.2.3 dòng 222):**
+- **Drafts:** Bài viết/caption/script đang ở dạng nháp.
+- **Captions/Scripts:** Nội dung đã qua AI + user review.
+- **Proof Usage:** Package nào đang dùng proof nào (liên kết với proof library).
+- **Publish Readiness:** Trạng thái sẵn sàng (draft/reviewed/ready/published).
+
+---
+
+### Màn 14: Content > Video
+**Route:** `#/agents/platform-content/video`
+**Mục đích:** Remotion Video Factory — tạo video TikTok/Reels/Shorts.
+
+**Nội dung (nguồn: `01-spec.md` §01.2.3 dòng 223 + `02-engineering.md` §02.10):**
+- **Script/Storyboard:** Soạn script JSON cho Remotion.
+- **Render Jobs:** Danh sách job đang chạy/đã xong (`GET /agents/platform-content/video-jobs`). Mỗi job có: template, status, preview URL, final URL.
+- **Preview:** Xem preview video trước khi publish.
+- **Tạo Job Mới:** Nút trigger render (`POST /agents/platform-content/video-jobs`).
+
+---
+
+### Màn 15: Content > Context
+**Route:** `#/agents/platform-content/context`
+**Mục đích:** Thu thập context hợp lệ từ các nền tảng — nguồn liệu cho AI.
+
+**Nội dung (nguồn: `01-spec.md` §01.2.3 dòng 224 + `02-engineering.md` §02.9):**
+- **Browser Context Items:** Danh sách context đã capture (source, timestamp, account, purpose, retention).
+- **Scope Config:** Phạm vi cho phép capture trên mỗi nền tảng.
+- **Retention Policy:** Giữ bao lâu, tự xoá khi nào.
+- **Source Review:** Xem lại từng context item, có thể approve/reject.
+
+---
+
+### Màn 16: Content > Publish
+**Route:** `#/agents/platform-content/publish`
+**Mục đích:** Quản lý đăng bài lên các nền tảng — có gate kiểm soát chặt.
+
+**Nội dung (nguồn: `01-spec.md` §01.2.3 dòng 225 + `02-engineering.md` §02.11):**
+- **Platform Accounts:** Danh sách tài khoản trên mỗi nền tảng (Facebook, LinkedIn, TikTok, YouTube, Upwork), trạng thái kết nối, risk level.
+- **Publish Gates:** Hàng đợi bài cần duyệt trước khi đăng (`GET /agents/platform-content/publish-gates`).
+- **Assisted Queue:** Bài đăng dạng `publish_assisted` — mở nền tảng + draft sẵn, user tự đăng.
+- **Official Queue:** Bài đăng dạng `allowed_publish` — chỉ khi kênh hợp lệ và policy cho phép.
+
+---
+
+### Màn 17: Content > Audit
+**Route:** `#/agents/platform-content/audit`
+**Mục đích:** Kiểm tra lại mọi hoạt động content — "who/what/why/when/result".
+
+**Nội dung (nguồn: `01-spec.md` §01.2.3 dòng 226 + `02-engineering.md` §02.11 dòng 480):**
+- **Content Approvals:** Lịch sử draft đã approve/reject.
+- **Render/Publish Logs:** Job Remotion nào đã render, bài nào đã publish, kết quả.
+- **Context Logs:** Context capture nào đã chạy, scope, kết quả.
+- **Model/Cost theo Content:** Chi phí AI cho content workspace.
+
+---
+
+## Design Rules Áp Dụng Cho TẤT CẢ 17 Màn
+
+**Nguồn: `DESIGN.md` + `01-spec.md` §01.3.1**
+
+| Rule | Chi tiết |
+|---|---|
+| No-Line Rule | Tuyệt đối không dùng `border: solid`. Dùng Tonal Shifts (chênh lệch màu nền). |
+| Bento Grid + Expandable | Dữ liệu dài đóng trong `<details>` (Expandable Panel). Bo góc `24px`. |
+| Segmented Control | Tab trong workspace dùng Pill-shape toggle, không dùng tab gạch chân. |
+| Large Work Planes | Màn chính dùng "planes, rails, bands" — KHÔNG dùng card grid bừa bãi. |
+| Component States | Mỗi control cần: default, hover, focus, active, disabled, loading. |
+| High-Risk Buttons | Nút rủi ro cao phải "look deliberate and gated" (hold-to-confirm hoặc 2-step). |
+| First-Class States | Empty, Loading, Not-Configured, Risk-Blocked, Resolved — tất cả phải có UI riêng. |
+| Motion | 150-220ms ease-out. Không decorative page-load choreography. |
+| OKLCH Colors | Tất cả màu dùng OKLCH. Neutrals phải tinted, không dùng pure black/white. |
+
+## Phương Án Triển Khai
+
+> [!IMPORTANT]
+> **Dùng Stitch MCP để design trước, code sau.**
+> Em sẽ tạo project trên Stitch, generate từng màn hình với prompt mô tả chi tiết từ bản đồ này. Sau khi anh duyệt visual trên Stitch, mới chuyển sang code.
+
+### Build Order (theo `02-engineering.md` §02.11 dòng 504-517)
+1. Shell + 3 workspace route + workspace toggle + per-workspace bottom menu
+2. Read-only summary / empty states cho tất cả 17 tab
+3. Trading Connections (tab 4) — build đầu tiên vì không có connections thì không có gì hoạt động
+4. Trading Signal Stream (tab 3) — validate AI parsing
+5. Trading Strategy (tab 2) — config guards
+6. Trading Desk (tab 1) — live position + kill switch
+7. Trading History (tab 5) — execution logs
+8. Facebook Leads Radar + Respond (tab 6-7) — draft_fast mode trước
+9. Platform Content Command + Packages + Video (tab 12-14) — generate_only trước
+10. Còn lại theo priority
+
+## Open Questions
+
+> [!WARNING]
+> 1. Anh muốn em dùng Stitch generate visual cho từng màn rồi anh duyệt trước? Hay anh muốn em code thẳng dựa trên bản đồ này?
+> 2. Có muốn em tạo Stitch Design System riêng cho 3 theme (Sovereign Vault / Warm Radar / Illuminated Studio) không?
+> 3. Dữ liệu mock ở mức nào? Chỉ empty states, hay cần fake data trông giống thật để demo?

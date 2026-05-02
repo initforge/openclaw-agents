@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenClaw Ops - Lead Response Drafting</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#201b11",
+                        "tertiary": "#b91a24",
+                        "surface-dim": "#e4d8c8",
+                        "on-surface-variant": "#504532",
+                        "error": "#ba1a1a",
+                        "secondary": "#006a61",
+                        "inverse-surface": "#363024",
+                        "outline-variant": "#d4c5ab",
+                        "on-primary-container": "#6d5000",
+                        "surface-container-high": "#f2e7d6",
+                        "surface-bright": "#fff8f2",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#930013",
+                        "surface-container-low": "#fef2e1",
+                        "on-primary-fixed-variant": "#5c4300",
+                        "surface-tint": "#795900",
+                        "secondary-container": "#86f2e4",
+                        "on-surface": "#201b11",
+                        "secondary-fixed-dim": "#6bd8cb",
+                        "on-secondary-fixed-variant": "#005049",
+                        "primary": "#795900",
+                        "on-primary-fixed": "#261a00",
+                        "primary-fixed": "#ffdfa0",
+                        "surface-container": "#f8ecdb",
+                        "surface-variant": "#ede1d0",
+                        "on-tertiary-fixed": "#410004",
+                        "on-secondary-container": "#006f66",
+                        "inverse-primary": "#fbbc00",
+                        "tertiary-fixed": "#ffdad7",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#ffb7b1",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#fbbc00",
+                        "on-secondary-fixed": "#00201d",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#ffbf00",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#ede1d0",
+                        "inverse-on-surface": "#fbefde",
+                        "on-tertiary-container": "#aa0a1b",
+                        "on-tertiary": "#ffffff",
+                        "background": "#fff8f2",
+                        "tertiary-fixed-dim": "#ffb3ad",
+                        "secondary-fixed": "#89f5e7",
+                        "surface": "#fff8f2",
+                        "outline": "#827660"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "card-gap": "24px",
+                        "gutter": "24px",
+                        "container-padding": "32px",
+                        "unit": "8px",
+                        "section-margin": "48px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Space Grotesk"],
+                        "body-lg": ["Inter"],
+                        "data-small": ["JetBrains Mono"],
+                        "h3": ["Space Grotesk"],
+                        "data-display": ["JetBrains Mono"],
+                        "h1": ["Space Grotesk"],
+                        "body-md": ["Inter"],
+                        "label-caps": ["Space Grotesk"]
+                    },
+                    "fontSize": {
+                        "h2": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "data-small": ["14px", { "lineHeight": "1", "fontWeight": "400" }],
+                        "h3": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "data-display": ["20px", { "lineHeight": "1", "fontWeight": "500" }],
+                        "h1": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#FBF8F3] text-on-background min-h-screen flex font-body-md">
+<!-- SideNavBar (Shared Component) -->
+<nav class="bg-white dark:bg-stone-900 text-[#FFBF00] dark:text-amber-400 font-['Space_Grotesk'] text-sm font-medium rounded-r-3xl h-[calc(100vh-32px)] my-4 ml-4 no-border whitespace-as-separator shadow-[0_4px_20px_-2px_rgba(180,170,150,0.15)] fixed left-0 top-0 w-64 flex flex-col z-40">
+<div class="p-6">
+<div class="flex items-center gap-4 mb-8">
+<img alt="OpenClaw Logo" class="w-10 h-10 rounded-xl object-cover" data-alt="A stylized, modern geometric logo depicting an abstract claw or talon shape, designed in a sleek amber and dark stone color palette, set against a pristine white background. The logo suggests precision, vigilance, and advanced operational capability in a clean, minimalist corporate identity style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRZFBesikYG61M3sR_M-Oe8ne8Bhl6APTUMdoZKDbuwAIe0g0ZYGGFvVVKocQZVVR4RRdAWL33JtvgZW74Z5lNVy8UH7pAdQPHXDLFtnNtmAM4YCD2yJaTv8zVFz0bEn-kkANile-axIiIS1oQGda94B8FoEgKcLR1PFpS-3R98rgHc0wWkm2CUkiVcBazJOmhjgGzSdt0QJ4Ixh_ycQnplq57eSACw-k0EGb8lYzpho7wzSv1TERxY7FwNV3mLkpM7S3YVh00KQ"/>
+<div>
+<h1 class="text-amber-500 font-bold text-lg leading-tight">Command Center</h1>
+<span class="text-stone-500 text-xs">Vigilant Ops</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<a class="text-stone-500 dark:text-stone-400 px-4 py-3 mx-2 hover:bg-stone-50 dark:hover:bg-stone-800 rounded-xl transition-all duration-300 ease-out flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">radar</span>
+                    Giám sát
+                </a>
+<a class="bg-[#FFBF00] text-stone-900 rounded-xl px-4 py-3 mx-2 transition-all duration-300 ease-out flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">edit_note</span>
+                    Soạn thảo
+                </a>
+<a class="text-stone-500 dark:text-stone-400 px-4 py-3 mx-2 hover:bg-stone-50 dark:hover:bg-stone-800 rounded-xl transition-all duration-300 ease-out flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">verified</span>
+                    Đối soát
+                </a>
+<a class="text-stone-500 dark:text-stone-400 px-4 py-3 mx-2 hover:bg-stone-50 dark:hover:bg-stone-800 rounded-xl transition-all duration-300 ease-out flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+                    Cài đặt
+                </a>
+</div>
+</div>
+<div class="mt-auto p-6 flex flex-col gap-4">
+<button class="w-full bg-stone-100 text-stone-700 py-3 rounded-xl font-medium hover:bg-stone-200 transition-colors">
+                Hỗ trợ trực tuyến
+            </button>
+<a class="text-stone-500 dark:text-stone-400 px-4 py-3 mx-2 hover:bg-stone-50 dark:hover:bg-stone-800 rounded-xl transition-all duration-300 ease-out flex items-center gap-3 mt-4 border-t border-stone-100 pt-4" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">logout</span>
+                Đăng xuất
+            </a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="ml-72 flex-1 flex flex-col min-h-screen">
+<!-- TopAppBar (Shared Component) -->
+<header class="bg-[#FBF8F3] dark:bg-stone-950 font-['Space_Grotesk'] tracking-tight docked full-width top-0 shadow-none flex justify-between items-center w-full px-8 py-4 z-30 sticky">
+<div class="flex items-center gap-4 w-1/3">
+<h2 class="text-2xl font-bold text-stone-900 dark:text-white font-['Space_Grotesk']">OpenClaw Ops</h2>
+</div>
+<div class="w-1/3 flex justify-center">
+<!-- Search bar would go here based on config, but "on_right" logic implies it's near actions -->
+</div>
+<div class="flex items-center justify-end gap-6 w-1/3">
+<div class="relative w-64 bg-surface-dim rounded-full flex items-center px-4 py-2">
+<span class="material-symbols-outlined text-on-surface-variant mr-2 text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full text-on-surface-variant placeholder-on-surface-variant/50 p-0" placeholder="Tìm kiếm lead..." type="text"/>
+</div>
+<button class="text-stone-500 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors rounded-full p-2 active:scale-95 duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-stone-500 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors rounded-full p-2 active:scale-95 duration-200">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<img alt="Operator Profile" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm cursor-pointer active:scale-95 duration-200" data-alt="A professional headshot of a female operations manager with a warm, approachable smile. She is wearing a modern business casual outfit. The lighting is soft and high-key, creating a clean, professional aesthetic suitable for a high-end corporate dashboard profile picture. The background is a slightly out-of-focus, bright office environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKOkdTnINVFr3Jlzoj0EBXef7RYCQwk-i2ZIMmEGGFZYXgB-rLm20yOZclaoPh594FFaUpVeJ1aCOQUzKGT40lr1P_augE5wLOBMmu8Bodz8b5yutrcJ0_Y79ewHrDhIGuRhDLuLIZTfZuQoReUk61Fq7VIV8EO5VytR8inLYLC7Ifxpr1wqo5L-izgTIPktJd6aoqZOvVfzB5bs4nLgqfvxgH5r9pBCnMD88VzWxchLUzuE-xx0ugfWITT-fFyxS18_bChopwXQ"/>
+</div>
+</header>
+<!-- Bento Grid Workspace -->
+<div class="p-8 pb-12 flex-1">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-card-gap h-full">
+<!-- Left Column: Source Context -->
+<div class="lg:col-span-5 flex flex-col gap-card-gap">
+<!-- Source Post Card -->
+<div class="bg-white rounded-[24px] shadow-[0_4px_20px_-2px_rgba(180,170,150,0.15)] p-container-padding flex-1 flex flex-col">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
+<span class="material-symbols-outlined">groups</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-on-surface">Hội Kinh Doanh Đồ Uống</h3>
+<div class="flex items-center gap-2 text-on-surface-variant font-data-small text-data-small mt-1">
+<span>Đăng bởi: Nguyễn Tấn</span>
+<span>•</span>
+<span>2 giờ trước</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-dim/30 border-l-4 border-primary-container p-6 rounded-r-xl mb-6 flex-1">
+<p class="font-body-lg text-body-lg text-on-surface italic leading-relaxed">
+                                "Mọi người cho em hỏi, quán em dạo này hay bị khách phàn nàn về việc order nhầm món và chờ lâu lúc đông khách. Em đang tìm giải pháp quản lý order bằng điện thoại cho nhân viên, chi phí hợp lý chút ạ. Quán em quy mô vừa, khoảng 15 bàn."
+                            </p>
+</div>
+<!-- Pain Point Analysis -->
+<div class="bg-surface-dim rounded-xl p-6">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-4 flex items-center gap-2 uppercase tracking-widest">
+<span class="material-symbols-outlined text-sm">psychology</span>
+                                Phân tích Pain Point
+                            </h4>
+<div class="flex flex-wrap gap-2">
+<span class="bg-[#ffe4e1] text-[#b91a24] px-3 py-1 rounded-full font-data-small text-data-small flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">error</span> Order nhầm món
+                                </span>
+<span class="bg-[#ffe4e1] text-[#b91a24] px-3 py-1 rounded-full font-data-small text-data-small flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">timer</span> Chờ lâu khi đông
+                                </span>
+<span class="bg-[#e0f2f1] text-[#006a61] px-3 py-1 rounded-full font-data-small text-data-small flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">smartphone</span> Cần quản lý qua Mobile
+                                </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Drafting & Matching -->
+<div class="lg:col-span-7 flex flex-col gap-card-gap">
+<!-- Drafting Section -->
+<div class="bg-white rounded-[24px] shadow-[0_4px_20px_-2px_rgba(180,170,150,0.15)] p-container-padding flex-1 flex flex-col">
+<!-- Comment Draft -->
+<div class="mb-8 flex-1 flex flex-col">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-h3 text-h3 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container">forum</span>
+                                    DỰ THẢO BÌNH LUẬN
+                                </h3>
+<span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full font-data-small text-data-small">Facebook</span>
+</div>
+<textarea class="w-full flex-1 min-h-[120px] bg-surface-dim border-none rounded-xl p-4 font-body-md text-on-surface resize-none focus:ring-2 focus:ring-primary-container transition-shadow" placeholder="Nhập nội dung bình luận...">Chào bạn Nguyễn Tấn, với quy mô 15 bàn và tình trạng đông khách, việc dùng app order trên điện thoại cho nhân viên sẽ giải quyết triệt để lỗi nhầm món và tiết kiệm 50% thời gian chạy đi chạy lại. Bên mình có giải pháp phần mềm chuyên biệt, chi phí chỉ từ 99k/tháng. Bạn check inbox để mình tư vấn chi tiết hơn nhé!</textarea>
+<div class="flex justify-end gap-3 mt-4">
+<button class="px-4 py-2 rounded-lg font-body-md text-on-surface hover:bg-surface-dim transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">content_copy</span> Sao chép
+                                </button>
+<button class="px-4 py-2 rounded-lg font-body-md text-on-surface hover:bg-surface-dim transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">open_in_new</span> Mở Post
+                                </button>
+<button class="px-6 py-2 bg-primary-container text-on-primary-container rounded-lg font-body-md font-medium shadow-[inset_0_-2px_0_rgba(0,0,0,0.1)] hover:brightness-95 active:shadow-inner transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">send</span> Gửi
+                                </button>
+</div>
+</div>
+<hr class="border-surface-variant my-2"/>
+<!-- Zalo Follow-up Draft -->
+<div class="mt-6 flex-1 flex flex-col">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-h3 text-h3 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-blue-500">chat</span>
+                                    THEO DÕI QUA ZALO
+                                </h3>
+<span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full font-data-small text-data-small">Zalo ZNS</span>
+</div>
+<textarea class="w-full flex-1 min-h-[100px] bg-surface-dim border-none rounded-xl p-4 font-body-md text-on-surface resize-none focus:ring-2 focus:ring-primary-container transition-shadow" placeholder="Nhập nội dung Zalo...">Dạ em chào anh Tấn, em là [Tên], liên hệ từ bài đăng trên Hội Kinh Doanh Đồ Uống. Em xin gửi anh tài liệu hướng dẫn setup quy trình order qua mobile dành riêng cho quán trà sữa/cafe quy mô dưới 20 bàn ạ.</textarea>
+<div class="flex justify-end gap-3 mt-4">
+<button class="px-4 py-2 rounded-lg font-body-md text-on-surface hover:bg-surface-dim transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">content_copy</span> Sao chép
+                                </button>
+<button class="px-6 py-2 bg-primary-container text-on-primary-container rounded-lg font-body-md font-medium shadow-[inset_0_-2px_0_rgba(0,0,0,0.1)] hover:brightness-95 active:shadow-inner transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">send</span> Gửi
+                                </button>
+</div>
+</div>
+</div>
+<!-- Proof Match Card -->
+<div class="bg-white rounded-[24px] shadow-[0_4px_20px_-2px_rgba(180,170,150,0.15)] p-container-padding flex items-center justify-between">
+<div>
+<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-1 uppercase tracking-widest">Proof Match</h4>
+<p class="font-body-md text-on-surface font-medium">Case Study: Quán Trà Sữa Q7</p>
+<p class="font-body-md text-on-surface-variant text-sm mt-1">Đã giải quyết tình trạng tương tự trong 7 ngày.</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-data-display text-[32px] text-secondary">92%</span>
+<span class="font-data-small text-data-small text-on-surface-variant">Độ phù hợp</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

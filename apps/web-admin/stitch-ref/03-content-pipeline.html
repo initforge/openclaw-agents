@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenClaw Ops - Publishing Pipeline</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#3c0800",
+                        "surface-container-low": "#f7f3ef",
+                        "on-surface-variant": "#56423d",
+                        "on-error": "#ffffff",
+                        "on-surface": "#1c1b1a",
+                        "tertiary-fixed-dim": "#cbc6bb",
+                        "on-secondary-fixed-variant": "#3f4a35",
+                        "on-error-container": "#93000a",
+                        "background": "#fdf9f5",
+                        "inverse-surface": "#31302e",
+                        "primary-fixed": "#ffdbd2",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#dae7ca",
+                        "tertiary": "#5f5c53",
+                        "surface-bright": "#fdf9f5",
+                        "on-secondary-container": "#5d6851",
+                        "on-secondary-fixed": "#151e0d",
+                        "on-primary-container": "#fffbff",
+                        "on-tertiary-fixed-variant": "#49473f",
+                        "primary": "#994029",
+                        "tertiary-fixed": "#e8e2d7",
+                        "surface-dim": "#ddd9d6",
+                        "on-tertiary-container": "#fffbff",
+                        "tertiary-container": "#78746b",
+                        "surface-container-high": "#ebe7e4",
+                        "surface-container": "#f1edea",
+                        "secondary": "#57624b",
+                        "primary-container": "#b9583f",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#dcc1ba",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#dae7ca",
+                        "on-background": "#1c1b1a",
+                        "on-tertiary-fixed": "#1d1b15",
+                        "inverse-primary": "#ffb4a1",
+                        "surface": "#fdf9f5",
+                        "inverse-on-surface": "#f4f0ec",
+                        "surface-tint": "#9c432b",
+                        "surface-container-highest": "#e6e2de",
+                        "error-container": "#ffdad6",
+                        "outline": "#89726c",
+                        "primary-fixed-dim": "#ffb4a1",
+                        "on-primary-fixed-variant": "#7d2c16",
+                        "secondary-fixed-dim": "#becbaf",
+                        "surface-variant": "#e6e2de",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "md": "24px",
+                        "lg": "48px",
+                        "xs": "8px",
+                        "sm": "16px",
+                        "xl": "80px",
+                        "container-margin": "40px"
+                    },
+                    "fontFamily": {
+                        "display": ["Space Grotesk"],
+                        "body-lg": ["Inter"],
+                        "data-lg": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "h1": ["Space Grotesk"],
+                        "data-sm": ["JetBrains Mono"],
+                        "h2": ["Space Grotesk"]
+                    },
+                    "fontSize": {
+                        "display": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "data-lg": ["20px", { "lineHeight": "1", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "h1": ["32px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "data-sm": ["14px", { "lineHeight": "1", "fontWeight": "400" }],
+                        "h2": ["24px", { "lineHeight": "1.3", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .material-symbols-outlined {
+                font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            }
+            .material-symbols-outlined.fill {
+                font-variation-settings: 'FILL' 1;
+            }
+            .shadow-ambient {
+                box-shadow: 0 10px 40px -10px rgba(156, 67, 43, 0.05);
+            }
+            .no-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+            .no-scrollbar {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-[#FDFBF7] dark:bg-stone-950 text-on-background font-body-md min-h-screen flex antialiased">
+<!-- SideNavBar -->
+<nav class="hidden md:flex bg-[#F6F3ED] dark:bg-stone-900 font-['Space_Grotesk'] text-sm uppercase tracking-widest h-screen w-72 rounded-r-none border-r-0 fixed left-0 top-0 flex-col py-8 z-20">
+<div class="px-6 mb-12 flex items-center gap-4">
+<img alt="OpenClaw Logo" class="w-12 h-12 rounded-full object-cover" data-alt="A minimalist, high-end abstract geometric logo graphic in terracotta and cream colors, representing sovereign control and editorial workspace, set against a pristine, well-lit modern studio background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDGGRiQ5_mH7BWeNbVSEFT0Ij6A9zosIWCHwmPthbAXxQl3bj-0vSxM_2kKB7SAu81TpUOg7eMzZp5tNwCHlg5-DbRC9BMY2xwm-7XQZktTEQPpcUWl679J41Wpa-ZIlSHGCLqDpuD1sjD_IDJoCuPSgzhDLqcqcJk3ZYmoRYFDSv4JjrRmRXmVcC8r4mbfjq0tC7WJjM6OCgeTDShDTMPSayM27s2WBHQl70MvI36ML2fE1D2KA-l7Dj0h5DIJVfmcxhvTJe5pA"/>
+<div>
+<div class="font-['Space_Grotesk'] font-black text-[#C36046]">Command Center</div>
+<div class="text-xs text-stone-500 font-medium normal-case tracking-normal">Sovereign Control</div>
+</div>
+</div>
+<div class="px-6 mb-8">
+<button class="w-full bg-[#C36046] text-white py-3 px-4 rounded-[24px] font-bold text-xs uppercase tracking-widest hover:bg-[#a64e37] transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Campaign
+            </button>
+</div>
+<ul class="flex flex-col gap-2 flex-grow">
+<li>
+<a class="flex items-center gap-4 text-stone-400 font-medium pl-6 py-3 hover:text-stone-600 dark:hover:text-stone-200 hover:bg-[#FDFBF7]/50 dark:hover:bg-stone-800/50 transition-all" href="#">
+<span class="material-symbols-outlined">terminal</span>
+                    Command
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 text-[#C36046] font-bold bg-[#FDFBF7] dark:bg-stone-800 rounded-l-full pl-6 py-3 transition-all translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">view_kanban</span>
+                    Publishing
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 text-stone-400 font-medium pl-6 py-3 hover:text-stone-600 dark:hover:text-stone-200 hover:bg-[#FDFBF7]/50 dark:hover:bg-stone-800/50 transition-all" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+                    Library
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 text-stone-400 font-medium pl-6 py-3 hover:text-stone-600 dark:hover:text-stone-200 hover:bg-[#FDFBF7]/50 dark:hover:bg-stone-800/50 transition-all" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+                    Insights
+                </a>
+</li>
+</ul>
+<div class="mt-auto flex flex-col gap-2">
+<a class="flex items-center gap-4 text-stone-400 font-medium pl-6 py-3 hover:text-stone-600 dark:hover:text-stone-200 hover:bg-[#FDFBF7]/50 dark:hover:bg-stone-800/50 transition-all" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+                Documentation
+            </a>
+<a class="flex items-center gap-4 text-stone-400 font-medium pl-6 py-3 hover:text-stone-600 dark:hover:text-stone-200 hover:bg-[#FDFBF7]/50 dark:hover:bg-stone-800/50 transition-all" href="#">
+<span class="material-symbols-outlined">help_center</span>
+                Support
+            </a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-72 flex flex-col h-screen overflow-hidden">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-12 py-6 w-full docked full-width top-0 no-border bg-[#FDFBF7] dark:bg-stone-950 flat no-shadows z-10 shrink-0">
+<div class="text-2xl font-bold text-[#C36046] uppercase tracking-wider font-['Space_Grotesk'] tracking-tight">OpenClaw Ops</div>
+<div class="flex items-center gap-6">
+<!-- Search on Right -->
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400">search</span>
+<input class="bg-[#F1EDE4] text-on-surface rounded-full pl-10 pr-4 py-2 border-none focus:ring-2 focus:ring-[#C36046] font-body-md outline-none w-64 placeholder-stone-400" placeholder="Search..." type="text"/>
+</div>
+<div class="flex items-center gap-4 text-[#C36046] dark:text-[#D97B5F]">
+<button class="hover:text-[#C36046] transition-colors duration-300 opacity-80 hover:opacity-100 flex items-center justify-center p-2 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:text-[#C36046] transition-colors duration-300 opacity-80 hover:opacity-100 flex items-center justify-center p-2 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<img alt="Administrator Profile" class="w-10 h-10 rounded-full object-cover ml-2 cursor-pointer shadow-ambient" data-alt="A high-quality, professional headshot of a mature administrative professional with a warm, confident expression. The lighting is bright and soft, matching a premium, minimal studio editorial aesthetic with a cream background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCh-vOv1f2Rlh5xpKKIkDVhHhxx3hfnA-mJi7lX2_-tSBgOJ490h1HJMICjV1SMSUDOJ6d1Y_tEIu2opw4VQO25MYs1IJUy6T_xEUoE0MiIQbzbEDzFEt_TaY-qTUzrIpnkrw4yXjHasbDcoDbrDXKdsy5b7jqevK1lYdMW8c0-c6MZ-sBroXgVK-DVvq3Q9u9jmrciWoIAUE578u1b9Tzf4bFz0-rHkFKkmRmOl6DeS6du9KN8Zy3oWz5IzrMhB-kPERqp2b9kSg"/>
+</div>
+</div>
+</header>
+<!-- Kanban Board Area -->
+<div class="flex-1 overflow-x-auto overflow-y-hidden px-12 pb-12 pt-4 no-scrollbar">
+<div class="flex gap-gutter h-full min-w-max">
+<!-- Draft Column -->
+<div class="w-80 flex flex-col h-full">
+<div class="flex items-center justify-between mb-6 shrink-0">
+<h2 class="font-h2 text-on-surface">Draft</h2>
+<span class="font-data-sm bg-surface-container text-on-surface px-3 py-1 rounded-full">12</span>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar flex flex-col gap-6 pb-20">
+<!-- Card 1 -->
+<div class="bg-[#F6F3ED] rounded-[24px] p-6 shadow-ambient cursor-pointer hover:-translate-y-1 transition-transform duration-300">
+<div class="flex gap-2 mb-4 flex-wrap">
+<span class="font-data-sm bg-white text-stone-500 px-3 py-1 rounded-full uppercase tracking-wider text-[10px]">LinkedIn</span>
+<span class="font-data-sm bg-white text-stone-500 px-3 py-1 rounded-full uppercase tracking-wider text-[10px]">Post</span>
+</div>
+<h3 class="font-body-lg text-on-surface mb-4">Q3 Strategy Announcement Teaser</h3>
+<div class="w-full h-32 rounded-lg bg-surface-container mb-4 overflow-hidden">
+<img alt="Thumbnail" class="w-full h-full object-cover opacity-80" data-alt="A modern, minimalist architectural interior space with warm, diffused sunlight filtering through large windows onto cream-colored textured walls. The scene feels premium, editorial, and aligned with a refined studio aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJstd57J1X3-ZohjE8Qo4NnuQ9i2yCdM3KY3BTudkXC4KOWX0efBoHhqhRLHOONB1NeRDOL_1KE-8eYdYJHEKOBQt4y5khCQNV4lv1j5pX6TGvSHyEa6IGCzDgRAipCr-zTZ6R50LsGiafCeqUOixWQW3D1cWTI8w8utsBFlU7SJ-UNBmKiLbZHFneSbh5dFz-qTyPZYwrb7LK_jlfjn57__Z8M9xWaU33yyjqDwtAaoSKN8Bx1Un0S1zrECEVDQ7bBqzRrIo4-A"/>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-[#F6F3ED] rounded-[24px] p-6 shadow-ambient cursor-pointer hover:-translate-y-1 transition-transform duration-300">
+<div class="flex gap-2 mb-4 flex-wrap">
+<span class="font-data-sm bg-white text-stone-500 px-3 py-1 rounded-full uppercase tracking-wider text-[10px]">TikTok</span>
+<span class="font-data-sm bg-white text-stone-500 px-3 py-1 rounded-full uppercase tracking-wider text-[10px]">Video</span>
+</div>
+<h3 class="font-body-lg text-on-surface mb-4">Behind the Scenes: Engineering Team</h3>
+<div class="flex items-center gap-2 text-stone-400 mt-4">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span class="font-data-sm text-[12px]">Due Tomorrow</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Reviewed Column -->
+<div class="w-80 flex flex-col h-full">
+<div class="flex items-center justify-between mb-6 shrink-0">
+<h2 class="font-h2 text-on-surface">Reviewed</h2>
+<span class="font-data-sm bg-surface-container text-on-surface px-3 py-1 rounded-full">4</span>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar flex flex-col gap-6 pb-20">
+<!-- Card 1 -->
+<div class="bg-white rounded-[24px] p-6 shadow-ambient cursor-pointer hover:-translate-y-1 transition-transform duration-300">
+<div class="flex gap-2 mb-4 flex-wrap">
+<span class="font-data-sm bg-[#F6F3ED] text-stone-500 px-3 py-1 rounded-full uppercase tracking-wider text-[10px]">YouTube</span>
+<span class="font-data-sm bg-[#F6F3ED] text-stone-500 px-3 py-1 rounded-full uppercase tracking-wider text-[10px]">Video</span>
+</div>
+<h3 class="font-body-lg text-on-surface mb-4">Deep Dive: Core Infrastructure Updates</h3>
+<div class="flex items-center gap-2 mt-4">
+<img alt="Reviewer" class="w-6 h-6 rounded-full" data-alt="A portrait of a young creative professional with short hair, looking focused in a well-lit, minimal studio environment. The color palette emphasizes warm neutrals and soft terracotta tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbre7jOyQfVbtSb4I6y0rn05KtOvUN3HoJoXaoegCzdIwAdYNlIeUbb3Y9oEa2Dgm5ySyz88oLozt9gNUTO_UPtXWMC2ltMifzP_FyD_eiNOPVvTlP8qwMUv4J1Soo3fG2IrJwcgypEiKVXIdBk9mIZlTjukSwt_dKvve5aCTPGx8qgBKhPDxc5wQ9dE2P_gwstVLjRcqHrV14bU1Y1qznIrDN0-OoLnlug4DP3JXulPdLT4kKbIrtS2SspxgS8xxiXnErNDiDsA"/>
+<span class="font-data-sm text-stone-500 text-[12px]">Approved by Sarah</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Ready Column -->
+<div class="w-80 flex flex-col h-full">
+<div class="flex items-center justify-between mb-6 shrink-0">
+<h2 class="font-h2 text-on-surface">Ready</h2>
+<span class="font-data-sm bg-surface-container text-on-surface px-3 py-1 rounded-full">2</span>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar flex flex-col gap-6 pb-20">
+<!-- Card 1 -->
+<div class="bg-white rounded-[24px] p-6 shadow-ambient cursor-pointer border-l-4 border-[#C36046]">
+<div class="flex gap-2 mb-4 flex-wrap">
+<span class="font-data-sm bg-[#F6F3ED] text-stone-500 px-3 py-1 rounded-full uppercase tracking-wider text-[10px]">LinkedIn</span>
+<span class="font-data-sm bg-[#F6F3ED] text-stone-500 px-3 py-1 rounded-full uppercase tracking-wider text-[10px]">Post</span>
+</div>
+<h3 class="font-body-lg text-on-surface mb-4">CEO Open Letter on AI Governance</h3>
+<button class="w-full bg-[#C36046] text-white py-2 px-4 rounded-lg font-bold text-sm tracking-wide mt-2 hover:opacity-90 transition-opacity">
+                                Schedule
+                            </button>
+</div>
+</div>
+</div>
+<!-- Publishing Column -->
+<div class="w-80 flex flex-col h-full">
+<div class="flex items-center justify-between mb-6 shrink-0">
+<h2 class="font-h2 text-on-surface">Publishing</h2>
+<span class="font-data-sm bg-surface-container text-on-surface px-3 py-1 rounded-full">1</span>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar flex flex-col gap-6 pb-20">
+<!-- Progress Card -->
+<div class="bg-white rounded-[24px] p-6 shadow-ambient relative overflow-hidden">
+<div class="flex justify-between items-start mb-4">
+<div class="flex gap-2 flex-wrap">
+<span class="font-data-sm bg-[#F6F3ED] text-stone-500 px-3 py-1 rounded-full uppercase tracking-wider text-[10px]">YouTube</span>
+</div>
+<span class="material-symbols-outlined text-secondary animate-pulse">cloud_upload</span>
+</div>
+<h3 class="font-body-lg text-on-surface mb-6">Product Keynote 2024</h3>
+<div class="mt-4">
+<div class="flex justify-between text-xs mb-2 font-data-sm text-stone-500">
+<span>Uploading Media...</span>
+<span>75%</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-1.5">
+<div class="bg-secondary h-1.5 rounded-full" style="width: 75%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Published Column -->
+<div class="w-80 flex flex-col h-full pr-12">
+<div class="flex items-center justify-between mb-6 shrink-0">
+<h2 class="font-h2 text-on-surface">Published</h2>
+<span class="font-data-sm bg-surface-container text-on-surface px-3 py-1 rounded-full">8</span>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar flex flex-col gap-6 pb-20">
+<!-- Stat Card -->
+<div class="bg-[#F6F3ED] rounded-[24px] p-6 shadow-ambient">
+<div class="flex gap-2 mb-4 flex-wrap">
+<span class="font-data-sm bg-white text-stone-500 px-3 py-1 rounded-full uppercase tracking-wider text-[10px]">LinkedIn</span>
+<span class="font-data-sm bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full uppercase tracking-wider text-[10px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">check_circle</span> Live
+                                </span>
+</div>
+<h3 class="font-body-lg text-on-surface mb-6">Culture Code V2 Release</h3>
+<div class="flex items-center gap-4 pt-4 border-t border-[#EBE7E4]">
+<div>
+<p class="font-data-sm text-[10px] text-stone-500 uppercase tracking-wider mb-1">Views</p>
+<p class="font-data-lg text-secondary">24.5k</p>
+</div>
+<div>
+<p class="font-data-sm text-[10px] text-stone-500 uppercase tracking-wider mb-1">Engagement</p>
+<p class="font-data-lg text-secondary">4.2%</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenClaw Ops - Quản lý Ngữ cảnh</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=JetBrains+Mono:wght@500;700&amp;family=Manrope:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#66645d",
+                        "error": "#ba1a1a",
+                        "tertiary": "#00685f",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#f4fffc",
+                        "outline-variant": "#dcc1ba",
+                        "primary-fixed-dim": "#ffb4a1",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#56423d",
+                        "primary-container": "#b9583f",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#fffbff",
+                        "inverse-on-surface": "#f8efe5",
+                        "on-secondary-fixed-variant": "#484740",
+                        "surface": "#fff8f3",
+                        "surface-container-low": "#fbf2e8",
+                        "surface-tint": "#9c432b",
+                        "secondary-container": "#e6e2d9",
+                        "background": "#fff8f3",
+                        "outline": "#89726c",
+                        "surface-container-highest": "#eae1d7",
+                        "on-secondary-fixed": "#1c1c16",
+                        "surface-container-high": "#f0e7dd",
+                        "tertiary-container": "#008379",
+                        "on-primary-fixed": "#3c0800",
+                        "surface-variant": "#eae1d7",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#1f1b15",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#00201d",
+                        "primary-fixed": "#ffdbd2",
+                        "inverse-surface": "#343029",
+                        "secondary-fixed-dim": "#cac6be",
+                        "surface-dim": "#e1d9cf",
+                        "surface-bright": "#fff8f3",
+                        "secondary": "#605e58",
+                        "inverse-primary": "#ffb4a1",
+                        "secondary-fixed": "#e6e2d9",
+                        "on-primary-fixed-variant": "#7d2c16",
+                        "on-background": "#1f1b15",
+                        "tertiary-fixed": "#8bf5e7",
+                        "primary": "#994029",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#6ed8cb",
+                        "on-tertiary-fixed-variant": "#005049",
+                        "surface-container": "#f6ece3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "40px",
+                        "xl": "64px",
+                        "md": "24px",
+                        "bento-gap": "20px",
+                        "base": "4px",
+                        "sm": "16px",
+                        "xs": "8px",
+                        "container-padding": "32px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Space Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "data-mono": ["JetBrains Mono"],
+                        "body-md": ["Manrope"],
+                        "h1": ["Space Grotesk"]
+                    },
+                    "fontSize": {
+                        "h2": ["24px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "label-caps": ["11px", { "lineHeight": "1.0", "fontWeight": "700" }],
+                        "data-mono": ["13px", { "lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "h1": ["40px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md h-screen w-full flex overflow-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- Shared Component: SideNavBar -->
+<nav aria-label="Sidebar" class="bg-[#F3EFE6] dark:bg-stone-900 h-screen w-64 rounded-r-[24px] fixed left-0 top-0 h-full flex flex-col p-6 z-40 hidden md:flex border-r-0">
+<!-- Header -->
+<div class="mb-10 flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center shrink-0 overflow-hidden">
+<img alt="Người dùng OpenClaw" class="w-full h-full object-cover" data-alt="A close-up profile portrait of a professional individual set against a warm, highly-illuminated studio background. The lighting is soft and even, highlighting sharp, architectural features. The color palette leans heavily into sophisticated neutrals and terracotta accents, perfectly capturing a modern, sovereign tech identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKm9WYRNhV659Q58HIJyyCRB14ZH6vDMv9gmDDIhmwYBwbtprEwgRCBISXEYRlmSTjI1AgfyZ7p1wcUROInwqp9U77A5x_INPDNecC9BWH5SNAvhsXIFL3w_Uxf2SJQDWl4H27KeXjFzfb9TLVNsK4zrrNsAB_NbWn59Kl5m-kS7OZx98bLsYguE8CaqPYf2q1lbtsWQejE4GlkyxQkAjZJDKV5RZVPv2gTCveC_IZJM7xWVi2NAUbdHz6FLS1h-6yRzl3JSAI0g"/>
+</div>
+<div class="flex flex-col">
+<span class="text-lg font-black text-[#C36046] tracking-tight leading-none">Quản lý Ngữ cảnh</span>
+<span class="font-['JetBrains_Mono'] text-[10px] font-medium uppercase tracking-tighter text-on-secondary-container mt-1 opacity-70">Hệ điều hành Ops</span>
+</div>
+</div>
+<!-- Main Navigation -->
+<div class="flex flex-col gap-2 flex-grow">
+<!-- Inactive Tab -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-stone-600 dark:text-stone-400 hover:bg-[#EAE3D5] dark:hover:bg-stone-800 hover:translate-x-1 transition-transform duration-200 group" href="#">
+<span class="material-symbols-outlined text-lg group-hover:text-[#C36046] transition-colors" data-icon="dashboard">dashboard</span>
+<span class="font-['JetBrains_Mono'] text-xs font-medium uppercase tracking-tighter">Bảng điều khiển</span>
+</a>
+<!-- Active Tab (Targeted based on Context Manager Prompt) -->
+<a class="flex items-center gap-3 px-4 py-3 bg-[#FDFBF7] dark:bg-stone-800 text-[#C36046] border-l-4 border-[#C36046] rounded-r-lg opacity-80 group" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="layers" data-weight="fill" style="font-variation-settings: 'FILL' 1;">layers</span>
+<span class="font-['JetBrains_Mono'] text-xs font-medium uppercase tracking-tighter">Ngữ cảnh</span>
+</a>
+<!-- Inactive Tab -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-stone-600 dark:text-stone-400 hover:bg-[#EAE3D5] dark:hover:bg-stone-800 hover:translate-x-1 transition-transform duration-200 group" href="#">
+<span class="material-symbols-outlined text-lg group-hover:text-[#C36046] transition-colors" data-icon="history">history</span>
+<span class="font-['JetBrains_Mono'] text-xs font-medium uppercase tracking-tighter">Phiên làm việc</span>
+</a>
+<!-- Inactive Tab -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-stone-600 dark:text-stone-400 hover:bg-[#EAE3D5] dark:hover:bg-stone-800 hover:translate-x-1 transition-transform duration-200 group" href="#">
+<span class="material-symbols-outlined text-lg group-hover:text-[#C36046] transition-colors" data-icon="database">database</span>
+<span class="font-['JetBrains_Mono'] text-xs font-medium uppercase tracking-tighter">Tài nguyên</span>
+</a>
+<!-- Inactive Tab -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-stone-600 dark:text-stone-400 hover:bg-[#EAE3D5] dark:hover:bg-stone-800 hover:translate-x-1 transition-transform duration-200 group" href="#">
+<span class="material-symbols-outlined text-lg group-hover:text-[#C36046] transition-colors" data-icon="settings_accessibility">settings_accessibility</span>
+<span class="font-['JetBrains_Mono'] text-xs font-medium uppercase tracking-tighter">Cài đặt</span>
+</a>
+</div>
+<!-- CTA -->
+<div class="mt-auto mb-6">
+<button class="w-full bg-[#C36046] text-white py-3 px-4 rounded-xl flex items-center justify-center gap-2 hover:bg-primary-container transition-colors font-['JetBrains_Mono'] text-xs font-medium uppercase tracking-tighter shadow-sm hover:shadow-md">
+<span class="material-symbols-outlined text-base">add</span>
+                Tạo Ngữ cảnh Mới
+            </button>
+</div>
+<!-- Footer Actions -->
+<div class="flex flex-col gap-1 border-t border-[#EAE3D5] dark:border-stone-800 pt-4">
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-stone-600 dark:text-stone-400 hover:bg-[#EAE3D5] dark:hover:bg-stone-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-base opacity-70" data-icon="contact_support">contact_support</span>
+<span class="font-['JetBrains_Mono'] text-[10px] font-medium uppercase tracking-tighter opacity-80">Hỗ trợ</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-stone-600 dark:text-stone-400 hover:bg-[#EAE3D5] dark:hover:bg-stone-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-base opacity-70" data-icon="logout">logout</span>
+<span class="font-['JetBrains_Mono'] text-[10px] font-medium uppercase tracking-tighter opacity-80">Đăng xuất</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<div class="flex-1 flex flex-col ml-0 md:ml-64 w-full h-full relative">
+<!-- Shared Component: TopNavBar -->
+<header class="bg-[#FDFBF7] dark:bg-stone-950 flex justify-between items-center w-full px-8 h-16 sticky top-0 z-30">
+<!-- Left: Brand / Search area -->
+<div class="flex items-center gap-8">
+<div class="text-xl font-bold text-stone-900 dark:text-stone-50 tracking-tight flex items-center gap-2">
+<span class="material-symbols-outlined text-[#C36046]" data-icon="terminal">terminal</span>
+<span>OpenClaw Ops</span>
+</div>
+<!-- Embedded Search (On Left as per JSON) -->
+<div class="hidden lg:flex items-center bg-surface-container-low rounded-full px-4 py-2 w-64 border border-transparent focus-within:border-[#C36046] transition-colors duration-200">
+<span class="material-symbols-outlined text-on-surface-variant text-sm mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm font-data-mono text-on-surface w-full p-0 placeholder-on-surface-variant opacity-70" placeholder="Tìm kiếm hệ thống..." type="text"/>
+</div>
+</div>
+<!-- Right: Trailing Icon Actions -->
+<div class="flex items-center gap-2">
+<button aria-label="Settings" class="p-2 rounded-full text-stone-500 dark:text-stone-400 hover:bg-[#EAE3D5] dark:hover:bg-stone-800 transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<button aria-label="Help" class="p-2 rounded-full text-stone-500 dark:text-stone-400 hover:bg-[#EAE3D5] dark:hover:bg-stone-800 transition-colors">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<button aria-label="Account" class="p-2 rounded-full text-[#C36046] hover:bg-[#EAE3D5] dark:hover:bg-stone-800 transition-colors">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Main View -->
+<main class="flex-1 overflow-y-auto p-container-padding">
+<!-- Bento Layout Wrapper -->
+<div class="max-w-5xl mx-auto flex flex-col gap-bento-gap">
+<!-- Page Header & Stats Bar -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-4 gap-4">
+<div>
+<h1 class="font-h1 text-h1 text-on-surface mb-2">Trình Quản Lý</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Kiểm soát và giám sát các phiên trình duyệt biệt lập.</p>
+</div>
+<!-- Stats Bar (Bento Module) -->
+<div class="flex items-center gap-6 bg-surface-container-high rounded-[24px] px-6 py-4">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-1">Tổng ngữ cảnh</span>
+<span class="font-data-mono text-data-mono text-on-surface text-lg">3</span>
+</div>
+<div class="w-[1px] h-8 bg-outline-variant opacity-50"></div>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-1">Đang hoạt động</span>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-tertiary-container shadow-[0_0_8px_rgba(0,131,121,0.5)]"></div>
+<span class="font-data-mono text-data-mono text-tertiary font-bold text-lg">2</span>
+</div>
+</div>
+<div class="w-[1px] h-8 bg-outline-variant opacity-50"></div>
+<div class="flex flex-col items-end">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-1">Chế độ</span>
+<span class="bg-surface text-primary px-3 py-1 rounded-full font-data-mono text-label-caps border border-outline-variant">manual_session</span>
+</div>
+</div>
+</div>
+<!-- Vertical List of Context Cards (Bento Grid Style) -->
+<div class="flex flex-col gap-md">
+<!-- Card 1 -->
+<div class="bg-surface-container-low rounded-[24px] p-md transition-colors hover:bg-surface-container-highest group relative overflow-hidden">
+<!-- Active Indicator Strip -->
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-tertiary-container"></div>
+<div class="pl-2 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<h2 class="font-h2 text-h2 text-on-surface">Hồ sơ LinkedIn</h2>
+<div class="flex items-center gap-2 px-3 py-1.5 bg-surface rounded-full border border-outline-variant">
+<div class="w-2 h-2 rounded-full bg-tertiary-container"></div>
+<span class="font-label-caps text-label-caps text-on-surface uppercase">Active</span>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Scope</span>
+<span class="font-data-mono text-data-mono text-on-surface bg-surface-variant px-2 py-1 rounded w-fit">public_profile</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Captured</span>
+<span class="font-data-mono text-data-mono text-on-surface">2026-04-28 09:00</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Retention</span>
+<span class="font-data-mono text-data-mono text-on-surface">30 days</span>
+</div>
+<div class="flex flex-col gap-1 items-start md:items-end">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Size</span>
+<span class="font-data-mono text-data-mono text-on-surface">2.4 KB</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-low rounded-[24px] p-md transition-colors hover:bg-surface-container-highest group relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-tertiary-container opacity-60"></div>
+<div class="pl-2 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<h2 class="font-h2 text-h2 text-on-surface">Facebook Page Insights</h2>
+<div class="flex items-center gap-2 px-3 py-1.5 bg-surface rounded-full border border-outline-variant">
+<div class="w-2 h-2 rounded-full bg-tertiary-container"></div>
+<span class="font-label-caps text-label-caps text-on-surface uppercase">Active</span>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Scope</span>
+<span class="font-data-mono text-data-mono text-on-surface bg-surface-variant px-2 py-1 rounded w-fit">page_analytics</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Captured</span>
+<span class="font-data-mono text-data-mono text-on-surface opacity-50">--</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Retention</span>
+<span class="font-data-mono text-data-mono text-on-surface">7 days</span>
+</div>
+<div class="flex flex-col gap-1 items-start md:items-end">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Size</span>
+<span class="font-data-mono text-data-mono text-on-surface opacity-50">--</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-low rounded-[24px] p-md transition-colors hover:bg-surface-container-highest group relative overflow-hidden opacity-80">
+<!-- Expired Indicator Strip -->
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-error"></div>
+<div class="pl-2 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<h2 class="font-h2 text-h2 text-on-surface line-through opacity-70">TikTok Creator Dashboard</h2>
+<div class="flex items-center gap-2 px-3 py-1.5 bg-error-container rounded-full border border-error/20">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="font-label-caps text-label-caps text-error uppercase">Expired</span>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2 opacity-70">
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Scope</span>
+<span class="font-data-mono text-data-mono text-on-surface bg-surface-variant px-2 py-1 rounded w-fit">creator_analytics</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Captured</span>
+<span class="font-data-mono text-data-mono text-on-surface opacity-50">--</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Retention</span>
+<span class="font-data-mono text-data-mono text-on-surface">7 days</span>
+</div>
+<div class="flex flex-col gap-1 items-start md:items-end">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Size</span>
+<span class="font-data-mono text-data-mono text-on-surface opacity-50">Purged</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

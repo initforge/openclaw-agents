@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenClaw Ops - Luồng Tín Hiệu</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "background": "#f9f9ff",
+                    "on-error-container": "#93000a",
+                    "on-secondary": "#ffffff",
+                    "on-surface-variant": "#3f4947",
+                    "error-container": "#ffdad6",
+                    "surface-container-high": "#dee9fd",
+                    "secondary-container": "#e1dfdc",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-low": "#eff3ff",
+                    "primary-fixed": "#abefe8",
+                    "on-primary-container": "#91d5ce",
+                    "outline": "#6f7977",
+                    "tertiary-container": "#305c55",
+                    "on-primary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "secondary-fixed-dim": "#c8c6c3",
+                    "on-secondary-container": "#636360",
+                    "secondary": "#5e5e5c",
+                    "surface-bright": "#f9f9ff",
+                    "outline-variant": "#bec9c7",
+                    "primary-container": "#115e59",
+                    "surface-container-highest": "#d9e3f7",
+                    "on-background": "#121c2a",
+                    "surface-dim": "#d0daef",
+                    "surface": "#f9f9ff",
+                    "on-tertiary-fixed-variant": "#224e47",
+                    "secondary-fixed": "#e4e2de",
+                    "on-primary-fixed": "#00201e",
+                    "inverse-surface": "#273140",
+                    "primary": "#004541",
+                    "surface-tint": "#216963",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed": "#bdece2",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed-variant": "#00504b",
+                    "surface-variant": "#d9e3f7",
+                    "inverse-primary": "#8fd3cc",
+                    "surface-container": "#e6eeff",
+                    "inverse-on-surface": "#ebf1ff",
+                    "on-secondary-fixed": "#1b1c1a",
+                    "tertiary-fixed-dim": "#a2d0c6",
+                    "primary-fixed-dim": "#8fd3cc",
+                    "tertiary": "#17443e",
+                    "on-secondary-fixed-variant": "#474744",
+                    "on-tertiary-fixed": "#00201c",
+                    "on-tertiary-container": "#a4d2c9",
+                    "on-surface": "#121c2a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "bento-gap": "16px",
+                    "base": "8px",
+                    "card-padding": "32px",
+                    "gutter": "24px",
+                    "margin-page": "40px"
+            },
+            "fontFamily": {
+                    "technical-data": [
+                            "JetBrains Mono"
+                    ],
+                    "display-lg": [
+                            "Space Grotesk"
+                    ],
+                    "body-base": [
+                            "Inter"
+                    ],
+                    "headline-md": [
+                            "Space Grotesk"
+                    ],
+                    "label-caps": [
+                            "JetBrains Mono"
+                    ]
+            },
+            "fontSize": {
+                    "technical-data": [
+                            "14px",
+                            {
+                                    "lineHeight": "1.4",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-base": [
+                            "16px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "label-caps": [
+                            "12px",
+                            {
+                                    "lineHeight": "1",
+                                    "fontWeight": "700"
+                            }
+                    ]
+            }
+        },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-base min-h-screen flex text-body-base">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col bg-[#ffffff] text-[#115E59] font-['Space_Grotesk'] text-sm font-semibold fixed left-0 h-screen w-64 rounded-r-[24px] border-r border-r border-[#E5E7EB] shadow-[2px_0_10px_rgba(17,94,89,0.04)] transition-all duration-200 active:scale-98 flex flex-col gap-2 p-4 h-full z-40">
+<div class="mb-8 mt-4 px-4">
+<h1 class="text-[#115E59] font-black text-2xl tracking-tighter">OpenClaw Ops</h1>
+<p class="text-xs text-gray-500 mt-1 font-technical-data text-technical-data">v2.4.0-Stable</p>
+</div>
+<div class="flex-1 space-y-2">
+<a class="flex items-center gap-3 bg-[#115E59] text-white rounded-xl px-4 py-3 shadow-sm group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">radar</span>
+<span>Live Stream</span>
+</a>
+<a class="flex items-center gap-3 text-gray-500 px-4 py-3 hover:bg-[#FDFBF7] hover:text-[#115E59] rounded-xl transition-colors group" href="#">
+<span class="material-symbols-outlined">history</span>
+<span>Historical</span>
+</a>
+<a class="flex items-center gap-3 text-gray-500 px-4 py-3 hover:bg-[#FDFBF7] hover:text-[#115E59] rounded-xl transition-colors group" href="#">
+<span class="material-symbols-outlined">security</span>
+<span>Risk Engine</span>
+</a>
+<a class="flex items-center gap-3 text-gray-500 px-4 py-3 hover:bg-[#FDFBF7] hover:text-[#115E59] rounded-xl transition-colors group" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span>Nodes</span>
+</a>
+<a class="flex items-center gap-3 text-gray-500 px-4 py-3 hover:bg-[#FDFBF7] hover:text-[#115E59] rounded-xl transition-colors group" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</div>
+<button class="mt-auto flex items-center justify-center gap-2 bg-[#115E59] text-white rounded-xl px-4 py-3 hover:bg-[#004541] transition-colors w-full font-headline-md text-[14px]">
+<span class="material-symbols-outlined text-[18px]">add</span>
+            New Strategy
+        </button>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 flex flex-col min-h-screen">
+<!-- TopNavBar (Mobile Only) -->
+<header class="md:hidden flex justify-between items-center w-full px-8 h-16 sticky top-0 z-50 bg-[#FDFBF7] text-[#115E59] font-['Space_Grotesk'] tracking-tight font-medium docked full-width top-0 border-b border-b border-[#E5E7EB] flat no shadows duration-150 linear-ease">
+<div class="text-xl font-bold text-[#115E59] tracking-tighter">OpenClaw Ops</div>
+<div class="flex gap-4">
+<button class="text-gray-500 hover:text-[#115E59] transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-gray-500 hover:text-[#115E59] transition-colors">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</button>
+</div>
+</header>
+<div class="p-margin-page max-w-7xl mx-auto w-full flex-1 flex flex-col gap-bento-gap">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-4">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface">LUỒNG TÍN HIỆU</h2>
+<p class="text-on-surface-variant mt-2 font-technical-data text-technical-data">Monitoring live feeds from 12 active sources.</p>
+</div>
+<!-- Filter Chips -->
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 bg-primary-container text-on-primary rounded-full font-label-caps text-label-caps tracking-wider transition-colors">
+                        Tất cả
+                    </button>
+<button class="px-4 py-2 bg-surface text-on-surface-variant border border-outline-variant rounded-full font-label-caps text-label-caps tracking-wider hover:bg-surface-variant transition-colors">
+                        Đã thực thi
+                    </button>
+<button class="px-4 py-2 bg-surface text-on-surface-variant border border-outline-variant rounded-full font-label-caps text-label-caps tracking-wider hover:bg-surface-variant transition-colors">
+                        Từ chối
+                    </button>
+<button class="px-4 py-2 bg-surface text-on-surface-variant border border-outline-variant rounded-full font-label-caps text-label-caps tracking-wider hover:bg-surface-variant transition-colors">
+                        Noise
+                    </button>
+</div>
+</div>
+<!-- Signal Cards Feed -->
+<div class="flex flex-col gap-4">
+<!-- Card 1: Executed -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-[24px] p-gutter shadow-[0_2px_10px_rgba(17,94,89,0.04)] flex flex-col gap-4 relative overflow-hidden group hover:border-primary-container transition-colors">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary-container"></div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+<!-- LEFT: RAW MESSAGE -->
+<div class="md:col-span-5 flex flex-col gap-2">
+<span class="font-label-caps text-label-caps text-primary-container tracking-widest uppercase">Telegram Alpha</span>
+<p class="font-body-base text-body-base text-on-surface leading-relaxed">
+                                BUY BTCUSDT @ 64500 SL 63000 TP 68000 risk 1%
+                            </p>
+</div>
+<!-- MIDDLE: AI PARSE -->
+<div class="md:col-span-4 flex flex-col gap-3 pl-0 md:pl-6 md:border-l border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="px-2 py-1 bg-surface-variant text-on-surface rounded font-technical-data text-[12px]">new_signal</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Confidence</span>
+<span class="font-technical-data text-technical-data text-primary-container">98.5%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[98.5%]"></div>
+</div>
+</div>
+</div>
+<!-- RIGHT: ACTION -->
+<div class="md:col-span-3 flex flex-col items-start md:items-end gap-2 pl-0 md:pl-6 md:border-l border-outline-variant">
+<span class="px-3 py-1.5 bg-tertiary-container text-on-tertiary rounded-full font-label-caps text-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                EXECUTED
+                            </span>
+<span class="font-technical-data text-[12px] text-on-surface-variant text-right">Order Placed: Market</span>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-2 pt-4 border-t border-outline-variant flex justify-between items-center text-on-surface-variant font-technical-data text-[12px]">
+<span>10:24:15 AM UTC</span>
+<span>ID: OC-9921</span>
+</div>
+</article>
+<!-- Card 2: Hard Reject -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-[24px] p-gutter shadow-[0_2px_10px_rgba(17,94,89,0.04)] flex flex-col gap-4 relative overflow-hidden group hover:border-error transition-colors">
+<div class="absolute top-0 left-0 w-1 h-full bg-error"></div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+<div class="md:col-span-5 flex flex-col gap-2">
+<span class="font-label-caps text-label-caps text-primary-container tracking-widest uppercase">Discord Whale</span>
+<p class="font-body-base text-body-base text-on-surface leading-relaxed">
+                                Long ETH 100x leverage right now moon mission!
+                            </p>
+</div>
+<div class="md:col-span-4 flex flex-col gap-3 pl-0 md:pl-6 md:border-l border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="px-2 py-1 bg-surface-variant text-on-surface rounded font-technical-data text-[12px]">new_signal</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Confidence</span>
+<span class="font-technical-data text-technical-data text-error">42.0%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-error w-[42.0%]"></div>
+</div>
+</div>
+</div>
+<div class="md:col-span-3 flex flex-col items-start md:items-end gap-2 pl-0 md:pl-6 md:border-l border-outline-variant">
+<span class="px-3 py-1.5 bg-error text-on-error rounded-full font-label-caps text-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">block</span>
+                                HARD_REJECT
+                            </span>
+<span class="font-technical-data text-[12px] text-on-surface-variant text-right">Reason: Risk Limit Exceeded</span>
+</div>
+</div>
+<div class="mt-2 pt-4 border-t border-outline-variant flex justify-between items-center text-on-surface-variant font-technical-data text-[12px]">
+<span>10:21:05 AM UTC</span>
+<span>ID: OC-9920</span>
+</div>
+</article>
+</div>
+</div>
+</main>
+</body></html>

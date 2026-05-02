@@ -1,0 +1,19 @@
+{
+  "name": "@openclaw/domain-content",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "biome check src",
+    "test": "vitest run",
+    "test:unit": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@openclaw/agent-core": "workspace:*",
+    "@openclaw/contracts": "workspace:*"
+  }
+}

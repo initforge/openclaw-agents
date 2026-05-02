@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenClaw Ops - Audit Log</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#d8e2ff",
+                    "secondary": "#5e5e5c",
+                    "on-surface-variant": "#59413a",
+                    "tertiary": "#0051af",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed-dim": "#adc6ff",
+                    "on-tertiary-fixed-variant": "#004494",
+                    "on-tertiary-fixed": "#001a41",
+                    "on-background": "#261814",
+                    "primary-fixed-dim": "#ffb59d",
+                    "on-primary-fixed-variant": "#832600",
+                    "inverse-surface": "#3c2d28",
+                    "on-secondary-container": "#636360",
+                    "inverse-primary": "#ffb59d",
+                    "background": "#fff8f6",
+                    "outline": "#8d7168",
+                    "surface-container-highest": "#f7ddd6",
+                    "outline-variant": "#e1bfb5",
+                    "surface-dim": "#eed5cd",
+                    "on-tertiary-container": "#ecf0ff",
+                    "secondary-fixed-dim": "#c8c6c3",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#ac3400",
+                    "on-error": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#e1dfdc",
+                    "surface": "#fff8f6",
+                    "surface-bright": "#fff8f6",
+                    "on-primary-container": "#ffece7",
+                    "primary-container": "#c2410c",
+                    "surface-container": "#ffe9e3",
+                    "tertiary-container": "#0069de",
+                    "on-secondary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "on-surface": "#261814",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#e4e2de",
+                    "on-secondary-fixed": "#1b1c1a",
+                    "surface-container-low": "#fff1ed",
+                    "inverse-on-surface": "#ffede8",
+                    "primary": "#9b2f00",
+                    "primary-fixed": "#ffdbd0",
+                    "surface-variant": "#f7ddd6",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed": "#390c00",
+                    "surface-container-high": "#fce3db",
+                    "on-secondary-fixed-variant": "#474744"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding": "32px",
+                    "component-gap": "16px",
+                    "unit": "8px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "h1": [
+                            "Space Grotesk"
+                    ],
+                    "body-md": [
+                            "Inter"
+                    ],
+                    "h3": [
+                            "Space Grotesk"
+                    ],
+                    "body-lg": [
+                            "Inter"
+                    ],
+                    "h2": [
+                            "Space Grotesk"
+                    ],
+                    "label-caps": [
+                            "Space Grotesk"
+                    ]
+            },
+            "fontSize": {
+                    "h1": [
+                            "48px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "1.5",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "h3": [
+                            "24px",
+                            {
+                                    "lineHeight": "1.3",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "h2": [
+                            "32px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "label-caps": [
+                            "12px",
+                            {
+                                    "lineHeight": "1",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "700"
+                            }
+                    ]
+            }
+          }
+        }
+      }
+    </script>
+</head>
+<body class="bg-[#FDFBF7] font-body-md text-body-md text-on-surface antialiased flex h-screen overflow-hidden">
+<!-- Shared Component: SideNavBar -->
+<nav class="bg-white dark:bg-zinc-900 font-['Space_Grotesk'] text-sm h-screen w-64 border-r border-[#EFECE6] dark:border-zinc-800 shadow-[4px_0_20px_0_rgba(194,65,12,0.05)] fixed left-0 top-0 h-full flex flex-col p-4 z-50">
+<!-- Header -->
+<div class="mb-8 px-4 flex flex-col gap-1 mt-4">
+<div class="text-lg font-black text-orange-700">Hệ thống Ops</div>
+<div class="text-xs text-zinc-500 font-medium tracking-wide">Đang hoạt động</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex-1 flex flex-col gap-2">
+<!-- Active Tab -->
+<a class="flex items-center gap-3 bg-orange-50 dark:bg-orange-950/30 text-orange-700 dark:text-orange-400 rounded-lg px-4 py-3 font-bold hover:bg-[#FDFBF7] dark:hover:bg-zinc-800 transition-all scale-98 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">list_alt</span>
+                Nhật ký hoạt động
+            </a>
+<!-- Inactive Tabs -->
+<a class="flex items-center gap-3 text-zinc-600 dark:text-zinc-400 px-4 py-3 hover:bg-[#FDFBF7] dark:hover:bg-zinc-800 transition-all scale-98 active:scale-95 transition-transform rounded-lg" href="#">
+<span class="material-symbols-outlined">fact_check</span>
+                Kiểm tra nội dung
+            </a>
+<a class="flex items-center gap-3 text-zinc-600 dark:text-zinc-400 px-4 py-3 hover:bg-[#FDFBF7] dark:hover:bg-zinc-800 transition-all scale-98 active:scale-95 transition-transform rounded-lg" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+                Quản lý hệ thống
+            </a>
+<a class="flex items-center gap-3 text-zinc-600 dark:text-zinc-400 px-4 py-3 hover:bg-[#FDFBF7] dark:hover:bg-zinc-800 transition-all scale-98 active:scale-95 transition-transform rounded-lg" href="#">
+<span class="material-symbols-outlined">history</span>
+                Lịch sử
+            </a>
+<a class="flex items-center gap-3 text-zinc-600 dark:text-zinc-400 px-4 py-3 hover:bg-[#FDFBF7] dark:hover:bg-zinc-800 transition-all scale-98 active:scale-95 transition-transform rounded-lg" href="#">
+<span class="material-symbols-outlined">help</span>
+                Trợ giúp
+            </a>
+</div>
+<!-- Footer -->
+<div class="mt-auto border-t border-[#EFECE6] dark:border-zinc-800 pt-4">
+<a class="flex items-center gap-3 text-zinc-600 dark:text-zinc-400 px-4 py-3 hover:bg-[#FDFBF7] dark:hover:bg-zinc-800 transition-all scale-98 active:scale-95 transition-transform rounded-lg" href="#">
+<span class="material-symbols-outlined">logout</span>
+                Đăng xuất
+            </a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="ml-64 flex-1 h-full overflow-y-auto px-12 py-12">
+<div class="max-w-[1200px] mx-auto flex flex-col gap-10">
+<!-- Page Header -->
+<header>
+<h1 class="font-h2 text-h2 text-on-background">NHẬT KÝ HOẠT ĐỘNG — NỘI DUNG</h1>
+</header>
+<!-- Bento Container for Content Audit Log -->
+<section class="bg-surface-container-lowest rounded-[24px] p-container-padding shadow-[0_8px_30px_rgba(194,65,12,0.03)] border border-outline-variant/40">
+<!-- Table Layout Header -->
+<div class="grid grid-cols-12 gap-gutter px-6 py-4 border-b border-surface-variant/60 font-label-caps text-label-caps text-secondary mb-4">
+<div class="col-span-2">Thời gian</div>
+<div class="col-span-3">Loại</div>
+<div class="col-span-5">Hành động</div>
+<div class="col-span-2 text-right">Chi phí</div>
+</div>
+<!-- Table Rows (List Layout) -->
+<div class="flex flex-col gap-unit">
+<!-- Row 1 -->
+<div class="grid grid-cols-12 gap-gutter items-center px-6 py-4 rounded-xl bg-surface-container-lowest hover:bg-[#FDFBF7] transition-colors group cursor-default">
+<div class="col-span-2 font-body-md text-body-md text-secondary">12:30</div>
+<div class="col-span-3">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-primary-container/10 text-primary-container font-label-caps text-label-caps border border-primary-container/20">
+                                render_complete
+                            </span>
+</div>
+<div class="col-span-5 font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">
+                            Video đã xuất: Vanhien Walkthrough
+                        </div>
+<div class="col-span-2 text-right font-body-md text-body-md text-secondary">
+                            $0.00
+                        </div>
+</div>
+<!-- Row 2 -->
+<div class="grid grid-cols-12 gap-gutter items-center px-6 py-4 rounded-xl bg-surface-container-lowest hover:bg-[#FDFBF7] transition-colors group cursor-default">
+<div class="col-span-2 font-body-md text-body-md text-secondary">13:00</div>
+<div class="col-span-3">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-primary-container/10 text-primary-container font-label-caps text-label-caps border border-primary-container/20">
+                                publish_assisted
+                            </span>
+</div>
+<div class="col-span-5 font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">
+                            Hỗ trợ tải lên TikTok
+                        </div>
+<div class="col-span-2 text-right font-body-md text-body-md text-secondary">
+                            $0.00
+                        </div>
+</div>
+<!-- Row 3 -->
+<div class="grid grid-cols-12 gap-gutter items-center px-6 py-4 rounded-xl bg-surface-container-lowest hover:bg-[#FDFBF7] transition-colors group cursor-default">
+<div class="col-span-2 font-body-md text-body-md text-secondary">09:00</div>
+<div class="col-span-3">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-primary-container/10 text-primary-container font-label-caps text-label-caps border border-primary-container/20">
+                                content_generated
+                            </span>
+</div>
+<div class="col-span-5 font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">
+                            AI đã tạo bài viết LinkedIn
+                        </div>
+<div class="col-span-2 text-right font-body-md text-body-md text-secondary">
+                            $0.008
+                        </div>
+</div>
+<!-- Row 4 -->
+<div class="grid grid-cols-12 gap-gutter items-center px-6 py-4 rounded-xl bg-surface-container-lowest hover:bg-[#FDFBF7] transition-colors group cursor-default">
+<div class="col-span-2 font-body-md text-body-md text-secondary">09:00</div>
+<div class="col-span-3">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-primary-container/10 text-primary-container font-label-caps text-label-caps border border-primary-container/20">
+                                context_captured
+                            </span>
+</div>
+<div class="col-span-5 font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">
+                            Đã thu thập bối cảnh: Hồ sơ LinkedIn
+                        </div>
+<div class="col-span-2 text-right font-body-md text-body-md text-secondary">
+                            $0.002
+                        </div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>

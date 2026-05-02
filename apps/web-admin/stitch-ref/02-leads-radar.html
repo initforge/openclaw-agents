@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Facebook Leads Radar - OpenClaw Ops</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-background": "#201b11",
+                      "on-secondary-container": "#006f66",
+                      "secondary-container": "#86f2e4",
+                      "on-surface": "#201b11",
+                      "surface-container-high": "#f2e7d6",
+                      "on-primary-container": "#6d5000",
+                      "surface-bright": "#fff8f2",
+                      "primary-container": "#ffbf00",
+                      "surface-container-highest": "#ede1d0",
+                      "inverse-surface": "#363024",
+                      "on-surface-variant": "#504532",
+                      "error": "#ba1a1a",
+                      "surface-container-lowest": "#ffffff",
+                      "on-error": "#ffffff",
+                      "inverse-primary": "#fbbc00",
+                      "tertiary": "#b91a24",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-fixed-variant": "#930013",
+                      "on-primary-fixed-variant": "#5c4300",
+                      "inverse-on-surface": "#fbefde",
+                      "on-tertiary-container": "#aa0a1b",
+                      "primary-fixed": "#ffdfa0",
+                      "surface-variant": "#ede1d0",
+                      "on-tertiary": "#ffffff",
+                      "surface-container": "#f8ecdb",
+                      "primary": "#795900",
+                      "outline-variant": "#d4c5ab",
+                      "outline": "#827660",
+                      "secondary-fixed-dim": "#6bd8cb",
+                      "surface": "#fff8f2",
+                      "on-error-container": "#93000a",
+                      "tertiary-container": "#ffb7b1",
+                      "secondary-fixed": "#89f5e7",
+                      "on-primary-fixed": "#261a00",
+                      "on-primary": "#ffffff",
+                      "surface-tint": "#795900",
+                      "tertiary-fixed-dim": "#ffb3ad",
+                      "surface-dim": "#e4d8c8",
+                      "on-tertiary-fixed": "#410004",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed-variant": "#005049",
+                      "primary-fixed-dim": "#fbbc00",
+                      "tertiary-fixed": "#ffdad7",
+                      "secondary": "#006a61",
+                      "surface-container-low": "#fef2e1",
+                      "background": "#fff8f2",
+                      "on-secondary-fixed": "#00201d"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "8px",
+                      "section-margin": "48px",
+                      "container-padding": "32px",
+                      "gutter": "24px",
+                      "card-gap": "24px"
+              },
+              "fontFamily": {
+                      "h3": [
+                              "Space Grotesk"
+                      ],
+                      "data-small": [
+                              "JetBrains Mono"
+                      ],
+                      "data-display": [
+                              "JetBrains Mono"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "h1": [
+                              "Space Grotesk"
+                      ],
+                      "label-caps": [
+                              "Space Grotesk"
+                      ],
+                      "h2": [
+                              "Space Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "h3": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "data-small": [
+                              "14px",
+                              {
+                                      "lineHeight": "1",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "data-display": [
+                              "20px",
+                              {
+                                      "lineHeight": "1",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "h1": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "h2": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+          .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+          }
+          .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+          }
+      </style>
+</head>
+<body class="bg-[#FBF8F3] text-on-background min-h-screen flex font-body-md">
+<!-- SideNavBar Component -->
+<nav class="bg-surface-container-lowest rounded-r-[24px] h-[calc(100vh-32px)] my-4 ml-4 shadow-[0_4px_20px_-2px_rgba(180,170,150,0.15)] fixed left-0 top-16 w-64 flex flex-col p-6 z-40 md:flex hidden">
+<div class="mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center text-on-primary-container font-h3">
+                OC
+            </div>
+<div>
+<h1 class="text-lg font-bold text-stone-900 font-h3 tracking-tight">Command Center</h1>
+<p class="text-xs text-on-surface-variant font-label-caps">Vigilant Monitoring</p>
+</div>
+</div>
+<ul class="flex flex-col gap-2 flex-grow">
+<li>
+<a class="flex items-center gap-3 p-3 text-stone-500 hover:bg-stone-50 rounded-xl transition-colors" href="#">
+<span class="material-symbols-outlined">radar</span>
+<span class="font-h3 text-sm">Overview</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 bg-[#FFBF00] text-stone-900 font-bold rounded-xl transition-transform hover:translate-x-1 active:inner-shadow duration-150 shadow-[0_4px_20px_-2px_rgba(180,170,150,0.15)]" href="#">
+<span class="material-symbols-outlined filled">dynamic_feed</span>
+<span class="font-h3 text-sm">Live Feed</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 text-stone-500 hover:bg-stone-50 rounded-xl transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-h3 text-sm">Lead Scoring</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 text-stone-500 hover:bg-stone-50 rounded-xl transition-colors" href="#">
+<span class="material-symbols-outlined">sync</span>
+<span class="font-h3 text-sm">CRM Sync</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 text-stone-500 hover:bg-stone-50 rounded-xl transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-h3 text-sm">Archives</span>
+</a>
+</li>
+</ul>
+<button class="mt-4 w-full py-3 bg-surface-container-high text-on-surface-variant rounded-xl font-h3 text-sm hover:bg-surface-container-highest transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download</span>
+            Export Data
+        </button>
+<div class="mt-auto pt-6 border-t border-surface-container-high/50 flex flex-col gap-2">
+<a class="flex items-center gap-3 p-2 text-stone-500 hover:text-stone-900 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
+<span class="font-body-md text-sm">Help</span>
+</a>
+<a class="flex items-center gap-3 p-2 text-stone-500 hover:text-stone-900 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span class="font-body-md text-sm">Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow md:ml-72 flex flex-col w-full min-h-screen">
+<!-- TopAppBar Component -->
+<header class="bg-[#FBF8F3] flex justify-between items-center w-full px-8 py-4 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="text-2xl font-bold tracking-tight text-stone-900 font-['Space_Grotesk'] md:hidden">
+                    OpenClaw Ops
+                </div>
+<nav class="hidden md:flex gap-6">
+<a class="text-stone-500 hover:text-stone-900 transition-colors font-['Space_Grotesk'] font-medium text-sm" href="#">Dashboard</a>
+<a class="text-amber-600 font-bold border-b-2 border-amber-500 pb-1 font-['Space_Grotesk'] font-medium text-sm" href="#">Leads</a>
+<a class="text-stone-500 hover:text-stone-900 transition-colors font-['Space_Grotesk'] font-medium text-sm" href="#">Performance</a>
+<a class="text-stone-500 hover:text-stone-900 transition-colors font-['Space_Grotesk'] font-medium text-sm" href="#">Automation</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:bg-stone-100 rounded-lg p-2 transition-colors scale-95 duration-200 ease-in-out text-stone-500">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:bg-stone-100 rounded-lg p-2 transition-colors scale-95 duration-200 ease-in-out text-stone-500">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="bg-amber-500 text-stone-900 px-4 py-2 rounded-lg font-['Space_Grotesk'] font-medium text-sm hover:bg-amber-400 transition-colors shadow-sm ml-2 hidden md:block">
+                    Add Lead
+                </button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden ml-2 cursor-pointer">
+<img alt="Operator Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYLoizzxT53rTbA8f_8rW5HxBm7fC3SrXVZYLgpYLuOqyuST8OzccNR5u2C8W9hiDSyeoFtMVyo3s6sJJ8uQ7qTLlvdigQenyFYs32me-PXZgki0rZwx3mJwZEZun_DUmxFP14MDq2i73FjnDv6GLYsyhHa8-gNmmZD7wVXD20aknXc2ckJUJ_pqlzRA3Fk7zaroJhbdaY_OVd4iwNTOYgQ0rLXagLOpT1Eww8jB7IAzGAd1mx6c6SmY4PMWWuMS--uBXrWCX3HQ"/>
+</div>
+</div>
+</header>
+<!-- Canvas Body -->
+<div class="p-container-padding flex-grow flex flex-col max-w-[1400px] mx-auto w-full">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-section-margin">
+<div>
+<h2 class="font-h1 text-on-background tracking-tight">LEAD RADAR</h2>
+<p class="font-body-lg text-on-surface-variant mt-2 flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-error animate-pulse"></span>
+                        4 leads active requiring immediate attention
+                    </p>
+</div>
+<div class="flex items-center gap-4">
+<div class="bg-surface-container-high px-4 py-2 rounded-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">filter_list</span>
+<span class="font-label-caps text-on-surface-variant">FILTER</span>
+</div>
+</div>
+</div>
+<!-- Bento Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-card-gap">
+<!-- Lead Card 1 (HOT) -->
+<article class="bg-surface-container-lowest rounded-[24px] p-[32px] shadow-[0_4px_20px_-2px_rgba(180,170,150,0.15)] flex flex-col h-full relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-error/5 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+<div class="flex justify-between items-start mb-6">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<a class="text-[#1877F2] font-h3 text-[18px] hover:underline decoration-2 underline-offset-4 truncate max-w-[280px]" href="#">Cộng đồng SaaS Việt Nam</a>
+<span class="text-on-surface-variant text-sm font-body-md">• 2 phút trước</span>
+</div>
+<div class="flex gap-2">
+<span class="bg-error-container text-on-error-container px-3 py-1 rounded-full font-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_fire_department</span>
+                                    HOT
+                                </span>
+<span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full font-label-caps">
+                                    B2B SOFTWARE
+                                </span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-data-display text-4xl text-error font-bold tracking-tighter">98</span>
+<span class="font-label-caps text-on-surface-variant mt-1">LEAD SCORE</span>
+</div>
+</div>
+<div class="bg-[#F3EEE5] rounded-xl p-6 mb-6 relative">
+<span class="material-symbols-outlined absolute top-4 left-4 text-surface-container-highest text-4xl -z-0">format_quote</span>
+<p class="font-body-md text-on-background italic relative z-10 pl-6 border-l-4 border-error/30">
+                            "Tôi đang tìm kiếm một công cụ tự động hóa quy trình chăm sóc khách hàng đa kênh. Đội ngũ đang quá tải với việc trả lời thủ công trên Zalo và Fanpage."
+                        </p>
+</div>
+<div class="mb-8">
+<h4 class="font-label-caps text-on-surface-variant mb-3">IDENTIFIED PAIN POINTS</h4>
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface-dim text-on-surface px-3 py-1.5 rounded-lg font-data-small text-xs">Omnichannel Overload</span>
+<span class="bg-surface-dim text-on-surface px-3 py-1.5 rounded-lg font-data-small text-xs">Manual Response Inefficiency</span>
+</div>
+</div>
+<div class="mt-auto flex items-center justify-between pt-6 border-t border-surface-container-high/40">
+<div class="flex gap-2">
+<span class="border border-outline-variant text-on-surface-variant px-3 py-1 rounded-full font-label-caps text-[10px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+                                Draft Fast
+                            </span>
+</div>
+<button class="bg-primary-container text-on-primary-container font-h3 text-sm px-6 py-3 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:shadow-inner transition-all flex items-center gap-2">
+                            Respond Now
+                            <span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+</div>
+</article>
+<!-- Lead Card 2 (WARM) -->
+<article class="bg-surface-container-lowest rounded-[24px] p-[32px] shadow-[0_4px_20px_-2px_rgba(180,170,150,0.15)] flex flex-col h-full relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/10 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+<div class="flex justify-between items-start mb-6">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<a class="text-[#1877F2] font-h3 text-[18px] hover:underline decoration-2 underline-offset-4 truncate max-w-[280px]" href="#">HR Tech Vietnam</a>
+<span class="text-on-surface-variant text-sm font-body-md">• 15 phút trước</span>
+</div>
+<div class="flex gap-2">
+<span class="bg-[#FFF4D6] text-[#936F00] px-3 py-1 rounded-full font-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">device_thermostat</span>
+                                    WARM
+                                </span>
+<span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full font-label-caps">
+                                    HR &amp; PAYROLL
+                                </span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-data-display text-4xl text-[#936F00] font-bold tracking-tighter">74</span>
+<span class="font-label-caps text-on-surface-variant mt-1">LEAD SCORE</span>
+</div>
+</div>
+<div class="bg-[#F3EEE5] rounded-xl p-6 mb-6 relative">
+<span class="material-symbols-outlined absolute top-4 left-4 text-surface-container-highest text-4xl -z-0">format_quote</span>
+<p class="font-body-md text-on-background italic relative z-10 pl-6 border-l-4 border-primary-container/50">
+                            "Có ai biết phần mềm nào tích hợp chấm công khuôn mặt và tự động xuất bảng lương không? Hệ thống hiện tại hay bị lỗi đồng bộ dữ liệu."
+                        </p>
+</div>
+<div class="mb-8">
+<h4 class="font-label-caps text-on-surface-variant mb-3">IDENTIFIED PAIN POINTS</h4>
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface-dim text-on-surface px-3 py-1.5 rounded-lg font-data-small text-xs">Data Sync Errors</span>
+<span class="bg-surface-dim text-on-surface px-3 py-1.5 rounded-lg font-data-small text-xs">Integration Needs</span>
+</div>
+</div>
+<div class="mt-auto flex items-center justify-between pt-6 border-t border-surface-container-high/40">
+<div class="flex gap-2">
+<span class="border border-outline-variant text-on-surface-variant px-3 py-1 rounded-full font-label-caps text-[10px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">smart_toy</span>
+                                Assisted Comment
+                            </span>
+</div>
+<button class="bg-surface-container-high text-on-surface font-h3 text-sm px-6 py-3 rounded-xl hover:bg-surface-container-highest transition-colors flex items-center gap-2">
+                            Review Draft
+                            <span class="material-symbols-outlined text-[18px]">edit_document</span>
+</button>
+</div>
+</article>
+<!-- Lead Card 3 (HOT) -->
+<article class="bg-surface-container-lowest rounded-[24px] p-[32px] shadow-[0_4px_20px_-2px_rgba(180,170,150,0.15)] flex flex-col h-full relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-error/5 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+<div class="flex justify-between items-start mb-6">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<a class="text-[#1877F2] font-h3 text-[18px] hover:underline decoration-2 underline-offset-4 truncate max-w-[280px]" href="#">Khởi nghiệp Thương mại Điện tử</a>
+<span class="text-on-surface-variant text-sm font-body-md">• 22 phút trước</span>
+</div>
+<div class="flex gap-2">
+<span class="bg-error-container text-on-error-container px-3 py-1 rounded-full font-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_fire_department</span>
+                                    HOT
+                                </span>
+<span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full font-label-caps">
+                                    E-COMMERCE
+                                </span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-data-display text-4xl text-error font-bold tracking-tighter">89</span>
+<span class="font-label-caps text-on-surface-variant mt-1">LEAD SCORE</span>
+</div>
+</div>
+<div class="bg-[#F3EEE5] rounded-xl p-6 mb-6 relative">
+<span class="material-symbols-outlined absolute top-4 left-4 text-surface-container-highest text-4xl -z-0">format_quote</span>
+<p class="font-body-md text-on-background italic relative z-10 pl-6 border-l-4 border-error/30">
+                            "Mình cần setup hệ thống CRM gấp để quản lý tệp data 50k KH từ Shopee đổ về. Giải pháp nào ngon bổ rẻ, team support nhanh nhẹn nhỉ?"
+                        </p>
+</div>
+<div class="mb-8">
+<h4 class="font-label-caps text-on-surface-variant mb-3">IDENTIFIED PAIN POINTS</h4>
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface-dim text-on-surface px-3 py-1.5 rounded-lg font-data-small text-xs">High Volume Data</span>
+<span class="bg-surface-dim text-on-surface px-3 py-1.5 rounded-lg font-data-small text-xs">Urgent Setup</span>
+</div>
+</div>
+<div class="mt-auto flex items-center justify-between pt-6 border-t border-surface-container-high/40">
+<div class="flex gap-2">
+<span class="border border-outline-variant text-on-surface-variant px-3 py-1 rounded-full font-label-caps text-[10px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+                                Draft Fast
+                            </span>
+</div>
+<button class="bg-primary-container text-on-primary-container font-h3 text-sm px-6 py-3 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:shadow-inner transition-all flex items-center gap-2">
+                            Respond Now
+                            <span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+</div>
+</article>
+<!-- Lead Card 4 (WARM) -->
+<article class="bg-surface-container-lowest rounded-[24px] p-[32px] shadow-[0_4px_20px_-2px_rgba(180,170,150,0.15)] flex flex-col h-full relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/10 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+<div class="flex justify-between items-start mb-6">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<a class="text-[#1877F2] font-h3 text-[18px] hover:underline decoration-2 underline-offset-4 truncate max-w-[280px]" href="#">Quản lý phòng khám Nha khoa</a>
+<span class="text-on-surface-variant text-sm font-body-md">• 1 giờ trước</span>
+</div>
+<div class="flex gap-2">
+<span class="bg-[#FFF4D6] text-[#936F00] px-3 py-1 rounded-full font-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">device_thermostat</span>
+                                    WARM
+                                </span>
+<span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full font-label-caps">
+                                    HEALTHCARE
+                                </span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-data-display text-4xl text-[#936F00] font-bold tracking-tighter">65</span>
+<span class="font-label-caps text-on-surface-variant mt-1">LEAD SCORE</span>
+</div>
+</div>
+<div class="bg-[#F3EEE5] rounded-xl p-6 mb-6 relative">
+<span class="material-symbols-outlined absolute top-4 left-4 text-surface-container-highest text-4xl -z-0">format_quote</span>
+<p class="font-body-md text-on-background italic relative z-10 pl-6 border-l-4 border-primary-container/50">
+                            "Mọi người đang dùng app nào để nhắc lịch hẹn tái khám tự động qua SMS/Zalo cho bệnh nhân vậy? Chi phí hàng tháng khoảng bao nhiêu?"
+                        </p>
+</div>
+<div class="mb-8">
+<h4 class="font-label-caps text-on-surface-variant mb-3">IDENTIFIED PAIN POINTS</h4>
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface-dim text-on-surface px-3 py-1.5 rounded-lg font-data-small text-xs">Automated Reminders</span>
+<span class="bg-surface-dim text-on-surface px-3 py-1.5 rounded-lg font-data-small text-xs">Cost Inquiry</span>
+</div>
+</div>
+<div class="mt-auto flex items-center justify-between pt-6 border-t border-surface-container-high/40">
+<div class="flex gap-2">
+<span class="border border-outline-variant text-on-surface-variant px-3 py-1 rounded-full font-label-caps text-[10px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">smart_toy</span>
+                                Assisted Comment
+                            </span>
+</div>
+<button class="bg-surface-container-high text-on-surface font-h3 text-sm px-6 py-3 rounded-xl hover:bg-surface-container-highest transition-colors flex items-center gap-2">
+                            Review Draft
+                            <span class="material-symbols-outlined text-[18px]">edit_document</span>
+</button>
+</div>
+</article>
+</div>
+</div>
+</main>
+</body></html>

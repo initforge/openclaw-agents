@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenClaw Ops - Content Command Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;600&amp;family=Space+Grotesk:wght@500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#474744",
+                    "secondary-container": "#fc8c70",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#fbf2ed",
+                    "secondary": "#9c432b",
+                    "surface-dim": "#e1d8d4",
+                    "primary-fixed": "#e4e2de",
+                    "primary-fixed-dim": "#c8c6c3",
+                    "on-secondary-fixed-variant": "#7d2c17",
+                    "on-tertiary-fixed": "#1c1b1c",
+                    "outline": "#767872",
+                    "tertiary-fixed-dim": "#c9c5c6",
+                    "inverse-surface": "#34302c",
+                    "on-primary-fixed": "#1b1c1a",
+                    "on-background": "#1e1b18",
+                    "on-error": "#ffffff",
+                    "background": "#fff8f5",
+                    "surface-container-high": "#efe6e2",
+                    "tertiary-fixed": "#e6e1e2",
+                    "outline-variant": "#c6c7c0",
+                    "tertiary-container": "#fffafb",
+                    "inverse-on-surface": "#f8efea",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#fff8f5",
+                    "inverse-primary": "#c8c6c3",
+                    "on-tertiary-container": "#757374",
+                    "on-surface": "#1e1b18",
+                    "error": "#ba1a1a",
+                    "surface-variant": "#e9e1dc",
+                    "tertiary": "#605e5f",
+                    "on-surface-variant": "#454742",
+                    "primary-container": "#fdfbf7",
+                    "surface-container-highest": "#e9e1dc",
+                    "surface-tint": "#5e5e5c",
+                    "surface-container": "#f5ece7",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#ffb4a2",
+                    "surface": "#fff8f5",
+                    "on-secondary-fixed": "#3c0800",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#484647",
+                    "on-primary-container": "#747471",
+                    "secondary-fixed": "#ffdbd2",
+                    "on-secondary-container": "#742510",
+                    "primary": "#5e5e5c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gap-lg": "24px",
+                    "gap-md": "16px",
+                    "base": "4px",
+                    "gap-xs": "8px",
+                    "bento-padding": "24px",
+                    "grid-margin": "32px"
+            },
+            "fontFamily": {
+                    "body-main": [
+                            "Inter"
+                    ],
+                    "h1": [
+                            "Space Grotesk"
+                    ],
+                    "label-caps": [
+                            "JetBrains Mono"
+                    ],
+                    "code-snippet": [
+                            "JetBrains Mono"
+                    ],
+                    "h2": [
+                            "Space Grotesk"
+                    ],
+                    "body-sm": [
+                            "Inter"
+                    ]
+            },
+            "fontSize": {
+                    "body-main": [
+                            "16px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "letterSpacing": "0",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "h1": [
+                            "40px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "label-caps": [
+                            "11px",
+                            {
+                                    "lineHeight": "1",
+                                    "letterSpacing": "0.08em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "code-snippet": [
+                            "13px",
+                            {
+                                    "lineHeight": "1.4",
+                                    "letterSpacing": "0",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "h2": [
+                            "24px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "body-sm": [
+                            "14px",
+                            {
+                                    "lineHeight": "1.5",
+                                    "letterSpacing": "0",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-primary-container text-on-surface font-body-main min-h-screen flex flex-col md:flex-row">
+<!-- Top AppBar (Mobile Only) -->
+<header class="md:hidden w-full h-16 flex items-center justify-between px-6 border-b border-primary-fixed z-40 bg-primary-container sticky top-0">
+<div class="text-xl font-black text-[#B9583F] font-h1">OpenClaw Ops</div>
+<button class="text-on-surface-variant focus:outline-none">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</header>
+<!-- SideNavBar (Web Only) -->
+<nav class="hidden md:flex flex-col h-screen w-64 border-r border-[#EAE3D8] bg-primary-container fixed left-0 top-0 z-40 p-6 space-y-8">
+<div class="flex flex-col gap-2">
+<h1 class="text-lg font-bold text-[#B9583F] font-h1">OpenClaw Ops</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Trung tâm điều khiển</p>
+</div>
+<button class="bg-[#B9583F] text-on-tertiary font-label-caps text-label-caps rounded-md px-4 py-3 flex items-center justify-center gap-2 hover:bg-secondary transition-colors duration-200">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+            Tạo nội dung
+        </button>
+<div class="flex-grow flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-3 text-stone-600 px-4 py-3 hover:bg-[#F7F3ED] rounded-md transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-label-caps text-label-caps uppercase">Tổng quan</span>
+</a>
+<a class="flex items-center gap-3 bg-[#B9583F] text-[#FDFBF7] rounded-md px-4 py-3 font-bold border-l-4 border-[#B9583F]" href="#">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+<span class="font-label-caps text-label-caps uppercase">Sáng tạo AI</span>
+</a>
+<a class="flex items-center gap-3 text-stone-600 px-4 py-3 hover:bg-[#F7F3ED] rounded-md transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="folder_copy">folder_copy</span>
+<span class="font-label-caps text-label-caps uppercase">Thư viện</span>
+</a>
+<a class="flex items-center gap-3 text-stone-600 px-4 py-3 hover:bg-[#F7F3ED] rounded-md transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-caps text-label-caps uppercase">Phân tích</span>
+</a>
+<a class="flex items-center gap-3 text-stone-600 px-4 py-3 hover:bg-[#F7F3ED] rounded-md transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-caps text-label-caps uppercase">Nhân sự</span>
+</a>
+</div>
+<div class="flex flex-col gap-2 mt-auto border-t border-[#EAE3D8] pt-4">
+<a class="flex items-center gap-3 text-stone-600 px-4 py-3 hover:bg-[#F7F3ED] rounded-md transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-caps text-label-caps uppercase">Cài đặt</span>
+</a>
+<a class="flex items-center gap-3 text-stone-600 px-4 py-3 hover:bg-[#F7F3ED] rounded-md transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-caps text-label-caps uppercase">Đăng xuất</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 p-6 md:p-8 overflow-y-auto">
+<!-- Top App Bar Content Row (Desktop) -->
+<div class="hidden md:flex fixed top-0 right-0 left-64 h-16 items-center justify-between px-8 z-30 bg-primary-container border-b border-[#EAE3D8]">
+<div class="flex items-center gap-6">
+<a class="text-stone-500 font-medium font-body-sm text-sm hover:text-[#B9583F] transition-colors duration-200" href="#">Bảng điều khiển</a>
+<a class="text-[#B9583F] font-bold font-body-sm text-sm border-b-2 border-[#B9583F] pb-4 pt-4" href="#">Nội dung</a>
+<a class="text-stone-500 font-medium font-body-sm text-sm hover:text-[#B9583F] transition-colors duration-200" href="#">Chiến dịch</a>
+</div>
+<div class="flex items-center gap-4 text-stone-500">
+<span class="material-symbols-outlined cursor-pointer hover:text-[#B9583F] transition-colors duration-200" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-[#B9583F] transition-colors duration-200" data-icon="settings">settings</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-[#B9583F] transition-colors duration-200" data-icon="help">help</span>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden ml-2 cursor-pointer border border-[#EAE3D8]">
+<img alt="Ảnh đại diện người dùng" class="w-full h-full object-cover" data-alt="A close up portrait photo of a professional avatar, clean modern lighting, neutral background, high resolution, suitable for a professional software dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCp1-2y9XAsCYm1ANZtMi66cntMGaaONKxxIFz24RJlx4aoj_H15dLWgWTOtc2wK1anBLtCNsuXZKyAQhdz-Co2IUujBcAv70KdLmxwo4Sm0wPQwMf_psrd4zARPX0ktdd_mDSqqnZpj_kPlCPoMlIKhuqAakmtR7mGa568fEqzjQJ7WlKeuDV0d-iKYRjWsmr_IGTgTBTaqYgh_FtkVcofq0fAKOBA-8k-i5wg5KQ05u35-BH8iDj9Y1PVBR_huTWI-m2dn5jbPQ"/>
+</div>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="max-w-[1400px] mx-auto mt-0 md:mt-24 grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- LEFT COLUMN (60%) -->
+<div class="lg:col-span-7 xl:col-span-8 flex flex-col gap-6">
+<!-- Main Editor Bento Box -->
+<section class="bg-surface-container-lowest rounded-[24px] border border-[#EAE3D8] p-bento-padding flex flex-col gap-6 relative">
+<div class="flex items-center justify-between">
+<h2 class="font-h2 text-h2 text-on-surface m-0">SOẠN THẢO</h2>
+<div class="flex items-center gap-2 bg-surface-container-low border border-[#EAE3D8] px-3 py-1.5 rounded-full">
+<div class="w-2.5 h-2.5 rounded-full bg-[#10b981] shadow-[0_0_8px_rgba(16,185,129,0.4)] animate-pulse"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">generate_only</span>
+</div>
+</div>
+<!-- Platform Chips -->
+<div class="flex flex-wrap gap-2">
+<button class="font-label-caps text-label-caps bg-surface-container px-3 py-1.5 rounded-[4px] border border-[#EAE3D8] text-on-surface-variant hover:border-[#B9583F] hover:text-[#B9583F] transition-colors">LinkedIn</button>
+<button class="font-label-caps text-label-caps bg-[#B9583F]/10 px-3 py-1.5 rounded-[4px] border border-[#B9583F] text-[#B9583F] transition-colors">TikTok</button>
+<button class="font-label-caps text-label-caps bg-surface-container px-3 py-1.5 rounded-[4px] border border-[#EAE3D8] text-on-surface-variant hover:border-[#B9583F] hover:text-[#B9583F] transition-colors">Facebook</button>
+<button class="font-label-caps text-label-caps bg-surface-container px-3 py-1.5 rounded-[4px] border border-[#EAE3D8] text-on-surface-variant hover:border-[#B9583F] hover:text-[#B9583F] transition-colors">YouTube</button>
+<button class="font-label-caps text-label-caps bg-surface-container px-3 py-1.5 rounded-[4px] border border-[#EAE3D8] text-on-surface-variant hover:border-[#B9583F] hover:text-[#B9583F] transition-colors">Upwork</button>
+</div>
+<!-- Input Area -->
+<div class="flex flex-col gap-2">
+<textarea class="w-full bg-[#F7F3ED] border-0 border-b-2 border-[#EAE3D8] focus:border-[#B9583F] focus:ring-0 rounded-t-lg p-4 font-code-snippet text-code-snippet text-on-surface min-h-[200px] resize-y placeholder:text-outline" placeholder="Nhập lệnh cho AI..."></textarea>
+</div>
+<div class="flex justify-end mt-2">
+<button class="bg-[#B9583F] text-on-tertiary font-body-sm text-body-sm font-medium rounded-lg px-6 py-3 flex items-center gap-2 hover:bg-secondary transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="magic_button">magic_button</span>
+                            Tạo nội dung
+                        </button>
+</div>
+</section>
+<!-- Revision Bento Box -->
+<section class="bg-surface-container-lowest rounded-[24px] border border-[#EAE3D8] p-bento-padding flex flex-col gap-4">
+<div class="flex items-center justify-between border-b border-[#EAE3D8] pb-4">
+<h3 class="font-h2 text-lg font-medium text-on-surface">CHỈNH SỬA LẠI</h3>
+<div class="flex items-center gap-3">
+<button class="text-outline hover:text-on-surface transition-colors p-1"><span class="material-symbols-outlined text-sm" data-icon="arrow_back_ios">arrow_back_ios</span></button>
+<span class="font-label-caps text-label-caps text-on-surface-variant bg-surface-variant px-2 py-1 rounded">v2</span>
+<button class="text-outline hover:text-on-surface transition-colors p-1"><span class="material-symbols-outlined text-sm" data-icon="arrow_forward_ios">arrow_forward_ios</span></button>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg border border-[#EAE3D8] flex gap-3 items-start">
+<span class="material-symbols-outlined text-[#B9583F] mt-0.5 text-[20px]" data-icon="info">info</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant m-0">AI có thể sai. Gõ prompt chỉnh sửa để sửa lại kết quả.</p>
+</div>
+<textarea class="w-full bg-[#F7F3ED] border-0 border-b-2 border-[#EAE3D8] focus:border-[#B9583F] focus:ring-0 rounded-t-lg p-4 font-code-snippet text-code-snippet text-on-surface min-h-[100px] resize-y placeholder:text-outline" placeholder="Ví dụ: Viết ngắn hơn, đổi giọng chuyên nghiệp hơn..."></textarea>
+<div class="flex justify-end">
+<button class="border border-[#B9583F] text-[#B9583F] bg-transparent font-body-sm text-body-sm font-medium rounded-lg px-6 py-2.5 flex items-center gap-2 hover:bg-[#B9583F]/5 transition-colors">
+                            Áp dụng chỉnh sửa
+                        </button>
+</div>
+</section>
+</div>
+<!-- RIGHT SIDEBAR (40%) -->
+<div class="lg:col-span-5 xl:col-span-4 flex flex-col gap-6">
+<!-- Skills Section -->
+<section class="bg-surface-container-lowest rounded-[24px] border border-[#EAE3D8] p-bento-padding flex flex-col gap-4">
+<h3 class="font-h2 text-lg font-medium text-on-surface">KỸ NĂNG</h3>
+<div class="flex flex-wrap gap-2">
+<div class="font-label-caps text-label-caps bg-surface-variant px-2.5 py-1 rounded-[4px] border border-[#EAE3D8] text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="bolt">bolt</span>
+                            content-creator
+                        </div>
+<div class="font-label-caps text-label-caps bg-surface-variant px-2.5 py-1 rounded-[4px] border border-[#EAE3D8] text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="bolt">bolt</span>
+                            social-content
+                        </div>
+<div class="font-label-caps text-label-caps bg-surface-variant px-2.5 py-1 rounded-[4px] border border-[#EAE3D8] text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="shield">shield</span>
+                            avoid-ai-writing
+                        </div>
+</div>
+</section>
+<!-- Context Section -->
+<section class="bg-surface-container-lowest rounded-[24px] border border-[#EAE3D8] p-bento-padding flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h3 class="font-h2 text-lg font-medium text-on-surface">NGỮ CẢNH</h3>
+<button class="text-[#B9583F] hover:bg-[#B9583F]/10 p-1.5 rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+</button>
+</div>
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between p-3 rounded-lg border border-[#EAE3D8] bg-surface-container-low hover:border-[#B9583F] transition-colors cursor-pointer group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline group-hover:text-[#B9583F] transition-colors" data-icon="description">description</span>
+<span class="font-code-snippet text-code-snippet text-on-surface">creator-profile.md</span>
+</div>
+<span class="material-symbols-outlined text-outline text-sm opacity-0 group-hover:opacity-100 transition-opacity" data-icon="open_in_new">open_in_new</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg border border-[#EAE3D8] bg-surface-container-low hover:border-[#B9583F] transition-colors cursor-pointer group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline group-hover:text-[#B9583F] transition-colors" data-icon="description">description</span>
+<span class="font-code-snippet text-code-snippet text-on-surface">platform-rules.md</span>
+</div>
+<span class="material-symbols-outlined text-outline text-sm opacity-0 group-hover:opacity-100 transition-opacity" data-icon="open_in_new">open_in_new</span>
+</div>
+</div>
+</section>
+<!-- History Section -->
+<section class="bg-surface-container-lowest rounded-[24px] border border-[#EAE3D8] p-bento-padding flex flex-col gap-4">
+<h3 class="font-h2 text-lg font-medium text-on-surface">LỊCH SỬ</h3>
+<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-1.5 border-l-2 border-[#EAE3D8] pl-3 hover:border-[#B9583F] transition-colors cursor-pointer">
+<span class="font-label-caps text-[10px] text-outline">10 PHÚT TRƯỚC</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Viết một bài đăng ngắn gọn giới thiệu tính năng mới của OpenClaw Ops cho nhóm đối tượng kỹ thuật viên...</p>
+</div>
+<div class="flex flex-col gap-1.5 border-l-2 border-[#EAE3D8] pl-3 hover:border-[#B9583F] transition-colors cursor-pointer">
+<span class="font-label-caps text-[10px] text-outline">1 GIỜ TRƯỚC</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Chỉnh sửa lại kịch bản video TikTok về quản lý thời gian, làm cho nhịp độ nhanh hơn và thêm call-to-action mạnh mẽ...</p>
+</div>
+</div>
+<button class="font-label-caps text-label-caps text-[#B9583F] underline underline-offset-4 mt-2 self-start hover:text-secondary transition-colors">XEM TẤT CẢ</button>
+</section>
+</div>
+</div>
+</main>
+<!-- Bottom Nav Bar (Mobile Only) -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-primary-container border-t border-[#EAE3D8] flex items-center justify-around z-40 px-2">
+<a class="flex flex-col items-center gap-1 p-2 text-stone-500" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="grid_view">grid_view</span>
+<span class="font-label-caps text-[9px] uppercase">Tổng quan</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-[#B9583F]" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="auto_awesome" data-weight="fill">auto_awesome</span>
+<span class="font-label-caps text-[9px] uppercase font-bold">Sáng tạo</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-stone-500" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="folder_copy">folder_copy</span>
+<span class="font-label-caps text-[9px] uppercase">Thư viện</span>
+</a>
+</div>
+</body></html>

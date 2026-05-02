@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenClaw Ops - Trading Terminal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#8fd3cc",
+                        "outline": "#6f7977",
+                        "on-secondary-fixed-variant": "#005236",
+                        "surface": "#f8faf8",
+                        "on-secondary-fixed": "#002113",
+                        "surface-container": "#eceeed",
+                        "surface-dim": "#d8dad9",
+                        "surface-container-high": "#e6e9e7",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#2e3130",
+                        "primary": "#004541",
+                        "on-tertiary-fixed": "#40000d",
+                        "tertiary-fixed-dim": "#ffb2b7",
+                        "on-background": "#191c1c",
+                        "on-primary-fixed-variant": "#00504b",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#ffb6ba",
+                        "tertiary": "#7f0023",
+                        "inverse-primary": "#8fd3cc",
+                        "on-primary-fixed": "#00201e",
+                        "surface-container-highest": "#e1e3e2",
+                        "surface-tint": "#216963",
+                        "secondary-container": "#6cf8bb",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#3f4947",
+                        "surface-variant": "#e1e3e2",
+                        "inverse-on-surface": "#eff1f0",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#4edea3",
+                        "secondary-fixed": "#6ffbbe",
+                        "outline-variant": "#bec9c7",
+                        "background": "#f8faf8",
+                        "on-primary-container": "#91d5ce",
+                        "surface-bright": "#f8faf8",
+                        "tertiary-container": "#ab0033",
+                        "tertiary-fixed": "#ffdadb",
+                        "secondary": "#006c49",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f2f4f3",
+                        "on-secondary-container": "#00714d",
+                        "primary-container": "#115e59",
+                        "on-surface": "#191c1c",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#92002a",
+                        "primary-fixed": "#abefe8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "margin": "32px",
+                        "card-padding": "24px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "h1": ["Space Grotesk"],
+                        "h2": ["Space Grotesk"],
+                        "data-lg": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "data-sm": ["JetBrains Mono"],
+                        "label": ["Inter"],
+                        "h3": ["Space Grotesk"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "h2": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "data-lg": ["16px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "data-sm": ["13px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                        "label": ["12px", {"lineHeight": "1", "fontWeight": "600"}],
+                        "h3": ["24px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #f8faf8; }
+        .bento-shadow { box-shadow: 0px 4px 20px rgba(17, 94, 89, 0.04); }
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] summary ~ * { animation: sweep .3s ease-in-out; }
+        @keyframes sweep {
+            0%    {opacity: 0; margin-top: -10px}
+            100%  {opacity: 1; margin-top: 0px}
+        }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden text-on-surface">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-screen p-4 gap-2 fixed left-0 top-0 w-64 border-r border-outline-variant/20 bg-surface shadow-[4px_0_20px_rgba(17,94,89,0.04)] z-40">
+<div class="px-4 py-6 mb-4 flex flex-col gap-1">
+<span class="font-h2 text-h2 text-primary font-bold">OpenClaw Ops</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Trading Terminal</span>
+</div>
+<div class="flex flex-col gap-2 flex-grow">
+<!-- Dashboard (Active) -->
+<a class="flex items-center gap-3 px-4 py-3 text-primary-container bg-surface-container-low rounded-[24px]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-body-md text-body-md font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low hover:text-primary-container rounded-[24px] transition-all" href="#">
+<span class="material-symbols-outlined">show_chart</span>
+<span class="font-body-md text-body-md">Trading</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low hover:text-primary-container rounded-[24px] transition-all" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-body-md text-body-md">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low hover:text-primary-container rounded-[24px] transition-all" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-body-md text-body-md">Assets</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low hover:text-primary-container rounded-[24px] transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</div>
+<div class="mt-auto flex flex-col gap-4">
+<button class="w-full py-3 bg-primary-container text-on-primary font-label text-label rounded-full hover:opacity-90 transition-opacity">
+                Quan sát
+            </button>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low hover:text-primary-container rounded-[24px] transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-body-md text-body-md">Help Center</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 flex flex-col md:ml-64 relative w-full overflow-y-auto">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center w-full px-6 h-16 sticky top-0 z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/20">
+<div class="flex items-center gap-4">
+<div class="md:hidden font-h3 text-h3 text-primary font-bold">OpenClaw Ops</div>
+<!-- 4-mode segmented pill -->
+<div class="hidden sm:flex bg-surface-container-low rounded-full p-1 border border-outline-variant/30">
+<button class="px-4 py-1.5 rounded-full font-label text-label text-on-surface-variant hover:bg-surface-container-high transition-colors">Quan sát</button>
+<button class="px-4 py-1.5 rounded-full font-label text-label text-on-surface-variant hover:bg-surface-container-high transition-colors">Giấy</button>
+<button class="px-4 py-1.5 rounded-full bg-surface text-primary-container font-label text-label shadow-sm flex items-center gap-2 border border-outline-variant/10">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                        Auto Guarded
+                    </button>
+<button class="px-4 py-1.5 rounded-full font-label text-label text-on-surface-variant hover:bg-surface-container-high transition-colors">Tạm dừng</button>
+</div>
+</div>
+<div class="flex items-center gap-4 text-primary">
+<button class="hover:bg-surface-container-low p-2 rounded-full transition-colors flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:bg-surface-container-low p-2 rounded-full transition-colors flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</button>
+<button class="hover:bg-surface-container-low p-2 rounded-full transition-colors flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<img alt="User profile" class="w-8 h-8 rounded-full border border-outline-variant/30 ml-2" data-alt="A professional headshot of a corporate executive in a modern office, bright lighting, soft focus background, exuding trust and reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrDJ3bgjlqzn-VmK9qwx-0_wlzixUo_L1wr1B-9FX_KO5_aLQi7v3YzVkQRvS86mog5dsfXpzf38ChOQHL-bq4kwpUMl3lLz4izQCVmbWRxicjK7cCjqNL7BkMkdc_uWe22EhidWUiaXbP3FCl0oQNlwcKmzkxrZ8GQt6mzmooustoqGOfywIYK17idiEfwkgFL4EUADJQ4gKlESDvv_o3hwq1YJfa45VjJhTBJWMXFS0fpyYI7_D70qj-byQsDiq0fOWNI-6gfQ"/>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="flex-1 p-gutter max-w-container-max mx-auto w-full flex flex-col lg:flex-row gap-gutter">
+<!-- Center Column (Positions) -->
+<div class="flex-1 flex flex-col gap-6">
+<h1 class="font-h2 text-h2 text-primary">VỊ THẾ ĐANG MỞ</h1>
+<div class="flex flex-col gap-4">
+<!-- Position 1 (Expandable) -->
+<details class="bg-surface-container-lowest rounded-[24px] bento-shadow overflow-hidden border border-outline-variant/10 group" open="">
+<summary class="p-card-padding flex items-center justify-between cursor-pointer hover:bg-surface-container-low/50 transition-colors">
+<div class="flex items-center gap-6">
+<span class="font-data-lg text-data-lg font-bold text-primary">XAUUSD</span>
+<span class="px-2.5 py-1 rounded-md bg-secondary/10 text-secondary font-label text-label">BUY</span>
+<span class="font-data-md text-data-md text-on-surface-variant">1.50 Lots</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex flex-col items-end">
+<span class="font-label text-label text-on-surface-variant mb-1">PnL</span>
+<span class="font-data-lg text-data-lg text-secondary font-bold">+$410.00</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-open:rotate-180 transition-transform">expand_more</span>
+</div>
+</summary>
+<div class="px-card-padding pb-card-padding border-t border-outline-variant/10 bg-surface/30">
+<div class="pt-4 flex flex-col gap-2">
+<!-- Layer 1 -->
+<div class="flex items-center justify-between py-2 border-b border-outline-variant/10">
+<div class="flex items-center gap-4 font-data-sm text-data-sm text-on-surface-variant">
+<span class="w-16">L1</span>
+<span>Entry: <span class="text-on-surface font-medium">2045.50</span></span>
+<span>SL: <span class="text-on-surface font-medium">2040.00</span></span>
+<span>TP: <span class="text-on-surface font-medium">2065.00</span></span>
+</div>
+<span class="font-data-sm text-data-sm text-secondary font-medium">+$210.00</span>
+</div>
+<!-- Layer 2 -->
+<div class="flex items-center justify-between py-2">
+<div class="flex items-center gap-4 font-data-sm text-data-sm text-on-surface-variant">
+<span class="w-16">L2</span>
+<span>Entry: <span class="text-on-surface font-medium">2042.00</span></span>
+<span>SL: <span class="text-on-surface font-medium">2040.00</span></span>
+<span>TP: <span class="text-on-surface font-medium">2065.00</span></span>
+</div>
+<span class="font-data-sm text-data-sm text-secondary font-medium">+$200.00</span>
+</div>
+</div>
+</div>
+</details>
+<!-- Position 2 -->
+<details class="bg-surface-container-lowest rounded-[24px] bento-shadow overflow-hidden border border-outline-variant/10 group">
+<summary class="p-card-padding flex items-center justify-between cursor-pointer hover:bg-surface-container-low/50 transition-colors">
+<div class="flex items-center gap-6">
+<span class="font-data-lg text-data-lg font-bold text-primary">BTCUSD</span>
+<span class="px-2.5 py-1 rounded-md bg-error/10 text-error font-label text-label">SELL</span>
+<span class="font-data-md text-data-md text-on-surface-variant">0.25 Lots</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex flex-col items-end">
+<span class="font-label text-label text-on-surface-variant mb-1">PnL</span>
+<span class="font-data-lg text-data-lg text-error font-bold">-$450.00</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-open:rotate-180 transition-transform">expand_more</span>
+</div>
+</summary>
+<div class="px-card-padding pb-card-padding border-t border-outline-variant/10 bg-surface/30">
+<div class="pt-4 flex flex-col gap-2">
+<div class="flex items-center justify-between py-2 text-on-surface-variant text-center">
+<span class="font-body-sm text-body-sm w-full">No active sub-layers.</span>
+</div>
+</div>
+</div>
+</details>
+<!-- Position 3 -->
+<details class="bg-surface-container-lowest rounded-[24px] bento-shadow overflow-hidden border border-outline-variant/10 group">
+<summary class="p-card-padding flex items-center justify-between cursor-pointer hover:bg-surface-container-low/50 transition-colors">
+<div class="flex items-center gap-6">
+<span class="font-data-lg text-data-lg font-bold text-primary">EURUSD</span>
+<span class="px-2.5 py-1 rounded-md bg-secondary/10 text-secondary font-label text-label">BUY</span>
+<span class="font-data-md text-data-md text-on-surface-variant">5.00 Lots</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex flex-col items-end">
+<span class="font-label text-label text-on-surface-variant mb-1">PnL</span>
+<span class="font-data-lg text-data-lg text-secondary font-bold">+$312.00</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-open:rotate-180 transition-transform">expand_more</span>
+</div>
+</summary>
+<div class="px-card-padding pb-card-padding border-t border-outline-variant/10 bg-surface/30">
+<div class="pt-4 flex flex-col gap-2">
+<div class="flex items-center justify-between py-2 text-on-surface-variant text-center">
+<span class="font-body-sm text-body-sm w-full">No active sub-layers.</span>
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+<!-- Right Rail -->
+<aside class="w-full lg:w-80 flex flex-col gap-6 shrink-0">
+<!-- System Status Card -->
+<div class="bg-surface-container-lowest rounded-[24px] p-card-padding bento-shadow border border-outline-variant/10 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-secondary"></span>
+</span>
+<span class="font-h3 text-h3 text-on-surface text-[18px]">MT5 CONNECTED</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label text-label text-on-surface-variant">Latency</span>
+<span class="font-data-sm text-data-sm text-on-surface">14ms</span>
+</div>
+</div>
+<!-- Kill Switch Card -->
+<div class="bg-surface-container-lowest rounded-[24px] p-card-padding bento-shadow border border-error/20 flex flex-col gap-4 items-center text-center justify-center h-48 bg-error/5">
+<span class="material-symbols-outlined text-error text-[40px]">warning</span>
+<button class="w-full py-4 bg-error text-on-error rounded-xl font-body-lg text-body-lg font-bold shadow-lg shadow-error/20 hover:bg-error/90 active:scale-95 transition-all">
+                        KILL SWITCH
+                        <span class="block font-body-sm text-body-sm font-normal opacity-80 mt-1">Đóng tất cả vị thế</span>
+</button>
+</div>
+</aside>
+</main>
+<!-- Bottom Band Metrics -->
+<div class="w-full bg-surface-container-lowest border-t border-outline-variant/20 p-6 shadow-[0_-4px_20px_rgba(17,94,89,0.02)] mt-auto z-10 relative">
+<div class="max-w-container-max mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+<div class="flex flex-col">
+<span class="font-h3 text-h3 text-[16px] text-on-surface-variant mb-1">PnL Hôm Nay</span>
+<span class="font-data-lg text-data-lg text-secondary text-[24px] font-bold">+$4,250.00</span>
+</div>
+<div class="flex flex-col border-l border-outline-variant/20 pl-6">
+<span class="font-h3 text-h3 text-[16px] text-on-surface-variant mb-1">Exposure</span>
+<span class="font-data-lg text-data-lg text-on-surface text-[24px]">1.50 Lots</span>
+</div>
+<div class="flex flex-col border-l border-outline-variant/20 pl-6">
+<span class="font-h3 text-h3 text-[16px] text-on-surface-variant mb-1">Giao Dịch</span>
+<span class="font-data-lg text-data-lg text-on-surface text-[24px]">7</span>
+</div>
+<div class="flex flex-col border-l border-outline-variant/20 pl-6">
+<span class="font-h3 text-h3 text-[16px] text-on-surface-variant mb-1">Hạn Mức Lỗ</span>
+<span class="font-data-lg text-data-lg text-error text-[24px]">$2,750.00</span>
+</div>
+</div>
+</div>
+</div>
+</body></html>

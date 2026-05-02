@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Trading History &amp; Reconciliation - OpenClaw Ops</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings:
+          'FILL' 1,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#ffb3b6",
+                    "on-secondary-container": "#fffbff",
+                    "secondary": "#ba0035",
+                    "tertiary-container": "#7d452f",
+                    "outline": "#6f7977",
+                    "on-error": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#115e59",
+                    "outline-variant": "#bec9c7",
+                    "surface-bright": "#fbf9f5",
+                    "surface-container-highest": "#e4e2de",
+                    "on-surface-variant": "#3f4947",
+                    "on-secondary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "background": "#fbf9f5",
+                    "surface-container-low": "#f5f3ef",
+                    "primary-fixed": "#abefe8",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#91d5ce",
+                    "error-container": "#ffdad6",
+                    "surface-container-high": "#eae8e4",
+                    "secondary-container": "#e21e49",
+                    "primary-fixed-dim": "#8fd3cc",
+                    "surface-container": "#efeeea",
+                    "inverse-primary": "#8fd3cc",
+                    "inverse-on-surface": "#f2f0ed",
+                    "surface-variant": "#e4e2de",
+                    "on-primary-fixed-variant": "#00504b",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#ffb59a",
+                    "on-secondary-fixed": "#40000c",
+                    "on-surface": "#1b1c1a",
+                    "on-tertiary-fixed": "#370e01",
+                    "tertiary": "#612f1a",
+                    "on-secondary-fixed-variant": "#920028",
+                    "on-tertiary-container": "#ffb89e",
+                    "surface": "#fbf9f5",
+                    "on-tertiary-fixed-variant": "#6d3823",
+                    "surface-dim": "#dbdad6",
+                    "on-background": "#1b1c1a",
+                    "tertiary-fixed": "#ffdbce",
+                    "surface-tint": "#216963",
+                    "surface-container-lowest": "#ffffff",
+                    "primary": "#004541",
+                    "secondary-fixed": "#ffdada",
+                    "inverse-surface": "#30312e",
+                    "on-primary-fixed": "#00201e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px",
+                    "card": "24px"
+            },
+            "spacing": {
+                    "stack-lg": "32px",
+                    "card-gap": "24px",
+                    "stack-md": "16px",
+                    "container-padding": "40px",
+                    "unit": "8px",
+                    "stack-sm": "8px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "data-sm": [
+                            "JetBrains Mono"
+                    ],
+                    "h2": [
+                            "Space Grotesk"
+                    ],
+                    "data-lg": [
+                            "JetBrains Mono"
+                    ],
+                    "body-sm": [
+                            "Inter"
+                    ],
+                    "label-caps": [
+                            "Space Grotesk"
+                    ],
+                    "body-main": [
+                            "Inter"
+                    ],
+                    "h1": [
+                            "Space Grotesk"
+                    ]
+            },
+            "fontSize": {
+                    "data-sm": [
+                            "13px",
+                            {
+                                    "lineHeight": "1.0",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "h2": [
+                            "32px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "data-lg": [
+                            "24px",
+                            {
+                                    "lineHeight": "1.0",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "body-sm": [
+                            "14px",
+                            {
+                                    "lineHeight": "1.5",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-caps": [
+                            "12px",
+                            {
+                                    "lineHeight": "1.0",
+                                    "letterSpacing": "0.08em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-main": [
+                            "16px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "h1": [
+                            "48px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-main text-body-main min-h-screen flex">
+<!-- SideNavBar (JSON) -->
+<nav class="h-screen w-72 fixed left-0 top-0 border-r-0 shadow-[4px_0px_20px_rgba(0,0,0,0.02)] shadow-xl bg-surface-container-lowest flex flex-col h-full py-8 z-50">
+<div class="px-6 mb-8">
+<h1 class="text-primary-container font-black font-h2 text-h2 leading-none">Sovereign Console</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-2">Terminal 01-A</p>
+</div>
+<button class="mx-6 mb-8 bg-surface-container hover:bg-surface-container-high text-on-surface py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span class="font-label-caps text-label-caps">New Transaction</span>
+</button>
+<ul class="flex-1 flex flex-col gap-2">
+<li>
+<a class="text-on-surface-variant flex items-center gap-4 py-3 px-6 hover:bg-surface-container-low transition-all duration-300" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-caps text-label-caps">Command</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center gap-4 py-3 px-6 hover:bg-surface-container-low transition-all duration-300" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="font-label-caps text-label-caps">Treasury</span>
+</a>
+</li>
+<li>
+<a class="text-primary-container flex items-center gap-4 py-3 px-6 border-r-4 border-primary-container bg-surface-container-low" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">history</span>
+<span class="font-label-caps text-label-caps">Activity</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center gap-4 py-3 px-6 hover:bg-surface-container-low transition-all duration-300" href="#">
+<span class="material-symbols-outlined">rule</span>
+<span class="font-label-caps text-label-caps">Policies</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center gap-4 py-3 px-6 hover:bg-surface-container-low transition-all duration-300" href="#">
+<span class="material-symbols-outlined">security</span>
+<span class="font-label-caps text-label-caps">Vault</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto px-6">
+<ul class="flex flex-col gap-2 border-t border-surface-variant pt-4">
+<li>
+<a class="text-on-surface-variant flex items-center gap-4 py-2 hover:bg-surface-container-low rounded-lg px-2 transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
+<span class="font-label-caps text-label-caps">Support</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center gap-4 py-2 hover:bg-surface-container-low rounded-lg px-2 transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-[20px]">description</span>
+<span class="font-label-caps text-label-caps">Documentation</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="ml-72 flex-1 flex flex-col w-full">
+<!-- TopAppBar (JSON) -->
+<header class="docked full-width top-0 z-40 shadow-[0px_4px_20px_rgba(0,0,0,0.04)] shadow-sm bg-surface-container-lowest flex justify-between items-center w-full px-10 h-20 sticky">
+<div class="flex items-center gap-8">
+<div class="text-xl font-black text-primary-container tracking-tighter uppercase font-h2">OpenClaw Ops</div>
+<nav class="hidden md:flex gap-6">
+<a class="text-primary-container border-b-2 border-primary-container pb-1 font-['Space_Grotesk'] uppercase tracking-wider text-sm font-semibold" href="#">History</a>
+<a class="text-on-surface-variant hover:text-primary-container transition-colors font-['Space_Grotesk'] uppercase tracking-wider text-sm font-semibold" href="#">Reconciliation</a>
+<a class="text-on-surface-variant hover:text-primary-container transition-colors font-['Space_Grotesk'] uppercase tracking-wider text-sm font-semibold" href="#">Assets</a>
+<a class="text-on-surface-variant hover:text-primary-container transition-colors font-['Space_Grotesk'] uppercase tracking-wider text-sm font-semibold" href="#">Network</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden lg:flex items-center bg-surface-container rounded-full px-4 py-2 shadow-inner">
+<span class="material-symbols-outlined text-on-surface-variant mr-2 text-[20px]">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-sm font-body-sm w-48 text-on-surface placeholder-on-surface-variant p-0" placeholder="Search operations..." type="text"/>
+</div>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-all active:scale-95 duration-200 ease-in-out">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-all active:scale-95 duration-200 ease-in-out">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden border border-surface-container-high ml-2">
+<img alt="Operator Profile" class="w-full h-full object-cover" data-alt="A close-up portrait of a professional system operator in a modern, brightly lit command center. The lighting is soft and natural, emphasizing a calm and focused demeanor. The background is slightly blurred but suggests a high-tech environment with minimalist aesthetics. The overall mood is serious but approachable." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyhs-n4619ieJnAkboUOzp1nwiDUD4hq4CFk5859W66Y94e2ChjukMMB2h-4rbcc6RB6UQzTPIgqnXYOPMQSJ10v6i0glp6d-q5s3XOanjvZGzbs1ZGl_lUzY-zsHboKm75lo9X4gm-8h0isIhlXy3vjVF0Ni6WAVt2vDCCzc7FakTd19ZvfNZMPaaqS0lsDiMs8Rx2pSLgpq44iPFFZ1E21cFuNqPBoXGHeX82hOnVUcq7-HGJB4GG4L9eNydHYotHlx4oLTzHw"/>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="p-container-padding flex flex-col gap-stack-lg max-w-7xl mx-auto w-full">
+<div class="mb-stack-sm">
+<h2 class="font-h2 text-h2 text-on-surface">Trading History &amp; Reconciliation</h2>
+<p class="font-body-main text-body-main text-on-surface-variant mt-2">Daily operational logs and database sync status.</p>
+</div>
+<!-- Expandable Bento Grids -->
+<div class="grid grid-cols-1 gap-card-gap">
+<!-- Section 1: LỊCH SỬ THỰC THI -->
+<details class="group bg-surface-container-lowest rounded-card shadow-[0px_4px_20px_rgba(0,0,0,0.04)] overflow-hidden" open="">
+<summary class="flex justify-between items-center p-6 cursor-pointer hover:bg-surface-bright transition-colors select-none">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-container">list_alt</span>
+<h3 class="font-label-caps text-label-caps text-on-surface">LỊCH SỬ THỰC THI</h3>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="p-6 pt-0 border-t border-surface-container-highest">
+<div class="overflow-x-auto mt-4">
+<table class="w-full text-left">
+<thead>
+<tr>
+<th class="pb-3 px-4 font-label-caps text-label-caps text-on-surface-variant">Order ID</th>
+<th class="pb-3 px-4 font-label-caps text-label-caps text-on-surface-variant">Symbol</th>
+<th class="pb-3 px-4 font-label-caps text-label-caps text-on-surface-variant">Type</th>
+<th class="pb-3 px-4 font-label-caps text-label-caps text-on-surface-variant">Lot</th>
+<th class="pb-3 px-4 font-label-caps text-label-caps text-on-surface-variant">Fill Price</th>
+<th class="pb-3 px-4 font-label-caps text-label-caps text-on-surface-variant text-right">Timestamp</th>
+</tr>
+</thead>
+<tbody class="font-data-sm text-data-sm text-on-surface">
+<tr class="hover:bg-surface-container-low transition-colors rounded-lg group">
+<td class="py-4 px-4 rounded-l-lg">#ORD-9921A</td>
+<td class="py-4 px-4 font-medium">XAUUSD</td>
+<td class="py-4 px-4">
+<span class="bg-primary-container text-on-primary px-2 py-1 rounded text-xs font-semibold tracking-wide">BUY</span>
+</td>
+<td class="py-4 px-4">5.00</td>
+<td class="py-4 px-4">2045.50</td>
+<td class="py-4 px-4 text-right text-on-surface-variant rounded-r-lg">10:15:22.004</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors rounded-lg">
+<td class="py-4 px-4 rounded-l-lg">#ORD-9921B</td>
+<td class="py-4 px-4 font-medium">EURUSD</td>
+<td class="py-4 px-4">
+<span class="bg-secondary text-on-secondary px-2 py-1 rounded text-xs font-semibold tracking-wide">SELL</span>
+</td>
+<td class="py-4 px-4">10.00</td>
+<td class="py-4 px-4">1.0825</td>
+<td class="py-4 px-4 text-right text-on-surface-variant rounded-r-lg">10:12:05.112</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors rounded-lg">
+<td class="py-4 px-4 rounded-l-lg">#ORD-9921C</td>
+<td class="py-4 px-4 font-medium">BTCUSD</td>
+<td class="py-4 px-4">
+<span class="bg-primary-container text-on-primary px-2 py-1 rounded text-xs font-semibold tracking-wide">BUY</span>
+</td>
+<td class="py-4 px-4">0.50</td>
+<td class="py-4 px-4">64200.00</td>
+<td class="py-4 px-4 text-right text-on-surface-variant rounded-r-lg">09:58:45.990</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</details>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-card-gap">
+<!-- Section 2: HARD REJECT -->
+<details class="group bg-surface-container-lowest rounded-card shadow-[0px_4px_20px_rgba(0,0,0,0.04)] overflow-hidden" open="">
+<summary class="flex justify-between items-center p-6 cursor-pointer hover:bg-surface-bright transition-colors select-none">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">block</span>
+<h3 class="font-label-caps text-label-caps text-on-surface">HARD REJECT</h3>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="p-6 pt-0 border-t border-surface-container-highest">
+<div class="overflow-x-auto mt-4">
+<table class="w-full text-left">
+<thead>
+<tr>
+<th class="pb-3 px-2 font-label-caps text-label-caps text-on-surface-variant">Signal ID</th>
+<th class="pb-3 px-2 font-label-caps text-label-caps text-on-surface-variant">Symbol</th>
+<th class="pb-3 px-2 font-label-caps text-label-caps text-on-surface-variant">Reason</th>
+</tr>
+</thead>
+<tbody class="font-data-sm text-data-sm text-on-surface">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-2">SIG-404</td>
+<td class="py-3 px-2 font-medium">GBPUSD</td>
+<td class="py-3 px-2 text-secondary">Insufficient Margin</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-2">SIG-405</td>
+<td class="py-3 px-2 font-medium">US30</td>
+<td class="py-3 px-2 text-secondary">Market Closed</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-2">SIG-406</td>
+<td class="py-3 px-2 font-medium">XAGUSD</td>
+<td class="py-3 px-2 text-secondary">Price Deviation</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</details>
+<!-- Section 3: ĐỐI SOÁT DB ↔ MT5 -->
+<details class="group bg-surface-container-lowest rounded-card shadow-[0px_4px_20px_rgba(0,0,0,0.04)] overflow-hidden" open="">
+<summary class="flex justify-between items-center p-6 cursor-pointer hover:bg-surface-bright transition-colors select-none">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface">sync_alt</span>
+<h3 class="font-label-caps text-label-caps text-on-surface">ĐỐI SOÁT DB ↔ MT5</h3>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="p-6 pt-0 border-t border-surface-container-highest">
+<div class="grid grid-cols-2 gap-4 mt-6">
+<div class="bg-surface-container-low p-4 rounded-xl flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Last Run</span>
+<span class="font-data-lg text-data-lg text-on-surface">22:00</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">DB Positions</span>
+<span class="font-data-lg text-data-lg text-on-surface">3</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">MT5 Positions</span>
+<span class="font-data-lg text-data-lg text-on-surface">3</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl flex flex-col gap-1 border border-primary-container/20">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Mismatches</span>
+<span class="font-data-lg text-data-lg text-primary-container">0</span>
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+</div>
+</main>
+</body></html>

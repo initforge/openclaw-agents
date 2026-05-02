@@ -1,0 +1,52 @@
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "content": [
+      {
+        "text": "{\"projectId\":\"5389230604236360897\",\"sessionId\":\"16506302453191593146\",\"outputComponents\":[{\"design\":{\"screens\":[{\"screenshot\":{\"name\":\"projects/5389230604236360897/files/ae8df3423305422689d9b95034300b8d\",\"downloadUrl\":\"https://lh3.googleusercontent.com/aida/ADBb0ujAx5k9jm1VntTibSM0lEZJM1q4OJJAgviozxCZOivPwavaEiVXpr800DqnGzB_z-15qRw2eSCUTHLhBZGRnMu7GfnsIDA8EJjp1iw95WAtpUekTYE6J4bxVQ58-bn_7x3_J-wOhwH4Nm-JN7VLfrBeJ5Lqho9-S1tLkgz3rmk-NsWsQNXiuEhNdXtcltt410oMy_HRt2xnOZvzHp22IKagX97Bb-Q1TeREks_K5ytfx6PJvIR11DM1\"},\"htmlCode\":{\"name\":\"projects/5389230604236360897/files/0f88c01defe54baf8103907c7f81ad7d\",\"downloadUrl\":\"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ6Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpZCiVodG1sX2I0OGZlZGRkYjJiNTQ5Mzg4YzRjMzZiZGQwNTcyZWYxEgoSBhCMkoevehgBkgEjCgpwcm9qZWN0X2lkEhVCEzUzODkyMzA2MDQyMzYzNjA4OTc&filename=&opi=96797242\",\"mimeType\":\"text/html\"},\"id\":\"933f12d2461e4c95a93c4f6db1cb24f6\",\"generatedBy\":\"create_datastore_entry\",\"width\":\"2560\",\"height\":\"2048\",\"title\":\"Simple Red Button\",\"name\":\"projects/5389230604236360897/screens/933f12d2461e4c95a93c4f6db1cb24f6\",\"theme\":{},\"deviceType\":\"DESKTOP\",\"screenType\":\"DESIGN\",\"screenMetadata\":{\"agentType\":\"PRO_AGENT\",\"status\":\"COMPLETE\"}}],\"theme\":{}}},{\"text\":\"I've added a simple red button to the canvas as you requested. It's designed with a clean, modern look, featuring a subtle shadow and hover effects.\"}]}",
+        "type": "text"
+      }
+    ],
+    "structuredContent": {
+      "outputComponents": [
+        {
+          "design": {
+            "screens": [
+              {
+                "deviceType": "DESKTOP",
+                "generatedBy": "create_datastore_entry",
+                "height": "2048",
+                "htmlCode": {
+                  "downloadUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ6Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpZCiVodG1sX2I0OGZlZGRkYjJiNTQ5Mzg4YzRjMzZiZGQwNTcyZWYxEgoSBhCMkoevehgBkgEjCgpwcm9qZWN0X2lkEhVCEzUzODkyMzA2MDQyMzYzNjA4OTc&filename=&opi=96797242",
+                  "mimeType": "text/html",
+                  "name": "projects/5389230604236360897/files/0f88c01defe54baf8103907c7f81ad7d"
+                },
+                "id": "933f12d2461e4c95a93c4f6db1cb24f6",
+                "name": "projects/5389230604236360897/screens/933f12d2461e4c95a93c4f6db1cb24f6",
+                "screenMetadata": {
+                  "agentType": "PRO_AGENT",
+                  "status": "COMPLETE"
+                },
+                "screenType": "DESIGN",
+                "screenshot": {
+                  "downloadUrl": "https://lh3.googleusercontent.com/aida/ADBb0ujAx5k9jm1VntTibSM0lEZJM1q4OJJAgviozxCZOivPwavaEiVXpr800DqnGzB_z-15qRw2eSCUTHLhBZGRnMu7GfnsIDA8EJjp1iw95WAtpUekTYE6J4bxVQ58-bn_7x3_J-wOhwH4Nm-JN7VLfrBeJ5Lqho9-S1tLkgz3rmk-NsWsQNXiuEhNdXtcltt410oMy_HRt2xnOZvzHp22IKagX97Bb-Q1TeREks_K5ytfx6PJvIR11DM1",
+                  "name": "projects/5389230604236360897/files/ae8df3423305422689d9b95034300b8d"
+                },
+                "theme": {},
+                "title": "Simple Red Button",
+                "width": "2560"
+              }
+            ],
+            "theme": {}
+          }
+        },
+        {
+          "text": "I've added a simple red button to the canvas as you requested. It's designed with a clean, modern look, featuring a subtle shadow and hover effects."
+        }
+      ],
+      "projectId": "5389230604236360897",
+      "sessionId": "16506302453191593146"
+    }
+  }
+}

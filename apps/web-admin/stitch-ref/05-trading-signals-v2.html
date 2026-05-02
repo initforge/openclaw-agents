@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenClaw Ops - Luồng tín hiệu</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&amp;family=JetBrains+Mono:wght@400..700&amp;family=Inter:wght@400..600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#191c1c",
+                        "secondary-fixed-dim": "#a2d0c6",
+                        "on-secondary-fixed-variant": "#224e47",
+                        "on-primary-fixed-variant": "#00504b",
+                        "surface-tint": "#216963",
+                        "secondary-container": "#bdece2",
+                        "surface-container-low": "#f2f4f3",
+                        "on-tertiary-fixed": "#191c1e",
+                        "surface-variant": "#e1e3e2",
+                        "on-secondary-container": "#416c65",
+                        "surface-container": "#eceeed",
+                        "on-primary-fixed": "#00201e",
+                        "primary": "#004541",
+                        "primary-fixed": "#abefe8",
+                        "inverse-surface": "#2e3130",
+                        "error": "#ba1a1a",
+                        "tertiary": "#3a3d3f",
+                        "on-surface-variant": "#3f4947",
+                        "surface-dim": "#d8dad9",
+                        "secondary": "#3b665f",
+                        "on-background": "#191c1c",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "surface-container-high": "#e6e9e7",
+                        "surface-bright": "#f8faf8",
+                        "on-primary-container": "#91d5ce",
+                        "outline-variant": "#bec9c7",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f8faf8",
+                        "inverse-on-surface": "#eff1f0",
+                        "on-tertiary-container": "#c7c8ca",
+                        "surface-container-highest": "#e1e3e2",
+                        "outline": "#6f7977",
+                        "secondary-fixed": "#bdece2",
+                        "surface": "#f8faf8",
+                        "tertiary-fixed-dim": "#c5c6c8",
+                        "error-container": "#ffdad6",
+                        "primary-fixed-dim": "#8fd3cc",
+                        "on-secondary-fixed": "#00201c",
+                        "tertiary-container": "#525456",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#e1e2e4",
+                        "inverse-primary": "#8fd3cc",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#115e59"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "32px",
+                        "gutter": "16px",
+                        "container-margin": "40px",
+                        "sm": "12px",
+                        "md": "16px",
+                        "base": "4px",
+                        "xs": "8px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Space Grotesk"],
+                        "h2": ["Space Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "h1": ["Space Grotesk"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "h2": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "data-mono": ["14px", { "lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "h1": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #FDFBF7; }
+        .bento-card {
+            border-radius: 24px;
+            background-color: #ffffff;
+            border: 1px solid #E5E7EB;
+            padding: 24px;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen text-on-surface font-body-md antialiased">
+<!-- Top AppBar (Mobile Only) -->
+<header class="md:hidden flex justify-between items-center h-16 px-6 w-full bg-[#FDFBF7] text-[#115E59] font-['Space_Grotesk'] docked full-width top-0 z-50 border-b border-stone-200">
+<div class="text-xl font-bold tracking-tighter">OpenClaw Ops</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined hover:bg-stone-100 transition-colors rounded-full p-2">notifications</span>
+<span class="material-symbols-outlined hover:bg-stone-100 transition-colors rounded-full p-2">apps</span>
+</div>
+</header>
+<!-- SideNavBar (Web Only) -->
+<nav class="hidden md:flex flex-col h-screen w-64 border-r border-stone-200 bg-[#FDFBF7] text-[#115E59] font-['Space_Grotesk'] text-sm tracking-tight docked left-0 py-6 shrink-0">
+<div class="px-6 mb-8">
+<div class="text-lg font-black tracking-tighter">OpenClaw Ops</div>
+<div class="text-xs text-stone-500 font-medium tracking-wider mt-1 uppercase">Trading Intelligence</div>
+</div>
+<div class="flex flex-col gap-1 w-full">
+<a class="flex items-center gap-3 px-6 py-3 text-stone-500 hover:text-[#115E59] hover:bg-stone-50 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Bảng điều khiển
+            </a>
+<a class="flex items-center gap-3 px-6 py-3 bg-[#F3F4F6] text-[#115E59] font-bold border-r-4 border-[#115E59] transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">dynamic_feed</span>
+                Luồng tín hiệu
+            </a>
+<a class="flex items-center gap-3 px-6 py-3 text-stone-500 hover:text-[#115E59] hover:bg-stone-50 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">history</span>
+                Lịch sử
+            </a>
+<a class="flex items-center gap-3 px-6 py-3 text-stone-500 hover:text-[#115E59] hover:bg-stone-50 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Cài đặt
+            </a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col min-w-0 p-6 md:p-10 lg:p-12 overflow-y-auto">
+<!-- Page Header & Filters -->
+<div class="mb-xl">
+<h1 class="font-h1 text-h1 text-primary-container mb-md tracking-tight uppercase">LUỒNG TÍN HIỆU</h1>
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<div class="flex items-center gap-3">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">NHÓM THEO:</span>
+<div class="flex gap-2">
+<button class="px-4 py-2 rounded-full bg-primary-container text-on-primary font-data-mono text-data-mono text-sm transition-transform active:scale-95">Thời gian</button>
+<button class="px-4 py-2 rounded-full bg-surface-container text-on-surface-variant hover:bg-surface-variant font-data-mono text-data-mono text-sm transition-all">Nguồn</button>
+<button class="px-4 py-2 rounded-full bg-surface-container text-on-surface-variant hover:bg-surface-variant font-data-mono text-data-mono text-sm transition-all">Symbol</button>
+</div>
+</div>
+<div class="flex flex-wrap gap-2">
+<button class="px-3 py-1.5 rounded border border-outline-variant text-on-surface-variant text-sm font-body-sm hover:border-primary-container transition-colors">Tất cả</button>
+<button class="px-3 py-1.5 rounded border border-outline-variant text-on-surface-variant text-sm font-body-sm hover:border-primary-container transition-colors flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span> Đã thực thi
+                    </button>
+<button class="px-3 py-1.5 rounded border border-outline-variant text-on-surface-variant text-sm font-body-sm hover:border-primary-container transition-colors flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-error"></span> Từ chối
+                    </button>
+<button class="px-3 py-1.5 rounded border border-outline-variant text-on-surface-variant text-sm font-body-sm hover:border-primary-container transition-colors flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-[#D97706]"></span> Noise
+                    </button>
+</div>
+</div>
+</div>
+<!-- Signal Stream (Bento Grid) -->
+<div class="flex flex-col gap-gutter">
+<!-- Signal Card 1 -->
+<div class="bento-card grid grid-cols-1 lg:grid-cols-12 gap-6 hover:shadow-lg transition-shadow duration-300">
+<!-- Col 1: Original Message -->
+<div class="lg:col-span-4 flex flex-col gap-3">
+<div class="font-label-caps text-label-caps text-outline uppercase tracking-wider">TIN NHẮN GỐC</div>
+<div>
+<span class="inline-block px-2 py-1 bg-primary-container/10 text-primary-container text-xs font-bold rounded mb-2">GoldSignalVIP</span>
+<div class="font-data-mono text-data-mono p-3 bg-surface-bright rounded border border-outline-variant text-on-surface whitespace-pre-wrap">BUY XAUUSD @ 2045 SL 2040 TP 2065</div>
+</div>
+</div>
+<!-- Col 2: AI Analysis -->
+<div class="lg:col-span-4 flex flex-col gap-3 lg:border-l lg:border-outline-variant lg:pl-6">
+<div class="flex justify-between items-center">
+<div class="font-label-caps text-label-caps text-outline uppercase tracking-wider">AI PHÂN TÍCH</div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-primary-container/10 text-primary-container font-label-caps text-[10px] rounded uppercase">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span> new_signal
+                        </span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-xs font-data-mono text-outline">
+<span>Confidence</span>
+<span class="text-primary-container font-bold">92%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[92%]"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-2">
+<div class="flex flex-col"><span class="text-[10px] text-outline font-label-caps uppercase">Symbol</span><span class="font-data-mono text-sm font-semibold">XAUUSD</span></div>
+<div class="flex flex-col"><span class="text-[10px] text-outline font-label-caps uppercase">Action</span><span class="font-data-mono text-sm font-bold text-primary-container">BUY</span></div>
+<div class="flex flex-col"><span class="text-[10px] text-outline font-label-caps uppercase">Entry</span><span class="font-data-mono text-sm">2045</span></div>
+<div class="flex flex-col"><span class="text-[10px] text-outline font-label-caps uppercase">SL / TP</span><span class="font-data-mono text-sm">2040 / 2065</span></div>
+</div>
+</div>
+<!-- Col 3: Result -->
+<div class="lg:col-span-4 flex flex-col justify-between lg:border-l lg:border-outline-variant lg:pl-6">
+<div class="flex flex-col gap-3">
+<div class="font-label-caps text-label-caps text-outline uppercase tracking-wider">KẾT QUẢ</div>
+<div>
+<div class="inline-flex items-center gap-1.5 text-primary-container font-bold text-sm mb-1">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+                                ĐÃ THỰC THI
+                            </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Order #OC-9921 placed successfully via API.</p>
+</div>
+</div>
+<div class="flex justify-between items-end mt-4 lg:mt-0">
+<span class="font-data-mono text-xs text-outline">10:24:15 AM</span>
+<span class="font-data-mono text-xs text-outline">#OC-9921</span>
+</div>
+</div>
+</div>
+<!-- Signal Card 2 (Noise Example) -->
+<div class="bento-card grid grid-cols-1 lg:grid-cols-12 gap-6 hover:shadow-lg transition-shadow duration-300 opacity-75">
+<div class="lg:col-span-4 flex flex-col gap-3">
+<div class="font-label-caps text-label-caps text-outline uppercase tracking-wider">TIN NHẮN GỐC</div>
+<div>
+<span class="inline-block px-2 py-1 bg-stone-200 text-stone-700 text-xs font-bold rounded mb-2">CryptoChatter</span>
+<div class="font-data-mono text-data-mono p-3 bg-surface-bright rounded border border-outline-variant text-on-surface whitespace-pre-wrap">Just saw the CPI numbers, looks like markets will pump soon! 🚀</div>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col gap-3 lg:border-l lg:border-outline-variant lg:pl-6">
+<div class="flex justify-between items-center">
+<div class="font-label-caps text-label-caps text-outline uppercase tracking-wider">AI PHÂN TÍCH</div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-[#FEF3C7] text-[#92400E] font-label-caps text-[10px] rounded uppercase">
+<span class="material-symbols-outlined text-[14px]">warning</span> noise
+                        </span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-xs font-data-mono text-outline">
+<span>Confidence (Actionable)</span>
+<span class="text-[#92400E] font-bold">12%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-[#D97706] w-[12%]"></div>
+</div>
+</div>
+<p class="font-body-sm text-sm text-outline italic mt-2">No actionable trading parameters detected.</p>
+</div>
+<div class="lg:col-span-4 flex flex-col justify-between lg:border-l lg:border-outline-variant lg:pl-6">
+<div class="flex flex-col gap-3">
+<div class="font-label-caps text-label-caps text-outline uppercase tracking-wider">KẾT QUẢ</div>
+<div>
+<div class="inline-flex items-center gap-1.5 text-outline font-bold text-sm mb-1">
+<span class="material-symbols-outlined text-[16px]">block</span>
+                                BỎ QUA
+                            </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Message classified as chatter/noise.</p>
+</div>
+</div>
+<div class="flex justify-between items-end mt-4 lg:mt-0">
+<span class="font-data-mono text-xs text-outline">10:18:42 AM</span>
+<span class="font-data-mono text-xs text-outline">#OC-9920</span>
+</div>
+</div>
+</div>
+<!-- Signal Card 3 (Rejected) -->
+<div class="bento-card grid grid-cols-1 lg:grid-cols-12 gap-6 hover:shadow-lg transition-shadow duration-300">
+<div class="lg:col-span-4 flex flex-col gap-3">
+<div class="font-label-caps text-label-caps text-outline uppercase tracking-wider">TIN NHẮN GỐC</div>
+<div>
+<span class="inline-block px-2 py-1 bg-primary-container/10 text-primary-container text-xs font-bold rounded mb-2">FX_Sniper</span>
+<div class="font-data-mono text-data-mono p-3 bg-surface-bright rounded border border-outline-variant text-on-surface whitespace-pre-wrap">SELL EURUSD 1.0950 SL 1.1000 TP 1.0800</div>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col gap-3 lg:border-l lg:border-outline-variant lg:pl-6">
+<div class="flex justify-between items-center">
+<div class="font-label-caps text-label-caps text-outline uppercase tracking-wider">AI PHÂN TÍCH</div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-primary-container/10 text-primary-container font-label-caps text-[10px] rounded uppercase">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span> new_signal
+                        </span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-xs font-data-mono text-outline">
+<span>Confidence</span>
+<span class="text-primary-container font-bold">88%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[88%]"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-2">
+<div class="flex flex-col"><span class="text-[10px] text-outline font-label-caps uppercase">Symbol</span><span class="font-data-mono text-sm font-semibold">EURUSD</span></div>
+<div class="flex flex-col"><span class="text-[10px] text-outline font-label-caps uppercase">Action</span><span class="font-data-mono text-sm font-bold text-error">SELL</span></div>
+<div class="flex flex-col"><span class="text-[10px] text-outline font-label-caps uppercase">Entry</span><span class="font-data-mono text-sm">1.0950</span></div>
+<div class="flex flex-col"><span class="text-[10px] text-outline font-label-caps uppercase">SL / TP</span><span class="font-data-mono text-sm">1.1000 / 1.0800</span></div>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col justify-between lg:border-l lg:border-outline-variant lg:pl-6">
+<div class="flex flex-col gap-3">
+<div class="font-label-caps text-label-caps text-outline uppercase tracking-wider">KẾT QUẢ</div>
+<div>
+<div class="inline-flex items-center gap-1.5 text-error font-bold text-sm mb-1">
+<span class="material-symbols-outlined text-[16px]">cancel</span>
+                                TỪ CHỐI
+                            </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Risk limit exceeded. SL distance (50 pips) breaches max risk rule.</p>
+</div>
+</div>
+<div class="flex justify-between items-end mt-4 lg:mt-0">
+<span class="font-data-mono text-xs text-outline">09:45:02 AM</span>
+<span class="font-data-mono text-xs text-outline">#OC-9919</span>
+</div>
+</div>
+</div>
+<!-- Signal Card 4 -->
+<div class="bento-card grid grid-cols-1 lg:grid-cols-12 gap-6 hover:shadow-lg transition-shadow duration-300">
+<div class="lg:col-span-4 flex flex-col gap-3">
+<div class="font-label-caps text-label-caps text-outline uppercase tracking-wider">TIN NHẮN GỐC</div>
+<div>
+<span class="inline-block px-2 py-1 bg-primary-container/10 text-primary-container text-xs font-bold rounded mb-2">AlgoBot_Alpha</span>
+<div class="font-data-mono text-data-mono p-3 bg-surface-bright rounded border border-outline-variant text-on-surface whitespace-pre-wrap">{"asset":"BTCUSD", "type":"buy", "price": 42000, "sl": 41500}</div>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col gap-3 lg:border-l lg:border-outline-variant lg:pl-6">
+<div class="flex justify-between items-center">
+<div class="font-label-caps text-label-caps text-outline uppercase tracking-wider">AI PHÂN TÍCH</div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-primary-container/10 text-primary-container font-label-caps text-[10px] rounded uppercase">
+<span class="material-symbols-outlined text-[14px]">api</span> structured
+                        </span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-xs font-data-mono text-outline">
+<span>Confidence</span>
+<span class="text-primary-container font-bold">100%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[100%]"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-y-2 gap-x-4 mt-2">
+<div class="flex flex-col"><span class="text-[10px] text-outline font-label-caps uppercase">Symbol</span><span class="font-data-mono text-sm font-semibold">BTCUSD</span></div>
+<div class="flex flex-col"><span class="text-[10px] text-outline font-label-caps uppercase">Action</span><span class="font-data-mono text-sm font-bold text-primary-container">BUY</span></div>
+<div class="flex flex-col"><span class="text-[10px] text-outline font-label-caps uppercase">Entry</span><span class="font-data-mono text-sm">42000</span></div>
+<div class="flex flex-col"><span class="text-[10px] text-outline font-label-caps uppercase">SL / TP</span><span class="font-data-mono text-sm">41500 / --</span></div>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col justify-between lg:border-l lg:border-outline-variant lg:pl-6">
+<div class="flex flex-col gap-3">
+<div class="font-label-caps text-label-caps text-outline uppercase tracking-wider">KẾT QUẢ</div>
+<div>
+<div class="inline-flex items-center gap-1.5 text-primary-container font-bold text-sm mb-1">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+                                ĐÃ THỰC THI
+                            </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Order #OC-9918 routed to Crypto Exchange.</p>
+</div>
+</div>
+<div class="flex justify-between items-end mt-4 lg:mt-0">
+<span class="font-data-mono text-xs text-outline">08:12:33 AM</span>
+<span class="font-data-mono text-xs text-outline">#OC-9918</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

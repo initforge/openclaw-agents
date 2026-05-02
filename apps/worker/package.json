@@ -1,0 +1,25 @@
+{
+  "name": "@openclaw/worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "biome check src",
+    "test": "vitest run",
+    "test:unit": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@openclaw/agent-core": "workspace:*",
+    "@openclaw/ai-router": "workspace:*",
+    "@openclaw/contracts": "workspace:*",
+    "@openclaw/db": "workspace:*",
+    "@openclaw/domain-content": "workspace:*",
+    "@openclaw/domain-leads": "workspace:*",
+    "@openclaw/domain-trading": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.3"
+  }
+}

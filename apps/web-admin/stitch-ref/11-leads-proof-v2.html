@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OpenClaw Ops - Proof Library</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-container": "#006f66",
+                      "on-primary-fixed-variant": "#5c4300",
+                      "on-primary-fixed": "#261a00",
+                      "surface-bright": "#fff8f2",
+                      "on-primary-container": "#6d5000",
+                      "tertiary-container": "#ffb7b1",
+                      "on-tertiary": "#ffffff",
+                      "surface": "#fff8f2",
+                      "on-secondary-fixed-variant": "#005049",
+                      "surface-tint": "#795900",
+                      "on-secondary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "on-surface-variant": "#504532",
+                      "on-tertiary-fixed-variant": "#930013",
+                      "tertiary-fixed-dim": "#ffb3ad",
+                      "outline": "#827660",
+                      "tertiary": "#b91a24",
+                      "secondary-fixed-dim": "#6bd8cb",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-high": "#f2e7d6",
+                      "inverse-primary": "#fbbc00",
+                      "surface-container": "#f8ecdb",
+                      "secondary": "#006a61",
+                      "on-primary": "#ffffff",
+                      "primary-container": "#ffbf00",
+                      "surface-container-low": "#fef2e1",
+                      "primary": "#795900",
+                      "background": "#fff8f2",
+                      "on-error-container": "#93000a",
+                      "secondary-fixed": "#89f5e7",
+                      "tertiary-fixed": "#ffdad7",
+                      "on-background": "#201b11",
+                      "primary-fixed-dim": "#fbbc00",
+                      "on-error": "#ffffff",
+                      "secondary-container": "#86f2e4",
+                      "outline-variant": "#d4c5ab",
+                      "on-secondary-fixed": "#00201d",
+                      "error-container": "#ffdad6",
+                      "on-surface": "#201b11",
+                      "surface-dim": "#e4d8c8",
+                      "on-tertiary-fixed": "#410004",
+                      "inverse-on-surface": "#fbefde",
+                      "surface-container-highest": "#ede1d0",
+                      "on-tertiary-container": "#aa0a1b",
+                      "inverse-surface": "#363024",
+                      "surface-variant": "#ede1d0",
+                      "primary-fixed": "#ffdfa0"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "container-padding": "32px",
+                      "card-gap": "24px",
+                      "section-margin": "48px",
+                      "unit": "8px"
+              },
+              "fontFamily": {
+                      "label-caps": [
+                              "Space Grotesk"
+                      ],
+                      "data-display": [
+                              "JetBrains Mono"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "h2": [
+                              "Space Grotesk"
+                      ],
+                      "h1": [
+                              "Space Grotesk"
+                      ],
+                      "data-small": [
+                              "JetBrains Mono"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "h3": [
+                              "Space Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "data-display": [
+                              "20px",
+                              {
+                                      "lineHeight": "1",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "h2": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "h1": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "data-small": [
+                              "14px",
+                              {
+                                      "lineHeight": "1",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "h3": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-[#FBF8F3] text-on-background min-h-screen flex selection:bg-primary-container selection:text-on-primary-container">
+<!-- SideNavBar (from JSON) -->
+<nav class="hidden md:flex h-screen w-72 flex-col fixed left-0 top-0 bg-[#FBF8F3] dark:bg-stone-950 shadow-none border-r border-stone-100 dark:border-stone-800 p-6 pt-24 gap-2 z-50">
+<div class="mb-8 px-4">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center overflow-hidden">
+<img alt="OpenClaw Logo" class="w-full h-full object-cover" data-alt="A stylized, minimalist logo mark featuring an abstracted claw or talon shape in warm amber tones, set against a pristine white background. The lighting is soft and flat, emphasizing the crisp vector-style edges of the logo. The overall aesthetic is modern, tech-forward, and clean." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDX0ojnEcLxo5UUwC2yG46LJqThz6ECArUN-b6552GBD9-wQJE-jV2t3ou9Ik1vKx-A2ZVgR70G1uZgX3ivqQ5tItG8ApA6AgS0k0x2UQK490LSaScsw9aKEmzFdsWmWflpCjwReWT7_Hvy0jopjTfd0zUeUseA0yNRrQ9hm2q3j7NP3f_W-Qk8FPYcvyYl8Pz2LmBSmTOHOrCUHrBVTLORSdT70wKIu6YtdslFwiWtda8DJcMrJoSo4aTK61pEEzXveWAXQc_nXQ"/>
+</div>
+<div>
+<h2 class="font-h3 text-h3 text-stone-900 dark:text-white">Command Center</h2>
+<p class="font-data-small text-data-small text-on-surface-variant mt-1">Operator v2.4</p>
+</div>
+</div>
+<button class="w-full mt-6 bg-primary-container text-on-primary-container font-label-caps text-label-caps py-3 px-4 rounded-xl flex items-center justify-center gap-2 hover:bg-inverse-primary transition-colors active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)]">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Proof
+            </button>
+</div>
+<div class="flex-1 overflow-y-auto pr-2 flex flex-col gap-unit">
+<a class="flex items-center gap-3 px-4 py-3 bg-white dark:bg-stone-900 text-stone-900 dark:text-white rounded-xl shadow-[0_4px_12px_-2px_rgba(180,170,150,0.1)] active:scale-[0.98] transition-all font-['Space_Grotesk'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">library_books</span>
+                Library
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-500 dark:text-stone-400 hover:bg-stone-100/50 dark:hover:bg-stone-800/30 rounded-xl active:scale-[0.98] transition-all font-['Space_Grotesk'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">analytics</span>
+                Reports
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-500 dark:text-stone-400 hover:bg-stone-100/50 dark:hover:bg-stone-800/30 rounded-xl active:scale-[0.98] transition-all font-['Space_Grotesk'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">campaign</span>
+                Campaigns
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-500 dark:text-stone-400 hover:bg-stone-100/50 dark:hover:bg-stone-800/30 rounded-xl active:scale-[0.98] transition-all font-['Space_Grotesk'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">group</span>
+                Team
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-500 dark:text-stone-400 hover:bg-stone-100/50 dark:hover:bg-stone-800/30 rounded-xl active:scale-[0.98] transition-all font-['Space_Grotesk'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 ml-0 md:ml-72 p-container-padding max-w-7xl mx-auto w-full">
+<!-- Header -->
+<header class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-section-margin">
+<div>
+<h1 class="font-h1 text-h1 text-on-surface">THƯ VIỆN PROOF</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2 max-w-2xl">Quản lý và sử dụng các chứng cứ (proof) để tăng tỉ lệ chuyển đổi.</p>
+</div>
+<div class="flex flex-wrap items-center gap-4">
+<button class="bg-surface-container-high text-on-surface font-label-caps text-label-caps py-3 px-5 rounded-xl flex items-center gap-2 hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">photo_camera</span>
+                    Chụp Playwright
+                </button>
+<button class="bg-primary-container text-on-primary-container font-label-caps text-label-caps py-3 px-6 rounded-xl flex items-center gap-2 hover:bg-inverse-primary transition-colors active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)]">
+<span class="material-symbols-outlined">add</span>
+                    Thêm Proof
+                </button>
+</div>
+</header>
+<!-- Proof Grid -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-card-gap mb-section-margin">
+<!-- Card 1: Case Study -->
+<article class="bg-surface-container-lowest rounded-[24px] p-[32px] shadow-[0_4px_20px_-2px_rgba(180,170,150,0.15)] flex flex-col gap-6">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-2">
+<span class="inline-flex items-center px-3 py-1 bg-[#F3EEE5] text-on-surface-variant font-label-caps text-label-caps rounded-full w-fit">case_study</span>
+<h3 class="font-h3 text-h3 text-on-surface">Case Study: Quán Trà Sữa Q7</h3>
+</div>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<div class="relative w-full aspect-video rounded-xl overflow-hidden bg-surface-container-highest group">
+<img alt="Screenshot Preview" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="A blurred, stylized representation of a modern point-of-sale dashboard interface for a bubble tea shop. The interface features warm amber and soft white tones, with subtle data charts and order lists visible through a frosted glass effect. The lighting is bright and even, simulating a clean web app environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCs4yF7_h5sw_SA6EXxJGFM5HZZ4PEgpH6OreEYxYYMBgu74jC2omyi-ILbgvEbyBJ9iQ1PwxWh6SvpWwOPaJQ9MF4wULqHmlmCUIEOEOMXZJvC9-f5D-cmiLr2VyhOqUYYXWAnEesGpuqE_yaozdr8KEghxuVUNERQC4EFnsGDJc7UvEVkjH0F7ZJOQta805RLeSKMR-EUl76JQxQ8liAJllz01EzKoJjszaumD6TEV02BT54wY8xPuT-dg7tz6pP5LQBWG4PpzA"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/10">
+<div class="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-on-surface">photo_camera</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">trending_up</span>
+<span class="font-body-md text-body-md text-on-surface">Tăng throughput 40%</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">timer</span>
+<span class="font-body-md text-body-md text-on-surface">Giảm thời gian order 60%</span>
+</div>
+</div>
+<div class="mt-auto pt-4 border-t border-[#F3EEE5] flex justify-between items-center">
+<span class="font-data-small text-data-small text-on-surface-variant">Đã dùng 5 lần</span>
+<button class="text-primary hover:text-primary-container transition-colors p-2 rounded-lg hover:bg-surface-container">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+</article>
+<div class="flex flex-col gap-card-gap">
+<!-- Card 2: Feedback -->
+<article class="bg-surface-container-lowest rounded-[24px] p-[32px] shadow-[0_4px_20px_-2px_rgba(180,170,150,0.15)] flex flex-col gap-4 flex-1">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-2">
+<span class="inline-flex items-center px-3 py-1 bg-[#F3EEE5] text-on-surface-variant font-label-caps text-label-caps rounded-full w-fit">testimonial</span>
+<h3 class="font-h3 text-h3 text-on-surface">Feedback: Chuỗi Cafe ABC</h3>
+</div>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<div class="bg-surface-bright rounded-xl p-4 border border-surface-container">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-on-surface-variant mt-1">format_quote</span>
+<p class="font-body-md text-body-md text-on-surface italic">"Quản lý kho chính xác 98%"</p>
+</div>
+</div>
+<div class="mt-auto pt-4 border-t border-[#F3EEE5] flex justify-between items-center">
+<span class="font-data-small text-data-small text-on-surface-variant">Đã dùng 3 lần</span>
+<button class="text-primary hover:text-primary-container transition-colors p-2 rounded-lg hover:bg-surface-container">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+</article>
+<!-- Card 3: Demo -->
+<article class="bg-surface-container-lowest rounded-[24px] p-[32px] shadow-[0_4px_20px_-2px_rgba(180,170,150,0.15)] flex flex-col gap-4 flex-1">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-2">
+<span class="inline-flex items-center px-3 py-1 bg-[#F3EEE5] text-on-surface-variant font-label-caps text-label-caps rounded-full w-fit">demo</span>
+<h3 class="font-h3 text-h3 text-on-surface">Demo: POS Mobile App</h3>
+</div>
+<div class="flex items-center gap-1 text-primary-container" title="Chưa xác thực">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">dashboard</span>
+<span class="font-body-md text-body-md text-on-surface">Real-time dashboard</span>
+</div>
+<div class="mt-auto pt-4 border-t border-[#F3EEE5] flex justify-between items-center">
+<span class="font-data-small text-data-small text-on-surface-variant">Đã dùng 0 lần</span>
+<button class="text-primary hover:text-primary-container transition-colors p-2 rounded-lg hover:bg-surface-container">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+</article>
+</div>
+</section>
+<!-- Capture Section -->
+<section class="bg-surface-container-lowest rounded-[24px] p-[32px] shadow-[0_4px_20px_-2px_rgba(180,170,150,0.15)]">
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+<div>
+<h2 class="font-h2 text-h2 text-on-surface">TỰ ĐỘNG CHỤP ẢNH</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Capture evidence via Playwright engine.</p>
+</div>
+<div class="flex items-center gap-2 bg-surface-bright px-4 py-2 rounded-lg border border-surface-container">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-caps text-label-caps text-on-surface">Sẵn sàng</span>
+</div>
+</div>
+<div class="bg-[#F3EEE5] rounded-xl p-6 flex flex-col md:flex-row gap-6 items-end">
+<div class="flex-1 w-full">
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Target URL</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">link</span>
+<input class="w-full bg-surface-container-lowest border-none rounded-xl py-3 pl-12 pr-4 font-body-md text-body-md text-on-surface focus:ring-2 focus:ring-primary-container focus:outline-none placeholder:text-outline-variant shadow-sm" placeholder="https://facebook.com/post/..." type="url"/>
+</div>
+</div>
+<div class="flex flex-col gap-2 shrink-0 w-full md:w-auto">
+<span class="font-data-small text-data-small text-on-surface-variant text-right md:text-left">Last capture: <span class="text-on-surface">10:15 - 20/10/2024</span></span>
+<button class="bg-primary-container text-on-primary-container font-label-caps text-label-caps py-3 px-8 rounded-xl flex items-center justify-center gap-2 hover:bg-inverse-primary transition-colors active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)] w-full md:w-auto">
+<span class="material-symbols-outlined">bolt</span>
+                        Chụp Ngay
+                    </button>
+</div>
+</div>
+</section>
+</main>
+</body></html>
