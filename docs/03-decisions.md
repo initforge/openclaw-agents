@@ -246,3 +246,31 @@ Hệ quả:
 - Số màn MVP tăng lên khoảng 16 tab/màn trong 3 workspace, nhưng giảm rủi ro deploy vì mỗi tab có contract rõ.
 - Cần workspace-scoped API, audit, approval, notification, model cost và feature flag.
 - Nếu có event system-level không map được workspace, UI chỉ hiển thị trong audit của workspace đang xem với nhãn `system`, không tạo workspace thứ tư.
+
+## 03.16. ADR-0016: Platform Content Hoàn Toàn Autonomous Với Control Options
+
+Trạng thái: accepted
+
+Platform Content Agent cần autonomous hoàn toàn nhưng vẫn có control options rõ ràng.
+
+Quyết định:
+
+- **4 Content Triggers**: schedule, trend, performance, command.
+- **4 Autonomy Levels**: fully_auto, auto_with_review, auto_no_publish, manual_only.
+- **4 Video Production Types**: walkthrough, viral_clip, product_showcase, testimonial_edit.
+- **3 Publish Methods**: official_api, browser_assisted, handoff.
+- Mỗi content card ghi rõ trigger_type và autonomy_level để audit và control.
+
+Lý do:
+
+- User muốn autonomous-first nhưng vẫn kiểm soát được mức độ tự động.
+- schedule trigger đảm bảo tần suất đăng bài ổn định mà không cần user chủ động.
+- autonomy_level cho phép user chọn "AI tạo nhưng tôi duyệt trước khi đăng" hoặc "AI tạo và đăng không cần tôi".
+- browser_assisted cover cho nền tảng không có official API đầy đủ (VD: TikTok).
+
+Hệ quả:
+
+- Content Factory cần background jobs cho schedule, trend detection, performance analysis.
+- Pipeline Kanban UI cần hiển thị trigger_type và autonomy_level trên mỗi card.
+- Video tab cần production_type selector và publish_method selector.
+- Context tab cần enforce scope/purpose/retention, không chỉ là label.

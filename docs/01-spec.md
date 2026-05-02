@@ -108,32 +108,66 @@ Không được:
 Business logic:
 
 - **Quản lý Toàn diện (Total Manager)**: Một thực thể AI quản lý trọn bộ các trang mạng xã hội. AI tự đưa ra quyết định sản xuất nội dung dựa trên profile và xu hướng của từng MXH.
-- **Xưởng Video (The Studio)**: Sản xuất video ngay trong workspace.
-    - **Walkthrough Studio**: Nhập URL + Account -> AI tự login, crawl sâu mọi ngóc ngách, quay chụp và render video hướng dẫn/giới thiệu bằng Remotion.
-    - **Viral Marketing**: Tự động nghiên cứu cơ chế viral và sản xuất video ngắn (TikTok/Reels) với mục tiêu bán hàng/marketing rõ ràng.
-- **Ngữ cảnh Sâu (Deep Context)**: AI chạy Cronjob (Playwright) để quét toàn bộ profile người dùng, bài viết cũ để thấu hiểu 100% phong cách và kiến thức nền tảng.
-- **Pipeline Tự hành**: Không chỉ là Kanban, đây là trung tâm điều phối Agent túc trực 24/7 để duy trì tần suất bài viết và tương tác.
+- **Content Plan Tự Động (Autonomous Planning)**: AI chủ động lập kế hoạch nội dung theo:
+    - **Schedule trigger**: Tần suất đăng bài cố định (VD: 3x/tuần LinkedIn, 1x/ngày TikTok) — user cấu hình trước.
+    - **Trend trigger**: Khi AI phát hiện trend mới liên quan đến content pillar, tự tạo content mới.
+    - **Performance trigger**: Khi content cũ underperform, AI tự đề xuất content thay thế.
+    - **Command trigger**: User gõ lệnh trong Command tab — AI tạo content ngay lập tức.
+- **Xưởng Video (The Studio)**: Sản xuất video ngay trong workspace, hỗ trợ nhiều loại:
+    - **Walkthrough**: User cung cấp URL → AI crawl nội dung → tạo video hướng dẫn bằng Remotion.
+    - **Viral Clip**: AI nghiên cứu viral pattern → generate script + render video ngắn (TikTok/Reels).
+    - **Product Showcase**: AI tạo video giới thiệu sản phẩm từ content package và asset.
+    - **Testimonial Edit**: AI cắt ghép video testimonial từ footage có sẵn.
+- **Ngữ cảnh Sâu (Deep Context)**: AI chạy Playwright Cronjob để quét toàn bộ profile, bài viết cũ, insights của từng nền tảng nhằm thấu hiểu phong cách và kiến thức nền tảng.
+- **Pipeline Tự Hành**: Kanban flow hoàn toàn autonomous: AI tạo draft → tự đẩy qua review → tự schedule → tự publish nếu policy cho phép. User có thể can thiệp bất kỳ bước nào.
 
-Technical logic:
+**Publish Mechanism Options**:
 
-- **Input**: User profile, URL target, viral research data, brand voice assets, external knowledge (via MCP).
-- **Media Factory**: Remotion rendering, automated screen capturing, AI script generation.
-- **Agent Manager**: Điều phối AI Pages Manager, tự động ra quyết định đăng bài dựa trên metrics.
+- **Official API**: Dùng OAuth của từng nền tảng (LinkedIn, YouTube) — ưu tiên khi có API chính chủ.
+- **Browser-Assisted**: Dùng Playwright để đăng bài khi không có official API hoặc API không đủ chức năng.
+- **Handoff Mode**: AI để content ở trạng thái "Ready" và thông báo user để user tự đăng.
 
-Action mode:
+Control options user cài được:
 
 ```text
-autonomous_manage    AI tự quản lý toàn bộ luồng nội dung (Mặc định)
-studio_production    sản xuất video chuyên sâu (walkthrough/viral)
-context_crawling     quét sâu profile/site để lấy context
-paused               dừng action
+Autonomy Level
+  fully_auto        AI tạo, review, schedule, publish mà không cần user
+  auto_with_review  AI tạo + schedule, chờ user review trước khi publish
+  auto_no_publish   AI tạo + draft, không tự đăng
+  manual_only       User tạo và đăng hoàn toàn
+
+Content Triggers
+  schedule          AI tạo theo tần suất cố định (user cấu hình)
+  trend             AI tạo khi phát hiện trend liên quan
+  performance       AI tạo khi content cũ underperform
+  command           AI tạo khi user gõ lệnh
+
+Video Production Types
+  walkthrough       URL → crawl → script → render
+  viral_clip        AI research → script → render
+  product_showcase  content package + asset → render
+  testimonial_edit  footage → AI edit → render
+
+Publish Method
+  official_api      OAuth platform API
+  browser_assisted  Playwright handoff
+  draft_only        Không đăng, chờ user
 ```
+
+Rule bắt buộc:
+
+- Auto publish CHỈ khi `Autonomy Level` = `fully_auto` và `Instruction` đã được cấu hình đầy đủ.
+- Mỗi content card phải ghi rõ: trigger_type (schedule|trend|performance|command), platform, autonomy_level khi tạo.
+- Video render job phải có output preview trước khi publish.
+- Browser-assisted publish chỉ dùng cho nền tảng không có official API hoặc API không hỗ trợ đầy đủ.
+- Context capture phải ghi rõ: scope, purpose, retention. Không capture ngoài scope.
 
 Không được:
 
-- auto publish nếu Instruction chưa được cấu hình.
-- bypass cơ chế bảo mật của nền tảng (CAPTCHA, Login) một cách bất thường.
+- auto publish nếu `Autonomy Level` = `auto_with_review` hoặc thấp hơn và content chưa được duyệt.
+- bypass cơ chế bảo mật nền tảng (CAPTCHA, Login) một cách bất thường.
 - render video hàng loạt mà không có mục tiêu marketing rõ ràng.
+- dùng nhiều account để né rate limit hoặc né khóa nền tảng.
 
 ## 01.3. Product Surfaces
 
@@ -211,11 +245,11 @@ Facebook Leads (Autonomous Growth) — 6 tabs
   Audit           Nhật ký hành động: bộ lọc như Trading, tra cứu lịch sử AI tự động comment/inbox.
 
 Platform Content (Autonomous Factory) — 5 tabs
-  Command         Prompt zone: Iterative editing, gõ lệnh để ra lệnh cho Agent túc trực 24/7.
-  Pipeline        Manager Page: AI quản lý toàn diện các kênh, tự động sản xuất nội dung theo profile.
-  Video           Studio: Walkthrough production (crawl sâu), Viral video generator, render ngay tại tab.
-  Context         Knowledge Hub: Card-based UI, Playwright/Cronjob quét profile/trang web để lấy context.
-  Audit           Nhật ký hệ thống: duyệt log context capture, render log, publish log.
+  Command         Prompt zone: gõ lệnh cho AI, chọn trigger, set autonomy level, quản lý content pillars.
+  Pipeline        Kanban autonomous: AI tạo draft → auto/semi-auto review → schedule → publish. Hiển thị trigger_type và autonomy_level trên mỗi card.
+  Video           Studio: chọn production type (walkthrough/viral_clip/product_showcase/testimonial_edit), trigger render, xem preview, chọn publish method.
+  Context         Knowledge Hub: card-based context items từ Playwright crawl, scope/purpose/retention được enforce, dùng cho AI generate.
+  Audit           Nhật ký hệ thống: content creation log, render log, publish log, trigger reasons, autonomy decisions.
 ```
 
 Ghi chú thay đổi so với bản 17 màn:

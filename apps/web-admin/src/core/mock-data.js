@@ -134,31 +134,67 @@ export const MOCK = {
         { prompt: 'Tạo caption TikTok cho video EngPath walkthrough', platform: 'tiktok', timestamp: '2026-04-29 12:00', status: 'completed' }
       ],
       skills: ['content-creator', 'social-content', 'avoid-ai-writing'],
-      contextItems: ['creator-profile.md', 'platform-rules.md', 'current-focus.md']
+      contextItems: ['creator-profile.md', 'platform-rules.md', 'current-focus.md'],
+      autonomyLevel: 'auto_with_review',
+      triggers: {
+        schedule: true,
+        trend: true,
+        performance: false,
+        command: true
+      }
     },
+    pillars: [
+      {
+        id: 'pillar-001',
+        name: 'AI in Education',
+        keywords: ['AI agent', 'edtech', 'grading', 'learning path'],
+        themes: ['Case Study', 'Quick Tips', 'Behind the Scenes'],
+        brandVoice: 'Chuyên nghiệp, storytelling, data-driven',
+        platforms: { linkedin: '3x/week', tiktok: '1x/day', youtube: '1x/week' },
+        autonomyLevel: 'auto_with_review',
+        active: true
+      },
+      {
+        id: 'pillar-002',
+        name: 'SaaS Builder',
+        keywords: ['SaaS', 'startup', 'MVP', 'product launch'],
+        themes: ['Tutorial', 'Case Study', 'Founder Story'],
+        brandVoice: 'Gần gũi, thực tế, có chiều sâu',
+        platforms: { linkedin: '2x/week', facebook: '3x/week' },
+        autonomyLevel: 'auto_no_publish',
+        active: false
+      }
+    ],
     pipeline: {
       draft: [
-        { id: 'pkg-009', title: 'LinkedIn: AI grading cho giáo viên', platform: 'linkedin', type: 'post', createdAt: '2026-04-29' },
-        { id: 'pkg-010', title: 'Facebook: Case study POS FnB', platform: 'facebook', type: 'post', createdAt: '2026-04-28' }
+        { id: 'pkg-009', title: 'LinkedIn: AI grading cho giáo viên', platform: 'linkedin', type: 'post', createdAt: '2026-04-29', triggerType: 'command', autonomyLevel: 'auto_with_review', pillar: 'AI in Education', status: 'draft' },
+        { id: 'pkg-010', title: 'TikTok: EngPath Walkthrough Caption', platform: 'tiktok', type: 'caption', createdAt: '2026-04-28', triggerType: 'schedule', autonomyLevel: 'fully_auto', pillar: 'AI in Education', status: 'draft' }
       ],
       reviewed: [
-        { id: 'pkg-008', title: 'TikTok: EngPath Walkthrough Caption', platform: 'tiktok', type: 'caption', createdAt: '2026-04-28' }
+        { id: 'pkg-008', title: 'LinkedIn: POS FnB Case Study Deep Dive', platform: 'linkedin', type: 'post', createdAt: '2026-04-28', triggerType: 'performance', autonomyLevel: 'auto_with_review', pillar: 'SaaS Builder', status: 'reviewed' }
       ],
       ready: [
-        { id: 'pkg-007', title: 'LinkedIn: POS FnB Case Study', platform: 'linkedin', type: 'post', createdAt: '2026-04-27' }
+        { id: 'pkg-007', title: 'Facebook: SaaS Startup Tips', platform: 'facebook', type: 'post', createdAt: '2026-04-27', triggerType: 'schedule', autonomyLevel: 'fully_auto', pillar: 'SaaS Builder', status: 'ready' }
+      ],
+      scheduled: [
+        { id: 'pkg-011', title: 'LinkedIn: Portfolio Engineering Best Practices', platform: 'linkedin', type: 'post', createdAt: '2026-04-29', triggerType: 'schedule', autonomyLevel: 'fully_auto', pillar: 'AI in Education', scheduledAt: '2026-05-01 08:00', status: 'scheduled' }
       ],
       publishing: [],
       published: [
-        { id: 'pkg-005', title: 'TikTok: Vanhien Walkthrough', platform: 'tiktok', type: 'video', views: 1200, createdAt: '2026-04-26' },
-        { id: 'pkg-004', title: 'LinkedIn: Portfolio Engineering', platform: 'linkedin', type: 'post', views: 3400, createdAt: '2026-04-25' }
+        { id: 'pkg-005', title: 'TikTok: Vanhien Walkthrough', platform: 'tiktok', type: 'video', views: 1200, createdAt: '2026-04-26', triggerType: 'command', autonomyLevel: 'auto_with_review', publishedAt: '2026-04-26 13:00', publishMethod: 'official_api' },
+        { id: 'pkg-004', title: 'LinkedIn: Portfolio Engineering', platform: 'linkedin', type: 'post', views: 3400, createdAt: '2026-04-25', triggerType: 'schedule', autonomyLevel: 'fully_auto', publishedAt: '2026-04-25 08:00', publishMethod: 'official_api' },
+        { id: 'pkg-003', title: 'YouTube: EngPath Deep Dive', platform: 'youtube', type: 'video', views: 890, createdAt: '2026-04-24', triggerType: 'trend', autonomyLevel: 'auto_with_review', publishedAt: '2026-04-24 18:00', publishMethod: 'browser_assisted' }
       ]
     },
     video: {
       jobs: [
-        { id: 'vj-001', title: 'EngPath Walkthrough v3', template: 'CinematicWalkthrough', status: 'rendering', progress: 65, duration: '42s', createdAt: '2026-04-29 14:00' },
-        { id: 'vj-002', title: 'Vanhien Walkthrough', template: 'CinematicWalkthrough', status: 'completed', progress: 100, duration: '38s', createdAt: '2026-04-26 10:00', previewUrl: '#' }
+        { id: 'vj-001', title: 'EngPath Walkthrough v3', template: 'CinematicWalkthrough', status: 'rendering', progress: 65, duration: '42s', createdAt: '2026-04-29 14:00', productionType: 'walkthrough', publishMethod: 'official_api' },
+        { id: 'vj-002', title: 'Vanhien Walkthrough', template: 'CinematicWalkthrough', status: 'completed', progress: 100, duration: '38s', createdAt: '2026-04-26 10:00', previewUrl: '#', productionType: 'walkthrough', publishMethod: 'official_api' },
+        { id: 'vj-003', title: 'TikTok Viral: FnB POS', template: 'ViralShort', status: 'queued', progress: 0, duration: '28s', createdAt: '2026-04-29 16:00', productionType: 'viral_clip', publishMethod: 'official_api' },
+        { id: 'vj-004', title: 'Product Showcase: AI Grading', template: 'ProductShowcase', status: 'completed', progress: 100, duration: '45s', createdAt: '2026-04-28 09:00', previewUrl: '#', productionType: 'product_showcase', publishMethod: 'official_api' },
+        { id: 'vj-005', title: 'Testimonial: Customer Feedback', template: 'TestimonialEdit', status: 'completed', progress: 100, duration: '62s', createdAt: '2026-04-27 11:00', previewUrl: '#', productionType: 'testimonial_edit', publishMethod: 'handoff' }
       ],
-      templates: ['CinematicWalkthrough', 'ProductShowcase', 'QuickDemo'],
+      templates: ['CinematicWalkthrough', 'ProductShowcase', 'QuickDemo', 'ViralShort', 'TestimonialEdit'],
       projectMatrix: { scenes: 13, assets: 45, motionLocked: true }
     },
     context: {

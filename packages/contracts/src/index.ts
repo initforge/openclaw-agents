@@ -28,6 +28,66 @@ export const AgentModeSchema = z.enum([
   "paused",
 ]);
 
+export const ContentTriggerTypeSchema = z.enum([
+  "schedule",
+  "trend",
+  "performance",
+  "command",
+]);
+
+export const ContentAutonomyLevelSchema = z.enum([
+  "fully_auto",
+  "auto_with_review",
+  "auto_no_publish",
+  "manual_only",
+]);
+
+export const ContentStatusSchema = z.enum([
+  "draft",
+  "reviewed",
+  "ready",
+  "scheduled",
+  "publishing",
+  "published",
+  "failed",
+]);
+
+export const VideoProductionTypeSchema = z.enum([
+  "walkthrough",
+  "viral_clip",
+  "product_showcase",
+  "testimonial_edit",
+]);
+
+export const VideoRenderStatusSchema = z.enum([
+  "queued",
+  "rendering",
+  "completed",
+  "failed",
+]);
+
+export const PublishMethodSchema = z.enum([
+  "official_api",
+  "browser_assisted",
+  "handoff",
+  "none",
+]);
+
+export const PublishStatusSchema = z.enum([
+  "pending",
+  "published",
+  "failed",
+  "skipped",
+]);
+
+export const ContentPlatformSchema = z.enum([
+  "linkedin",
+  "tiktok",
+  "youtube",
+  "facebook",
+  "upwork",
+]);
+
 export const SourceTypeSchema = z.enum([
   "telegram_channel",
   "telegram_group",
@@ -49,6 +109,12 @@ export const JobTypeSchema = z.enum([
   "content.render.remotion",
   "content.render.preview",
   "content.sync.workspace",
+  "content.factory.plan",
+  "content.factory.generate",
+  "content.factory.schedule_optimize",
+  "content.factory.context_crawl",
+  "content.publish.api",
+  "content.publish.browser",
   "platform.context.capture",
   "platform.publish.assisted",
   "agent.codex-cli",
@@ -176,3 +242,50 @@ export type ApprovalSummary = z.infer<typeof ApprovalSummarySchema>;
 export type DashboardSummary = z.infer<typeof DashboardSummarySchema>;
 export type WorkerJobSummary = z.infer<typeof WorkerJobSummarySchema>;
 export type NotificationSummary = z.infer<typeof NotificationSummarySchema>;
+export type ContentTriggerType = z.infer<typeof ContentTriggerTypeSchema>;
+export type ContentAutonomyLevel = z.infer<typeof ContentAutonomyLevelSchema>;
+export type ContentStatus = z.infer<typeof ContentStatusSchema>;
+export type VideoProductionType = z.infer<typeof VideoProductionTypeSchema>;
+export type VideoRenderStatus = z.infer<typeof VideoRenderStatusSchema>;
+export type PublishMethod = z.infer<typeof PublishMethodSchema>;
+export type PublishStatus = z.infer<typeof PublishStatusSchema>;
+export type ContentPlatform = z.infer<typeof ContentPlatformSchema>;
+
+export const ContentPackageSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  body: z.string(),
+  platform: ContentPlatformSchema,
+  contentPillar: z.string().optional(),
+  triggerType: ContentTriggerTypeSchema,
+  triggerMeta: z.record(z.unknown()).optional(),
+  autonomyLevel: ContentAutonomyLevelSchema,
+  status: ContentStatusSchema,
+  createdBy: ExecutionSurfaceSchema,
+  createdAt: z.string(),
+  publishedAt: z.string().nullable(),
+  reviewDecision: z.enum(["approved", "rejected"]).nullable(),
+  reviewBy: z.string().nullable(),
+  reviewAt: z.string().nullable(),
+});
+
+export type ContentPackage = z.infer<typeof ContentPackageSchema>;
+
+export const VideoRenderJobSchema = z.object({
+  id: z.string(),
+  productionType: VideoProductionTypeSchema,
+  contentPackageId: z.string().nullable(),
+  scriptJson: z.record(z.unknown()),
+  assetsJson: z.record(z.unknown()),
+  templateId: z.string(),
+  renderStatus: VideoRenderStatusSchema,
+  previewUrl: z.string().nullable(),
+  finalUrl: z.string().nullable(),
+  publishMethod: PublishMethodSchema,
+  publishStatus: PublishStatusSchema,
+  createdBy: ExecutionSurfaceSchema,
+  createdAt: z.string(),
+  publishedAt: z.string().nullable(),
+});
+
+export type VideoRenderJob = z.infer<typeof VideoRenderJobSchema>;

@@ -6,7 +6,7 @@ const initialState = {
   tabs: {
     trading: 'desk',
     leads: 'radar',
-    content: 'strategy'
+    content: 'command'
   }
 };
 

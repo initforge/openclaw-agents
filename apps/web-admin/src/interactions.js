@@ -87,9 +87,9 @@ function handleClick(e) {
 
   // ─── Cross-tab navigation (all workspaces) ───
   if (txt.includes('→ Pipeline') || txt.includes('Xem Pipeline'))  { goTab('pipeline');  toast('➡️ Chuyển sang Pipeline', 'info'); return; }
-  if (txt.includes('→ Studio'))    { goTab('studio');   toast('➡️ Chuyển sang Studio', 'info'); return; }
+  if (txt.includes('→ Video'))    { goTab('video');   toast('➡️ Chuyển sang Video', 'info'); return; }
   if (txt.includes('Xem Context')) { goTab('context');  toast('➡️ Chuyển sang Ngữ Cảnh', 'info'); return; }
-  if (txt.includes('Sửa →') && txt.includes('Sửa'))     { goTab('strategy'); toast('➡️ Chuyển sang Chiến Lược', 'info'); return; }
+  if (txt.includes('Xem Audit')) { goTab('audit'); toast('➡️ Chuyển sang Audit', 'info'); return; }
 
   // ─── PAUSE ALL ───
   if (txt.includes('PAUSE ALL')) {
@@ -134,7 +134,7 @@ function handleClick(e) {
     return;
   }
 
-  // ─── W3 Content: Create Tab ───
+  // ─── W3 Content: Command Tab ───
   if (txt.includes('Tạo nội dung') || txt.includes('Tạo nội')) {
     btnLoad(btn, 2500).then(() => {
       const output = document.querySelector('[class*="border-l-4"]');
@@ -174,7 +174,7 @@ function handleClick(e) {
     toast(`🔍 Filter: ${txt}`, 'info'); return;
   }
 
-  // ─── W3: Studio Tab ───
+  // ─── W3: Video Tab ───
   if (txt.includes('Storyboard') || txt.includes('Review → Render')) {
     showModal('🎬 Tạo Video — Storyboard Preview', `
       <p style="font-size:13px;color:#444;margin-bottom:16px">AI đã phân tích URL và tạo storyboard 12 scenes:</p>

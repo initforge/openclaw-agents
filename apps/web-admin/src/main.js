@@ -10,20 +10,19 @@ import { renderLeadsCustomers } from './views/leads-customers.js';
 import { renderLeadsSources } from './views/leads-sources.js';
 import { renderLeadsProof } from './views/leads-proof.js';
 import { renderLeadsAudit } from './views/leads-audit.js';
-import { renderContentStrategy } from './views/content-strategy.js';
-import { renderContentCreate } from './views/content-create.js';
+import { renderContentCommand } from './views/content-command.js';
 import { renderContentPipeline } from './views/content-pipeline.js';
-import { renderContentStudio } from './views/content-studio.js';
+import { renderContentVideo } from './views/content-video.js';
 import { renderContentContext } from './views/content-context.js';
 import { renderContentAudit } from './views/content-audit.js';
 import { appStore } from './core/store.js';
 import { initInteractions } from './interactions.js';
 
-/* ── Tab Definitions (17 screens) ── */
+/* ── Tab Definitions (16 screens) ── */
 const WORKSPACE_TABS = {
   trading: ['desk', 'strategy', 'signal-stream', 'connections', 'history'],
   leads: ['radar', 'respond', 'customers', 'sources', 'proof', 'audit'],
-  content: ['strategy', 'create', 'pipeline', 'studio', 'context', 'audit']
+  content: ['command', 'pipeline', 'video', 'context', 'audit']
 };
 
 const TAB_LABELS = {
@@ -31,7 +30,7 @@ const TAB_LABELS = {
   connections: 'Kết Nối', history: 'Lịch Sử',
   radar: 'Radar', respond: 'Phản Hồi', customers: 'Khách Hàng',
   sources: 'Nguồn', proof: 'Proof', audit: 'Audit',
-  create: 'Soạn', pipeline: 'Pipeline', studio: 'Studio', context: 'Ngữ Cảnh'
+  command: 'Soạn Lệnh', pipeline: 'Pipeline', video: 'Video', context: 'Ngữ Cảnh'
 };
 
 /* ── View Router ── */
@@ -47,10 +46,9 @@ const VIEW_MAP = {
   'leads/sources': renderLeadsSources,
   'leads/proof': renderLeadsProof,
   'leads/audit': renderLeadsAudit,
-  'content/strategy': renderContentStrategy,
-  'content/create': renderContentCreate,
+  'content/command': renderContentCommand,
   'content/pipeline': renderContentPipeline,
-  'content/studio': renderContentStudio,
+  'content/video': renderContentVideo,
   'content/context': renderContentContext,
   'content/audit': renderContentAudit,
 };

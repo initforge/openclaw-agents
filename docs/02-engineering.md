@@ -243,10 +243,16 @@ Task type:
 hunter_evidence_analyze
 hunter_persona_profile
 hunter_auto_comment
+factory_content_plan
+factory_content_generate
 factory_deep_context_crawl
-factory_page_manager_plan
+factory_schedule_optimize
 studio_walkthrough_script
 studio_viral_production
+studio_product_showcase
+studio_testimonial_edit
+publish_official_api
+publish_browser_assisted
 ```
 
 Technical rule:
@@ -290,35 +296,235 @@ Technical rule:
 - Không bypass CAPTCHA bằng các dịch vụ bên thứ ba nếu vi phạm chính sách nền tảng.
 - Mọi context item phải lưu source, timestamp, account, purpose và retention.
 
-## 02.10. Remotion Video Pipeline
+## 02.10. Content Factory & Autonomous Planning
 
-User có thể bấm nút hoặc gõ lệnh để tạo video TikTok/Reels/Shorts.
+Content Agent hoạt động autonomous hoàn toàn dựa trên 4 trigger và 4 mức autonomy.
 
-Flow:
+### 02.10.1. Trigger Types
 
 ```text
-prompt / content package
-  -> script draft
-  -> storyboard
-  -> Remotion render job
-  -> preview artifact
-  -> user review
-  -> publish_assisted hoặc official_publish nếu hợp lệ
+schedule_trigger
+  Input: platform_id, frequency_config (VD: 3x/week LinkedIn)
+  AI action: tạo content mới theo content_pillar, schedule vào cột Ready → auto publish theo autonomy level
+  Cron: chạy theo config của từng platform
+
+trend_trigger
+  Input: content_pillar keywords, viral research data
+  AI action: phát hiện trend liên quan → tạo content mới gấp (fast track)
+  Source: manual research trigger hoặc AI trend detection job
+
+performance_trigger
+  Input: content_metrics (views, engagement, CTR)
+  AI action: content dưới ngưỡng → AI tạo replacement content
+  Threshold: user cấu hình per platform
+
+command_trigger
+  Input: user prompt trong Command tab
+  AI action: tạo content ngay lập tức, đẩy vào pipeline
+  Mode: luôn ưu tiên cao nhất
 ```
 
-Job data:
+### 02.10.2. Autonomy Levels
+
+```text
+fully_auto
+  schedule/trend/performance/command -> create -> review_auto_pass -> schedule -> publish
+  Không có bước chờ user
+
+auto_with_review
+  schedule/trend/performance/command -> create -> WAIT user review -> user approve -> publish
+
+auto_no_publish
+  schedule/trend/performance/command -> create -> WAIT user review -> user approve -> user manually publish
+  (AI không bao giờ gọi publish action)
+
+manual_only
+  AI chỉ generate content package, không render, không publish
+```
+
+### 02.10.3. Content Plan Algorithm
+
+AI tự quyết định nội dung dựa trên:
+
+```text
+Content Pillar (user cấu hình)
+  - Chủ đề chính (VD: AI in Education)
+  - Content themes (VD: Quick Tips, Case Study, Behind the Scenes)
+  - Brand voice (VD: chuyên nghiệp, gần gũi)
+
+Platform Profile (AI thu thập qua context crawl)
+  - LinkedIn: professional, educational, case study heavy
+  - TikTok: short, hook-first, entertainment + value
+  - YouTube: long-form, deep-dive, tutorial
+  - Facebook: community-focused, engagement driving
+
+Trend Matching (trend_trigger)
+  - Viral topic detection: keyword matching với content pillar
+  - Format adaptation: adapt viral format cho brand voice
+
+Content Gap Analysis
+  - So sánh content đã đăng vs content pillar
+  - AI tự fill gap: thiếu case study → tạo case study
+```
+
+### 02.10.4. Publish Mechanism
+
+```text
+official_api
+  - LinkedIn OAuth2 (pages/personal)
+  - YouTube Data API v3
+  - TikTok Content API (nếu available)
+  - Facebook Graph API (pages)
+  - Mỗi platform account lưu OAuth tokens trong DB
+
+browser_assisted (Playwright)
+  - Dùng khi: official API không đủ chức năng, hoặc user opt-in
+  - Workflow: login -> navigate -> fill form -> upload media -> publish
+  - Cần session cookie hoặc credentials
+  - Smart delays: random 2-8s giữa các action
+
+handoff
+  - AI đẩy content vào cột Ready
+  - Gửi notification cho user
+  - User tự đăng trên nền tảng
+```
+
+### 02.10.5. Content Card Schema
+
+```text
+content_packages
+  id
+  title
+  body               markdown/content body
+  platform          linkedin | tiktok | youtube | facebook | upwork
+  content_pillar    FK to content_pillars
+  trigger_type      schedule | trend | performance | command
+  trigger_meta      { trend_keyword, performance_ref_id, ... }
+  autonomy_level    fully_auto | auto_with_review | auto_no_publish | manual_only
+  status            draft | reviewed | ready | scheduled | publishing | published | failed
+  created_by        ExecutionSurface
+  created_at
+  published_at
+  review_decision   approved | rejected | null
+  review_by         user_id | null
+  review_at         timestamp | null
+
+content_pillars (config)
+  id
+  agent_slug        platform-content
+  name              "AI in Education"
+  keywords          text[]
+  themes            text[]
+  brand_voice       text
+  platforms         platform[]
+  schedule_config   jsonb  -- { linkedin: "3x/week", tiktok: "1x/day", ... }
+  trend_threshold   int   -- engagement threshold for performance trigger
+
+platform_accounts (cho content)
+  id
+  platform          linkedin | tiktok | youtube | facebook
+  account_label     "Main LinkedIn Page"
+  oauth_tokens      encrypted json
+  session_cookie    encrypted json  -- cho browser_assisted
+  publish_method    official_api | browser_assisted
+  is_active         boolean
+```
+
+### 02.10.6. Background Jobs for Content Agent
+
+```text
+factory_content_plan          -- chạy theo schedule, tạo content plan mới
+factory_content_generate      -- tạo content package từ plan
+factory_schedule_optimize      -- tối ưu posting schedule dựa trên performance
+factory_deep_context_crawl    -- crawl profile/posts để lấy context mới
+publish_browser_assisted      -- Playwright publish job
+video_render_*                -- các video render jobs (xem 02.11)
+```
+
+## 02.11. Remotion Video Pipeline
+
+AI tạo video theo 4 production type. Mỗi type có workflow khác nhau.
+
+### 02.10.1. Video Production Types
+
+**Walkthrough**:
+```text
+URL input
+  -> Playwright crawl (screenshots, UI steps extraction)
+  -> AI analyze structure & flow
+  -> AI generate storyboard + narration script
+  -> Remotion render job
+  -> preview artifact
+  -> publish (official_api | browser_assisted | handoff)
+```
+
+**Viral Clip**:
+```text
+trend_topic / keyword
+  -> AI research viral patterns (hooks, formats, sounds)
+  -> AI generate script (hook + body + CTA)
+  -> Remotion render with template
+  -> preview artifact
+  -> publish
+```
+
+**Product Showcase**:
+```text
+content_package (product info, images, USPs)
+  -> AI select template + structure
+  -> AI generate narration + overlay text
+  -> Remotion render
+  -> preview artifact
+  -> publish
+```
+
+**Testimonial Edit**:
+```text
+raw_footage input
+  -> AI select best moments based on transcript sentiment
+  -> AI create edit sequence (cut, transition, text overlay)
+  -> Remotion render with testimonial template
+  -> preview artifact
+  -> publish
+```
+
+### 02.10.2. Render Job Data
 
 ```text
 video_render_jobs
-content_package_id
-template_id
-script_json
-assets_json
-render_status
-preview_url
-final_url
-created_by
-created_at
+  id
+  production_type        walkthrough | viral_clip | product_showcase | testimonial_edit
+  content_package_id     FK to content_packages
+  script_json            AI-generated script/storyboard
+  assets_json            screenshots, footage refs, overlay assets
+  template_id            Remotion composition ID
+  render_status          queued | rendering | completed | failed
+  preview_url            artifact URL for review
+  final_url              final video URL after approval
+  publish_method         official_api | browser_assisted | handoff | none
+  publish_status         pending | published | failed | skipped
+  created_by             ExecutionSurface
+  created_at
+  published_at
+```
+
+### 02.10.3. Autonomy Flow
+
+```text
+fully_auto (all triggers on, autonomy = fully_auto)
+  schedule trigger -> AI create draft -> auto pass review -> auto schedule -> auto publish
+  trend trigger -> AI create draft -> auto pass review -> auto publish (fast track)
+  command trigger -> AI create draft -> auto schedule -> auto publish
+  performance trigger -> AI create replacement draft -> auto pass review -> auto publish
+
+auto_with_review (autonomy = auto_with_review)
+  any trigger -> AI create draft -> WAIT user review -> user approve -> auto publish
+
+auto_no_publish (autonomy = auto_no_publish)
+  any trigger -> AI create draft -> WAIT user review -> user approve -> user manually publish
+
+manual_only
+  AI generate content package only, no render/publish
 ```
 
 Không gửi Telegram notification cho render do user vừa chủ động bấm, trừ khi render fail hoặc cần attention sau khi user rời Web Admin.
